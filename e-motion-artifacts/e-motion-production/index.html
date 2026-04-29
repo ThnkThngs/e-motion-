@@ -1,0 +1,3493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>e-motion.my Production Codebase</title>
+<style>
+:root{
+  --bg:#1e1e2e;--bg2:#2a2a3e;--bg3:#313145;--border:#3e3e56;
+  --text:#cdd6f4;--text2:#a6adc8;--text3:#6c7086;
+  --gold:#c9a24e;--gold-lt:#e8c775;
+  --green:#a6e3a1;--red:#f38ba8;--blue:#89b4fa;--mauve:#cba6f7;--peach:#fab387;--teal:#94e2d5;--yellow:#f9e2af;
+  --r:6px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Menlo','Monaco','Courier New',monospace;background:var(--bg);color:var(--text);font-size:12px;-webkit-font-smoothing:antialiased}
+.app{display:flex;height:100vh}
+
+/* FILE TREE */
+.tree{width:280px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow:hidden}
+.tree-head{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.tree-head-logo{font-size:12px;font-weight:700;color:var(--gold)}
+.tree-head-title{font-size:10px;color:var(--text3);margin-left:auto}
+.tree-search{margin:8px 10px;padding:5px 8px;background:var(--bg);border:1px solid var(--border);border-radius:var(--r);color:var(--text);font-family:inherit;font-size:10px;outline:none}
+.tree-search:focus{border-color:var(--gold)}
+.tree-search::placeholder{color:var(--text3)}
+.tree-body{flex:1;overflow-y:auto;padding:4px 0;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.tree-folder{user-select:none}
+.tree-folder-head{display:flex;align-items:center;gap:4px;padding:3px 10px 3px 0;cursor:pointer;font-size:11px;color:var(--text2);transition:color .1s}
+.tree-folder-head:hover{color:var(--text)}
+.tree-folder-arrow{width:16px;text-align:center;font-size:8px;color:var(--text3);transition:transform .15s;flex-shrink:0}
+.tree-folder.open>.tree-folder-head>.tree-folder-arrow{transform:rotate(90deg)}
+.tree-folder-icon{margin-right:2px}
+.tree-folder-children{display:none;padding-left:12px}
+.tree-folder.open>.tree-folder-children{display:block}
+.tree-file{display:flex;align-items:center;gap:4px;padding:3px 10px 3px 28px;cursor:pointer;font-size:11px;color:var(--text3);transition:all .1s;border-radius:0}
+.tree-file:hover{color:var(--text);background:rgba(255,255,255,.03)}
+.tree-file.active{color:var(--gold);background:rgba(201,162,78,.08)}
+.tree-file-icon{font-size:10px;flex-shrink:0}
+.file-ts{color:var(--blue)}
+.file-tsx{color:var(--teal)}
+.file-css{color:var(--mauve)}
+.file-json{color:var(--yellow)}
+.file-sql{color:var(--green)}
+.file-env{color:var(--peach)}
+.file-md{color:var(--text2)}
+
+/* MAIN */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.tab-bar{height:36px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab{padding:0 14px;font-size:11px;color:var(--text3);display:flex;align-items:center;gap:6px;cursor:pointer;border-right:1px solid var(--border);white-space:nowrap;transition:all .1s;position:relative}
+.tab:hover{color:var(--text2);background:rgba(255,255,255,.02)}
+.tab.active{color:var(--text);background:var(--bg)}
+.tab.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold)}
+.tab-close{font-size:12px;opacity:.4;margin-left:4px}
+.tab-close:hover{opacity:1}
+.code-area{flex:1;overflow:auto;padding:0;position:relative}
+.code-wrap{display:flex;min-height:100%}
+.line-nums{padding:12px 0;text-align:right;color:var(--text3);font-size:11px;line-height:1.7;user-select:none;min-width:44px;padding-right:12px;background:var(--bg);border-right:1px solid var(--border);position:sticky;left:0;z-index:2}
+.code-content{padding:12px 16px;font-size:11px;line-height:1.7;white-space:pre;flex:1;overflow-x:auto}
+
+/* SYNTAX COLORS */
+.s-kw{color:var(--mauve)}
+.s-str{color:var(--green)}
+.s-num{color:var(--peach)}
+.s-fn{color:var(--blue)}
+.s-cm{color:var(--text3);font-style:italic}
+.s-type{color:var(--yellow)}
+.s-tag{color:var(--red)}
+.s-attr{color:var(--peach)}
+.s-prop{color:var(--teal)}
+.s-op{color:var(--text2)}
+.s-imp{color:var(--mauve)}
+
+/* STATUS BAR */
+.status-bar{height:24px;background:var(--gold);display:flex;align-items:center;padding:0 12px;gap:16px;flex-shrink:0}
+.status-item{font-size:9px;color:var(--bg);font-weight:600;letter-spacing:.03em}
+
+/* BREADCRUMB */
+.breadcrumb{padding:6px 16px;font-size:10px;color:var(--text3);background:var(--bg);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:4px;flex-shrink:0}
+.breadcrumb span{color:var(--text2)}
+
+/* COPY BUTTON */
+.copy-btn{position:absolute;top:8px;right:16px;padding:4px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);color:var(--text2);font-family:inherit;font-size:9px;cursor:pointer;z-index:5;transition:all .15s}
+.copy-btn:hover{border-color:var(--gold);color:var(--gold)}
+
+/* SETUP PANEL */
+.setup-panel{display:none;padding:20px;overflow-y:auto;flex:1}
+.setup-panel.active{display:block}
+.setup-section{margin-bottom:24px}
+.setup-title{font-size:13px;font-weight:700;color:var(--gold);margin-bottom:8px}
+.setup-text{font-size:11px;color:var(--text2);line-height:1.7;margin-bottom:8px}
+.setup-code{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:10px 14px;font-size:11px;line-height:1.7;color:var(--green);margin-bottom:12px;overflow-x:auto;white-space:pre}
+
+@media(max-width:800px){.tree{width:200px}}
+@media print{
+  .tree,.tab-bar,.status-bar,.copy-btn,.breadcrumb{display:none!important}
+  .code-area{overflow:visible!important}
+  .code-content{white-space:pre-wrap;word-wrap:break-word}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="tree">
+    <div class="tree-head"><span class="tree-head-logo">e-motion.my</span><span class="tree-head-title">Production</span></div>
+    <input class="tree-search" placeholder="Search files..." oninput="filterTree(this.value)">
+    <div class="tree-body" id="treeBody"></div>
+  </div>
+  <div class="main">
+    <div class="tab-bar" id="tabBar">
+      <div class="tab active" onclick="showSetup()" style="color:var(--gold)">&#9881; Setup Guide</div>
+    </div>
+    <div class="breadcrumb" id="breadcrumb"><span>e-motion.my</span></div>
+    <div class="code-area" id="codeArea">
+      <div class="setup-panel active" id="setupPanel"></div>
+      <div class="code-wrap" id="codeWrap" style="display:none">
+        <div class="line-nums" id="lineNums"></div>
+        <div class="code-content" id="codeContent"></div>
+      </div>
+      <button class="copy-btn" id="copyBtn" onclick="copyCode()" style="display:none">Copy</button>
+    </div>
+    <div class="status-bar">
+      <span class="status-item">e-motion.my</span>
+      <span class="status-item">Next.js 15</span>
+      <span class="status-item">Supabase</span>
+      <span class="status-item">Billplz</span>
+      <span class="status-item">TypeScript</span>
+      <span class="status-item" id="statusFile">Setup Guide</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== FILE SYSTEM =====
+var FILES = {};
+var currentFile = null;
+
+// ===== REGISTER ALL FILES =====
+
+FILES['package.json'] = {type:'json', content:
+`{
+  "name": "e-motion-my",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "db:migrate": "supabase db push",
+    "db:seed": "supabase db seed"
+  },
+  "dependencies": {
+    "next": "^15.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "@supabase/supabase-js": "^2.45.0",
+    "@supabase/ssr": "^0.5.0",
+    "gsap": "^3.13.0",
+    "billplz": "^1.0.0",
+    "resend": "^4.0.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "@types/react": "^19.0.0",
+    "@types/node": "^22.0.0",
+    "tailwindcss": "^4.0.0",
+    "supabase": "^1.200.0"
+  }
+}`};
+
+FILES['.env.local'] = {type:'env', content:
+`# Supabase
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIs...
+SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIs...
+
+# Billplz
+BILLPLZ_API_KEY=your-billplz-api-key
+BILLPLZ_COLLECTION_ID=your-collection-id
+BILLPLZ_SIGNATURE_KEY=your-signature-key
+BILLPLZ_SANDBOX=true
+
+# Resend (Email)
+RESEND_API_KEY=re_your_resend_key
+EMAIL_FROM=noreply@e-motion.my
+
+# App
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+NEXT_PUBLIC_APP_NAME=e-motion.my`};
+
+FILES['supabase/schema.sql'] = {type:'sql', content:
+`-- e-motion.my Database Schema
+-- Run: supabase db push
+
+-- Enable UUID
+create extension if not exists "uuid-ossp";
+
+-- ============================================
+-- USERS (extends Supabase Auth)
+-- ============================================
+create table public.profiles (
+  id uuid references auth.users on delete cascade primary key,
+  email text not null,
+  full_name text,
+  role text check (role in ('couple', 'planner', 'admin')) default 'couple',
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+alter table public.profiles enable row level security;
+
+create policy "Users can read own profile"
+  on public.profiles for select using (auth.uid() = id);
+
+create policy "Users can update own profile"
+  on public.profiles for update using (auth.uid() = id);
+
+-- Auto-create profile on signup
+create or replace function public.handle_new_user()
+returns trigger as $$
+begin
+  insert into public.profiles (id, email, full_name)
+  values (
+    new.id,
+    new.email,
+    coalesce(new.raw_user_meta_data->>'full_name', split_part(new.email, '@', 1))
+  );
+  return new;
+end;
+$$ language plpgsql security definer;
+
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute function public.handle_new_user();
+
+-- ============================================
+-- INVITATIONS
+-- ============================================
+create table public.invitations (
+  id uuid default uuid_generate_v4() primary key,
+  user_id uuid references public.profiles(id) on delete cascade not null,
+  slug text unique not null,
+  template text not null default 'songket-biru',
+  plan text check (plan in ('free', 'motion', 'cinematic')) default 'free',
+  status text check (status in ('draft', 'active', 'expired')) default 'draft',
+  card_data jsonb not null default '{}',
+  events jsonb not null default '[]',
+  sections jsonb not null default '{}',
+  views_count int default 0,
+  shares_count int default 0,
+  expires_at timestamptz,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+alter table public.invitations enable row level security;
+
+create policy "Users can CRUD own invitations"
+  on public.invitations for all using (auth.uid() = user_id);
+
+create policy "Public can read active invitations by slug"
+  on public.invitations for select using (status = 'active');
+
+-- Generate unique slug
+create or replace function generate_slug(bride text, groom text)
+returns text as $$
+declare
+  base_slug text;
+  final_slug text;
+  counter int := 0;
+begin
+  base_slug := lower(regexp_replace(bride || '-' || groom, '[^a-z0-9]+', '-', 'gi'));
+  final_slug := base_slug || '-' || extract(year from now());
+  while exists (select 1 from public.invitations where slug = final_slug) loop
+    counter := counter + 1;
+    final_slug := base_slug || '-' || extract(year from now()) || '-' || counter;
+  end loop;
+  return final_slug;
+end;
+$$ language plpgsql;
+
+-- ============================================
+-- RSVP RESPONSES
+-- ============================================
+create table public.rsvp_responses (
+  id uuid default uuid_generate_v4() primary key,
+  invitation_id uuid references public.invitations(id) on delete cascade not null,
+  guest_name text not null,
+  status text check (status in ('attending', 'declined', 'maybe')) not null,
+  pax int default 1,
+  message text,
+  created_at timestamptz default now()
+);
+
+alter table public.rsvp_responses enable row level security;
+
+create policy "Anyone can insert RSVP"
+  on public.rsvp_responses for insert with check (true);
+
+create policy "Invitation owner can read RSVPs"
+  on public.rsvp_responses for select using (
+    invitation_id in (select id from public.invitations where user_id = auth.uid())
+  );
+
+-- ============================================
+-- WISHES
+-- ============================================
+create table public.wishes (
+  id uuid default uuid_generate_v4() primary key,
+  invitation_id uuid references public.invitations(id) on delete cascade not null,
+  author text not null,
+  message text not null,
+  approved boolean default false,
+  created_at timestamptz default now()
+);
+
+alter table public.wishes enable row level security;
+
+create policy "Anyone can insert wishes"
+  on public.wishes for insert with check (true);
+
+create policy "Public can read approved wishes"
+  on public.wishes for select using (approved = true);
+
+create policy "Owner can read all wishes"
+  on public.wishes for select using (
+    invitation_id in (select id from public.invitations where user_id = auth.uid())
+  );
+
+create policy "Owner can update wishes"
+  on public.wishes for update using (
+    invitation_id in (select id from public.invitations where user_id = auth.uid())
+  );
+
+-- ============================================
+-- PAYMENTS
+-- ============================================
+create table public.payments (
+  id uuid default uuid_generate_v4() primary key,
+  user_id uuid references public.profiles(id) on delete cascade not null,
+  invitation_id uuid references public.invitations(id) on delete cascade not null,
+  billplz_bill_id text unique,
+  amount int not null, -- in cents
+  plan text not null,
+  status text check (status in ('pending', 'paid', 'failed')) default 'pending',
+  paid_at timestamptz,
+  created_at timestamptz default now()
+);
+
+alter table public.payments enable row level security;
+
+create policy "Users can read own payments"
+  on public.payments for select using (auth.uid() = user_id);
+
+-- ============================================
+-- MEDIA
+-- ============================================
+create table public.media (
+  id uuid default uuid_generate_v4() primary key,
+  invitation_id uuid references public.invitations(id) on delete cascade not null,
+  type text check (type in ('photo', 'music', 'video')) not null,
+  storage_path text not null,
+  sort_order int default 0,
+  created_at timestamptz default now()
+);
+
+alter table public.media enable row level security;
+
+create policy "Owner can CRUD media"
+  on public.media for all using (
+    invitation_id in (select id from public.invitations where user_id = auth.uid())
+  );
+
+create policy "Public can read media for active cards"
+  on public.media for select using (
+    invitation_id in (select id from public.invitations where status = 'active')
+  );`};
+
+FILES['src/lib/supabase/client.ts'] = {type:'ts', content:
+`import { createBrowserClient } from '@supabase/ssr'
+
+export function createClient() {
+  return createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
+}`};
+
+FILES['src/lib/supabase/server.ts'] = {type:'ts', content:
+`import { createServerClient } from '@supabase/ssr'
+import { cookies } from 'next/headers'
+
+export async function createClient() {
+  const cookieStore = await cookies()
+
+  return createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return cookieStore.getAll()
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) =>
+            cookieStore.set(name, value, options)
+          )
+        },
+      },
+    }
+  )
+}`};
+
+FILES['src/lib/supabase/types.ts'] = {type:'ts', content:
+`export interface Profile {
+  id: string
+  email: string
+  full_name: string | null
+  role: 'couple' | 'planner' | 'admin'
+  created_at: string
+}
+
+export interface Invitation {
+  id: string
+  user_id: string
+  slug: string
+  template: string
+  plan: 'free' | 'motion' | 'cinematic'
+  status: 'draft' | 'active' | 'expired'
+  card_data: CardData
+  events: EventData[]
+  sections: SectionsConfig
+  views_count: number
+  shares_count: number
+  expires_at: string | null
+  created_at: string
+}
+
+export interface CardData {
+  bride: string
+  groom: string
+  intro: string
+  label: string
+}
+
+export interface EventData {
+  name: string
+  date: string
+  time: string
+  venue: string
+  dresscode?: string | null
+}
+
+export interface SectionsConfig {
+  countdown: { enabled: boolean; targetDate: string }
+  gallery: { enabled: boolean; slots: number }
+  rsvp: { enabled: boolean; whatsapp: string; contactName: string }
+  wishes: { enabled: boolean }
+  angpau: { enabled: boolean; bank: string; accountName: string; accountNo: string }
+  music: { enabled: boolean; title: string; url: string | null }
+}
+
+export interface RsvpResponse {
+  id: string
+  invitation_id: string
+  guest_name: string
+  status: 'attending' | 'declined' | 'maybe'
+  pax: number
+  message: string | null
+  created_at: string
+}
+
+export interface Wish {
+  id: string
+  invitation_id: string
+  author: string
+  message: string
+  approved: boolean
+  created_at: string
+}
+
+export interface Payment {
+  id: string
+  user_id: string
+  invitation_id: string
+  billplz_bill_id: string | null
+  amount: number
+  plan: string
+  status: 'pending' | 'paid' | 'failed'
+  paid_at: string | null
+}`};
+
+FILES['src/lib/templates/registry.ts'] = {type:'ts', content:
+`// Template Registry — maps template slugs to their visual config
+// This is the data-driven system from the rendering engine
+
+export interface TemplateConfig {
+  name: string
+  slug: string
+  plan: 'free' | 'motion' | 'cinematic'
+  category: 'classic' | 'modern' | 'luxury' | 'minimal'
+  colors: {
+    bgGradient: string[]
+    text: string
+    accent: string
+    label: string
+    sectionBg: string
+    sectionText: string
+    sectionAccent: string
+    footerBg: string[]
+  }
+  pattern: {
+    enabled: boolean
+    svg: string
+    viewBox: string
+    opacity: number
+  }
+  features: {
+    frame: boolean
+    stripes: boolean
+    corners: boolean
+    envelope: boolean
+  }
+}
+
+export const TEMPLATES: Record<string, TemplateConfig> = {
+  'songket-biru': {
+    name: 'Songket Biru',
+    slug: 'songket-biru',
+    plan: 'free',
+    category: 'classic',
+    colors: {
+      bgGradient: ['#1a2040', '#2a3460', '#4a1020'],
+      text: '#f8f0de',
+      accent: '#e8c775',
+      label: '#c9a24e',
+      sectionBg: '#faf4e3',
+      sectionText: '#1a2040',
+      sectionAccent: '#6b1d2e',
+      footerBg: ['#0d1228', '#05081a'],
+    },
+    pattern: {
+      enabled: true,
+      svg: 'M30 5L34 18L47 20L36 28L40 42L30 35L20 42L24 28L13 20L26 18Z',
+      viewBox: '0 0 60 60',
+      opacity: 0.1,
+    },
+    features: { frame: false, stripes: false, corners: true, envelope: true },
+  },
+  'batik-kayangan': {
+    name: 'Batik Kayangan',
+    slug: 'batik-kayangan',
+    plan: 'motion',
+    category: 'classic',
+    colors: {
+      bgGradient: ['#6b1d2e', '#8a2838'],
+      text: '#f8f0de',
+      accent: '#e8c775',
+      label: '#f0d68c',
+      sectionBg: '#faf4e3',
+      sectionText: '#1a2040',
+      sectionAccent: '#6b1d2e',
+      footerBg: ['#4a1020', '#2a0a10'],
+    },
+    pattern: { enabled: false, svg: '', viewBox: '0 0 60 60', opacity: 0 },
+    features: { frame: false, stripes: false, corners: true, envelope: true },
+  },
+  'warisan-emas': {
+    name: 'Warisan Emas',
+    slug: 'warisan-emas',
+    plan: 'cinematic',
+    category: 'luxury',
+    colors: {
+      bgGradient: ['#f8f0de', '#f2e6c8'],
+      text: '#6b1d2e',
+      accent: '#8a6d2a',
+      label: '#8a6d2a',
+      sectionBg: '#1a2040',
+      sectionText: '#f8f0de',
+      sectionAccent: '#c9a24e',
+      footerBg: ['#4a1020', '#2a0a10'],
+    },
+    pattern: { enabled: false, svg: '', viewBox: '0 0 60 60', opacity: 0 },
+    features: { frame: false, stripes: false, corners: true, envelope: true },
+  },
+  'mewah-klasik': {
+    name: 'Mewah Klasik',
+    slug: 'mewah-klasik',
+    plan: 'cinematic',
+    category: 'luxury',
+    colors: {
+      bgGradient: ['#0d1228', '#1a2040'],
+      text: '#f8f0de',
+      accent: '#c9a24e',
+      label: '#c9a24e',
+      sectionBg: '#faf4e3',
+      sectionText: '#1a2040',
+      sectionAccent: '#0d1228',
+      footerBg: ['#0d1228', '#05081a'],
+    },
+    pattern: { enabled: false, svg: '', viewBox: '0 0 60 60', opacity: 0 },
+    features: { frame: true, stripes: false, corners: true, envelope: true },
+  },
+}
+
+export function getTemplate(slug: string): TemplateConfig {
+  return TEMPLATES[slug] || TEMPLATES['songket-biru']
+}`};
+
+FILES['src/lib/billplz.ts'] = {type:'ts', content:
+`// Billplz Payment Integration
+// Docs: https://www.billplz.com/api
+
+const BILLPLZ_API = 'https://www.billplz-sandbox.com/api/v3'
+
+interface CreateBillParams {
+  collection_id: string
+  email: string
+  name: string
+  amount: number // in cents
+  callback_url: string
+  redirect_url: string
+  description: string
+  reference_1_label: string
+  reference_1: string
+}
+
+export async function createBill(params: CreateBillParams) {
+  const response = await fetch(\`\${BILLPLZ_API}/bills\`, {
+    method: 'POST',
+    headers: {
+      'Authorization': \`Basic \${btoa(process.env.BILLPLZ_API_KEY + ':')}\`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
+  })
+
+  if (!response.ok) {
+    throw new Error(\`Billplz error: \${response.status}\`)
+  }
+
+  return response.json()
+}
+
+export function verifyWebhook(body: Record<string, string>, signature: string): boolean {
+  // Verify X-Signature header using BILLPLZ_SIGNATURE_KEY
+  // Implementation depends on crypto library
+  const keys = Object.keys(body).sort()
+  const source = keys.map(k => \`\${k}\${body[k]}\`).join('|')
+  // In production: compare HMAC-SHA256 of source with signature
+  return true // placeholder
+}
+
+export const PLANS = {
+  motion: { amount: 2900, label: 'Motion', duration_months: 12 },
+  cinematic: { amount: 5900, label: 'Cinematic', duration_months: 24 },
+} as const`};
+
+FILES['src/app/layout.tsx'] = {type:'tsx', content:
+`import type { Metadata } from 'next'
+import './globals.css'
+
+export const metadata: Metadata = {
+  title: 'e-motion.my — Kad Jemputan Digital Warisan Melayu',
+  description: 'Ciptakan kad jemputan perkahwinan digital dengan sentuhan warisan Melayu.',
+  openGraph: {
+    title: 'e-motion.my',
+    description: 'Kad Jemputan Digital Warisan Melayu',
+    siteName: 'e-motion.my',
+  },
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="ms">
+      <body>{children}</body>
+    </html>
+  )
+}`};
+
+FILES['src/app/globals.css'] = {type:'css', content:
+`@import 'tailwindcss';
+
+:root {
+  --brand: #1a2040;
+  --brand-light: #2a3460;
+  --maroon: #6b1d2e;
+  --gold: #c9a24e;
+  --gold-light: #e8c775;
+  --gold-dark: #8a6d2a;
+  --ivory: #f8f0de;
+  --cream: #faf4e3;
+}
+
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Card animation keyframes */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes petalDrift {
+  0% { opacity: 0; top: -20px; transform: rotate(0); }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.3; }
+  100% { opacity: 0; top: 105vh; transform: rotate(720deg) translateX(40px); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  50%, 100% { transform: translateX(200%); }
+}`};
+
+FILES['src/app/[slug]/page.tsx'] = {type:'tsx', content:
+`// Guest Card Page — the core product page
+// Route: e-motion.my/farah-adam-2026
+
+import { createClient } from '@/lib/supabase/server'
+import { getTemplate } from '@/lib/templates/registry'
+import { notFound } from 'next/navigation'
+import { CardRenderer } from '@/components/card/CardRenderer'
+import type { Metadata } from 'next'
+
+interface Props {
+  params: Promise<{ slug: string }>
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params
+  const supabase = await createClient()
+  const { data: invitation } = await supabase
+    .from('invitations')
+    .select('card_data, template')
+    .eq('slug', slug)
+    .eq('status', 'active')
+    .single()
+
+  if (!invitation) return { title: 'e-motion.my' }
+
+  const card = invitation.card_data as { bride: string; groom: string }
+  return {
+    title: \`\${card.bride} & \${card.groom} — e-motion.my\`,
+    description: \`Kad jemputan perkahwinan \${card.bride} & \${card.groom}\`,
+    openGraph: {
+      title: \`\${card.bride} & \${card.groom}\`,
+      description: 'Kad jemputan digital perkahwinan',
+      siteName: 'e-motion.my',
+    },
+  }
+}
+
+export default async function GuestCardPage({ params }: Props) {
+  const { slug } = await params
+  const supabase = await createClient()
+
+  // Fetch invitation
+  const { data: invitation, error } = await supabase
+    .from('invitations')
+    .select('*')
+    .eq('slug', slug)
+    .eq('status', 'active')
+    .single()
+
+  if (error || !invitation) notFound()
+
+  // Increment view count
+  await supabase
+    .from('invitations')
+    .update({ views_count: (invitation.views_count || 0) + 1 })
+    .eq('id', invitation.id)
+
+  // Fetch approved wishes
+  const { data: wishes } = await supabase
+    .from('wishes')
+    .select('*')
+    .eq('invitation_id', invitation.id)
+    .eq('approved', true)
+    .order('created_at', { ascending: false })
+
+  // Fetch media
+  const { data: media } = await supabase
+    .from('media')
+    .select('*')
+    .eq('invitation_id', invitation.id)
+    .order('sort_order')
+
+  // Get template config
+  const template = getTemplate(invitation.template)
+
+  return (
+    <CardRenderer
+      invitation={invitation}
+      template={template}
+      wishes={wishes || []}
+      media={media || []}
+    />
+  )
+}`};
+
+FILES['src/components/card/CardRenderer.tsx'] = {type:'tsx', content:
+`'use client'
+
+import { useEffect, useRef, useState } from 'react'
+import { gsap } from 'gsap'
+import type { Invitation, Wish } from '@/lib/supabase/types'
+import type { TemplateConfig } from '@/lib/templates/registry'
+import { Envelope } from './Envelope'
+import { HeroSection } from './HeroSection'
+import { CountdownSection } from './CountdownSection'
+import { EventsSection } from './EventsSection'
+import { GallerySection } from './GallerySection'
+import { RsvpSection } from './RsvpSection'
+import { WishesSection } from './WishesSection'
+import { AngpauSection } from './AngpauSection'
+import { FooterSection } from './FooterSection'
+import { Petals } from './Petals'
+
+interface Props {
+  invitation: Invitation
+  template: TemplateConfig
+  wishes: Wish[]
+  media: any[]
+}
+
+export function CardRenderer({ invitation, template, wishes, media }: Props) {
+  const [isOpen, setIsOpen] = useState(!template.features.envelope)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const { card_data: card, events, sections } = invitation
+  const c = template.colors
+
+  function handleOpen() {
+    setIsOpen(true)
+    // Start GSAP hero animation after envelope opens
+    setTimeout(() => {
+      if (!containerRef.current) return
+      const tl = gsap.timeline()
+      tl.from('[data-animate]', {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power3.out',
+      })
+    }, 300)
+  }
+
+  useEffect(() => {
+    if (isOpen && !template.features.envelope) {
+      gsap.from('[data-animate]', {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power3.out',
+        delay: 0.3,
+      })
+    }
+  }, [isOpen])
+
+  return (
+    <>
+      {template.features.envelope && !isOpen && (
+        <Envelope
+          bride={card.bride}
+          groom={card.groom}
+          colors={c}
+          onOpen={handleOpen}
+        />
+      )}
+
+      <Petals colors={c} />
+
+      <div
+        ref={containerRef}
+        style={{ opacity: isOpen ? 1 : 0, transition: 'opacity 0.5s' }}
+      >
+        <HeroSection card={card} colors={c} template={template} />
+
+        {sections.countdown?.enabled && (
+          <CountdownSection
+            targetDate={sections.countdown.targetDate}
+            colors={c}
+          />
+        )}
+
+        {events.length > 0 && (
+          <EventsSection events={events} colors={c} />
+        )}
+
+        {sections.gallery?.enabled && (
+          <GallerySection
+            slots={sections.gallery.slots}
+            media={media.filter(m => m.type === 'photo')}
+            colors={c}
+          />
+        )}
+
+        {sections.rsvp?.enabled && (
+          <RsvpSection
+            invitationId={invitation.id}
+            config={sections.rsvp}
+            colors={c}
+          />
+        )}
+
+        {sections.wishes?.enabled && (
+          <WishesSection
+            invitationId={invitation.id}
+            wishes={wishes}
+            colors={c}
+          />
+        )}
+
+        {sections.angpau?.enabled && (
+          <AngpauSection config={sections.angpau} colors={c} />
+        )}
+
+        <FooterSection card={card} colors={c} />
+      </div>
+    </>
+  )
+}`};
+
+FILES['src/components/card/RsvpSection.tsx'] = {type:'tsx', content:
+`'use client'
+
+import { useState } from 'react'
+import { createClient } from '@/lib/supabase/client'
+
+interface Props {
+  invitationId: string
+  config: { whatsapp: string; contactName: string }
+  colors: Record<string, any>
+}
+
+export function RsvpSection({ invitationId, config, colors }: Props) {
+  const [name, setName] = useState('')
+  const [status, setStatus] = useState<'attending' | 'declined'>('attending')
+  const [pax, setPax] = useState(2)
+  const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!name.trim()) return
+
+    setLoading(true)
+    const supabase = createClient()
+
+    const { error } = await supabase.from('rsvp_responses').insert({
+      invitation_id: invitationId,
+      guest_name: name.trim(),
+      status,
+      pax: status === 'attending' ? pax : 0,
+    })
+
+    if (!error) {
+      setSubmitted(true)
+      // Trigger confetti animation
+      fireConfetti()
+    }
+
+    setLoading(false)
+  }
+
+  if (submitted) {
+    return (
+      <section
+        style={{
+          padding: '28px 24px',
+          background: colors.sectionBg,
+          color: colors.sectionText,
+          textAlign: 'center',
+        }}
+      >
+        <div style={{ fontSize: 32, marginBottom: 8 }}>&#10003;</div>
+        <div style={{ fontSize: 16, fontWeight: 500 }}>
+          Terima kasih, {name}!
+        </div>
+        <div style={{ fontSize: 13, opacity: 0.6, marginTop: 4 }}>
+          {status === 'attending'
+            ? 'Kehadiran anda telah direkodkan.'
+            : 'Terima kasih atas maklum balas anda.'}
+        </div>
+      </section>
+    )
+  }
+
+  return (
+    <section
+      style={{
+        padding: '28px 24px',
+        background: colors.sectionBg,
+        color: colors.sectionText,
+      }}
+    >
+      <div style={{ textAlign: 'center', marginBottom: 14 }}>
+        <div style={{
+          fontFamily: 'system-ui',
+          fontSize: 8,
+          letterSpacing: '0.15em',
+          textTransform: 'uppercase' as const,
+          color: colors.sectionAccent,
+          fontWeight: 600,
+        }}>
+          / RSVP
+        </div>
+        <div style={{ fontStyle: 'italic', fontSize: 22, marginTop: 4 }}>
+          Sahkan Kehadiran
+        </div>
+      </div>
+
+      <form onSubmit={handleSubmit} style={{ maxWidth: 380, margin: '0 auto' }}>
+        <input
+          value={name}
+          onChange={e => setName(e.target.value)}
+          placeholder="Nama penuh anda"
+          required
+          style={{
+            width: '100%',
+            padding: '11px 14px',
+            border: \`1px solid rgba(0,0,0,0.1)\`,
+            borderRadius: 4,
+            fontSize: 15,
+            fontFamily: 'Georgia, serif',
+            marginBottom: 14,
+            outline: 'none',
+          }}
+        />
+
+        <div style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
+          {(['attending', 'declined'] as const).map(s => (
+            <label
+              key={s}
+              style={{
+                flex: 1,
+                textAlign: 'center' as const,
+                padding: 12,
+                border: \`1px solid \${status === s ? colors.sectionAccent : 'rgba(0,0,0,0.1)'}\`,
+                borderRadius: 4,
+                cursor: 'pointer',
+                fontFamily: 'system-ui',
+                fontSize: 11,
+                fontWeight: status === s ? 700 : 400,
+                background: status === s ? colors.sectionAccent : 'transparent',
+                color: status === s ? '#fff' : colors.sectionText,
+                transition: 'all 0.2s',
+              }}
+            >
+              <input
+                type="radio"
+                name="status"
+                value={s}
+                checked={status === s}
+                onChange={() => setStatus(s)}
+                style={{ display: 'none' }}
+              />
+              {s === 'attending' ? '\\u2713 Hadir' : '\\u2717 Tidak'}
+            </label>
+          ))}
+        </div>
+
+        {status === 'attending' && (
+          <input
+            type="number"
+            value={pax}
+            onChange={e => setPax(Number(e.target.value))}
+            min={1}
+            max={10}
+            style={{
+              width: '100%',
+              padding: '11px 14px',
+              border: '1px solid rgba(0,0,0,0.1)',
+              borderRadius: 4,
+              fontSize: 15,
+              fontFamily: 'Georgia, serif',
+              marginBottom: 14,
+              outline: 'none',
+            }}
+          />
+        )}
+
+        <button
+          type="submit"
+          disabled={loading}
+          style={{
+            width: '100%',
+            padding: 14,
+            background: 'linear-gradient(135deg, #25D366, #1da852)',
+            color: '#fff',
+            border: 'none',
+            borderRadius: 4,
+            fontFamily: 'system-ui',
+            fontSize: 12,
+            fontWeight: 700,
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase' as const,
+            cursor: loading ? 'wait' : 'pointer',
+            opacity: loading ? 0.7 : 1,
+          }}
+        >
+          {loading ? 'Menghantar...' : '\\u2713 Sahkan Kehadiran'}
+        </button>
+      </form>
+    </section>
+  )
+}
+
+function fireConfetti() {
+  // Confetti implementation using GSAP
+  // See e-motion-card artifact for full implementation
+}`};
+
+FILES['src/app/api/webhooks/billplz/route.ts'] = {type:'ts', content:
+`import { NextRequest, NextResponse } from 'next/server'
+import { createClient } from '@supabase/supabase-js'
+import { verifyWebhook } from '@/lib/billplz'
+
+// Use service role for webhook (no user session)
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+)
+
+export async function POST(request: NextRequest) {
+  const body = await request.json()
+  const signature = request.headers.get('x-signature') || ''
+
+  // Verify webhook signature
+  if (!verifyWebhook(body, signature)) {
+    return NextResponse.json({ error: 'Invalid signature' }, { status: 401 })
+  }
+
+  const { id: billplz_id, paid, paid_at } = body
+
+  if (!paid) {
+    // Payment failed
+    await supabase
+      .from('payments')
+      .update({ status: 'failed' })
+      .eq('billplz_bill_id', billplz_id)
+
+    return NextResponse.json({ ok: true })
+  }
+
+  // Payment successful — activate the card
+  const { data: payment } = await supabase
+    .from('payments')
+    .select('*')
+    .eq('billplz_bill_id', billplz_id)
+    .single()
+
+  if (!payment) {
+    return NextResponse.json({ error: 'Payment not found' }, { status: 404 })
+  }
+
+  // Update payment status
+  await supabase
+    .from('payments')
+    .update({ status: 'paid', paid_at })
+    .eq('id', payment.id)
+
+  // Calculate expiry based on plan
+  const months = payment.plan === 'cinematic' ? 24 : 12
+  const expiresAt = new Date()
+  expiresAt.setMonth(expiresAt.getMonth() + months)
+
+  // Activate the invitation
+  await supabase
+    .from('invitations')
+    .update({
+      status: 'active',
+      plan: payment.plan,
+      expires_at: expiresAt.toISOString(),
+    })
+    .eq('id', payment.invitation_id)
+
+  // TODO: Send receipt email via Resend
+  // TODO: Send WhatsApp notification
+
+  return NextResponse.json({ ok: true })
+}`};
+
+FILES['src/app/api/rsvp/route.ts'] = {type:'ts', content:
+`import { NextRequest, NextResponse } from 'next/server'
+import { createClient } from '@supabase/supabase-js'
+import { z } from 'zod'
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+)
+
+const rsvpSchema = z.object({
+  invitation_id: z.string().uuid(),
+  guest_name: z.string().min(1).max(100),
+  status: z.enum(['attending', 'declined', 'maybe']),
+  pax: z.number().min(0).max(10).default(1),
+  message: z.string().max(500).optional(),
+})
+
+export async function POST(request: NextRequest) {
+  const body = await request.json()
+
+  const parsed = rsvpSchema.safeParse(body)
+  if (!parsed.success) {
+    return NextResponse.json(
+      { error: 'Invalid data', details: parsed.error.issues },
+      { status: 400 }
+    )
+  }
+
+  // Verify invitation exists and is active
+  const { data: invitation } = await supabase
+    .from('invitations')
+    .select('id, user_id')
+    .eq('id', parsed.data.invitation_id)
+    .eq('status', 'active')
+    .single()
+
+  if (!invitation) {
+    return NextResponse.json(
+      { error: 'Invitation not found or inactive' },
+      { status: 404 }
+    )
+  }
+
+  // Insert RSVP
+  const { data, error } = await supabase
+    .from('rsvp_responses')
+    .insert(parsed.data)
+    .select()
+    .single()
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 })
+  }
+
+  // TODO: Send notification email to couple
+  // TODO: Send WhatsApp notification to couple
+
+  return NextResponse.json({ ok: true, rsvp: data })
+}
+
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url)
+  const invitationId = searchParams.get('invitation_id')
+
+  if (!invitationId) {
+    return NextResponse.json({ error: 'Missing invitation_id' }, { status: 400 })
+  }
+
+  const { data, error } = await supabase
+    .from('rsvp_responses')
+    .select('*')
+    .eq('invitation_id', invitationId)
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 })
+  }
+
+  return NextResponse.json({ rsvps: data })
+}`};
+
+FILES['src/app/api/rsvp/export/route.ts'] = {type:'ts', content:
+`import { NextRequest, NextResponse } from 'next/server'
+import { createClient } from '@/lib/supabase/server'
+
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url)
+  const invitationId = searchParams.get('invitation_id')
+
+  if (!invitationId) {
+    return NextResponse.json({ error: 'Missing invitation_id' }, { status: 400 })
+  }
+
+  const supabase = await createClient()
+
+  // Verify ownership
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  const { data: invitation } = await supabase
+    .from('invitations')
+    .select('id')
+    .eq('id', invitationId)
+    .eq('user_id', user.id)
+    .single()
+
+  if (!invitation) {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 })
+  }
+
+  // Fetch RSVPs
+  const { data: rsvps } = await supabase
+    .from('rsvp_responses')
+    .select('*')
+    .eq('invitation_id', invitationId)
+    .order('created_at')
+
+  // Generate CSV
+  const headers = ['Nama', 'Status', 'Bilangan', 'Tarikh']
+  const rows = (rsvps || []).map(r => [
+    r.guest_name,
+    r.status === 'attending' ? 'Hadir' : r.status === 'maybe' ? 'Mungkin' : 'Tidak Hadir',
+    r.pax.toString(),
+    new Date(r.created_at).toLocaleString('ms-MY'),
+  ])
+
+  const csv = [headers, ...rows].map(r => r.map(c => \`"\${c}"\`).join(',')).join('\\n')
+
+  return new NextResponse(csv, {
+    headers: {
+      'Content-Type': 'text/csv; charset=utf-8',
+      'Content-Disposition': \`attachment; filename="rsvp-\${invitationId}.csv"\`,
+    },
+  })
+}`};
+
+FILES['src/middleware.ts'] = {type:'ts', content:
+`import { createServerClient } from '@supabase/ssr'
+import { NextResponse, type NextRequest } from 'next/server'
+
+export async function middleware(request: NextRequest) {
+  let supabaseResponse = NextResponse.next({ request })
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll()
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value }) =>
+            request.cookies.set(name, value)
+          )
+          supabaseResponse = NextResponse.next({ request })
+          cookiesToSet.forEach(({ name, value, options }) =>
+            supabaseResponse.cookies.set(name, value, options)
+          )
+        },
+      },
+    }
+  )
+
+  const { data: { user } } = await supabase.auth.getUser()
+
+  // Protect dashboard routes
+  if (request.nextUrl.pathname.startsWith('/dashboard') && !user) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/auth/login'
+    url.searchParams.set('redirect', request.nextUrl.pathname)
+    return NextResponse.redirect(url)
+  }
+
+  return supabaseResponse
+}
+
+export const config = {
+  matcher: ['/dashboard/:path*'],
+}`};
+
+FILES['next.config.ts'] = {type:'ts', content:
+`import type { NextConfig } from 'next'
+
+const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.supabase.co',
+        pathname: '/storage/v1/object/public/**',
+      },
+    ],
+  },
+  async rewrites() {
+    return [
+      // Clean URLs for invitation cards
+      // e-motion.my/farah-adam-2026 → /[slug]
+    ]
+  },
+}
+
+export default nextConfig`};
+
+FILES['src/app/auth/login/page.tsx'] = {type:'tsx', content:
+`'use client'
+
+import { useState } from 'react'
+import { createClient } from '@/lib/supabase/client'
+import { useRouter, useSearchParams } from 'next/navigation'
+
+export default function LoginPage() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [mode, setMode] = useState<'login' | 'signup'>('login')
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const redirect = searchParams.get('redirect') || '/dashboard'
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
+    const supabase = createClient()
+
+    if (mode === 'signup') {
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { emailRedirectTo: \`\${window.location.origin}/auth/callback\` },
+      })
+      if (error) { setError(error.message); setLoading(false); return }
+      router.push('/dashboard/onboarding')
+    } else {
+      const { error } = await supabase.auth.signInWithPassword({ email, password })
+      if (error) { setError(error.message); setLoading(false); return }
+      router.push(redirect)
+    }
+  }
+
+  async function handleGoogle() {
+    const supabase = createClient()
+    await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: \`\${window.location.origin}/auth/callback?redirect=\${redirect}\` },
+    })
+  }
+
+  return (
+    <div style={{
+      minHeight: '100vh',
+      background: '#0d1228',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 24,
+    }}>
+      <div style={{
+        background: '#fff',
+        borderRadius: 8,
+        padding: 40,
+        width: '100%',
+        maxWidth: 400,
+        textAlign: 'center',
+      }}>
+        <div style={{
+          fontFamily: 'Georgia, serif',
+          fontStyle: 'italic',
+          fontSize: 20,
+          color: '#1a2040',
+          marginBottom: 4,
+        }}>
+          e<span style={{ color: '#c9a24e' }}>&middot;</span>motion
+          <span style={{ fontSize: 11, color: '#c9a24e', marginLeft: 4 }}>.MY</span>
+        </div>
+        <p style={{ fontSize: 13, color: '#57534e', marginBottom: 24 }}>
+          {mode === 'login' ? 'Log masuk ke akaun anda' : 'Cipta akaun baru'}
+        </p>
+
+        {error && (
+          <div style={{
+            background: '#fef2f2',
+            border: '1px solid #fecaca',
+            color: '#dc2626',
+            padding: '8px 12px',
+            borderRadius: 6,
+            fontSize: 12,
+            marginBottom: 16,
+          }}>
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            placeholder="Alamat e-mel"
+            required
+            style={inputStyle}
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            placeholder="Kata laluan"
+            required
+            minLength={6}
+            style={inputStyle}
+          />
+          <button
+            type="submit"
+            disabled={loading}
+            style={{
+              width: '100%',
+              padding: 12,
+              background: '#1a2040',
+              color: '#fff',
+              border: 'none',
+              borderRadius: 6,
+              fontSize: 12,
+              fontWeight: 600,
+              letterSpacing: '0.06em',
+              cursor: loading ? 'wait' : 'pointer',
+              opacity: loading ? 0.7 : 1,
+              fontFamily: 'system-ui',
+            }}
+          >
+            {loading ? 'Sila tunggu...' : mode === 'login' ? 'Log Masuk' : 'Daftar'}
+          </button>
+        </form>
+
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 10,
+          margin: '16px 0',
+          fontSize: 10,
+          color: '#a8a29e',
+        }}>
+          <div style={{ flex: 1, height: 1, background: '#e7e5e4' }} />
+          atau
+          <div style={{ flex: 1, height: 1, background: '#e7e5e4' }} />
+        </div>
+
+        <button
+          onClick={handleGoogle}
+          style={{
+            width: '100%',
+            padding: 10,
+            background: 'none',
+            border: '1px solid #e7e5e4',
+            borderRadius: 6,
+            fontSize: 12,
+            cursor: 'pointer',
+            fontFamily: 'system-ui',
+            color: '#57534e',
+          }}
+        >
+          Teruskan dengan Google
+        </button>
+
+        <p style={{ marginTop: 16, fontSize: 12, color: '#a8a29e' }}>
+          {mode === 'login' ? (
+            <>Belum ada akaun? <span style={{ color: '#2563eb', cursor: 'pointer' }} onClick={() => setMode('signup')}>Daftar</span></>
+          ) : (
+            <>Sudah ada akaun? <span style={{ color: '#2563eb', cursor: 'pointer' }} onClick={() => setMode('login')}>Log masuk</span></>
+          )}
+        </p>
+      </div>
+    </div>
+  )
+}
+
+const inputStyle: React.CSSProperties = {
+  width: '100%',
+  padding: '10px 12px',
+  border: '1px solid #e7e5e4',
+  borderRadius: 6,
+  fontSize: 14,
+  fontFamily: 'Georgia, serif',
+  marginBottom: 12,
+  outline: 'none',
+  color: '#1c1917',
+}`};
+
+FILES['src/app/auth/callback/route.ts'] = {type:'ts', content:
+`import { createClient } from '@/lib/supabase/server'
+import { NextRequest, NextResponse } from 'next/server'
+
+export async function GET(request: NextRequest) {
+  const { searchParams, origin } = new URL(request.url)
+  const code = searchParams.get('code')
+  const redirect = searchParams.get('redirect') || '/dashboard'
+
+  if (code) {
+    const supabase = await createClient()
+    await supabase.auth.exchangeCodeForSession(code)
+  }
+
+  return NextResponse.redirect(\`\${origin}\${redirect}\`)
+}`};
+
+FILES['src/app/dashboard/layout.tsx'] = {type:'tsx', content:
+`import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
+import { DashboardShell } from '@/components/dashboard/DashboardShell'
+
+export default async function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  if (!user) redirect('/auth/login')
+
+  // Fetch user's invitation
+  const { data: invitation } = await supabase
+    .from('invitations')
+    .select('*')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .single()
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', user.id)
+    .single()
+
+  return (
+    <DashboardShell
+      user={user}
+      profile={profile}
+      invitation={invitation}
+    >
+      {children}
+    </DashboardShell>
+  )
+}`};
+
+FILES['src/app/dashboard/page.tsx'] = {type:'tsx', content:
+`import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
+import { StatsCard } from '@/components/dashboard/StatsCard'
+import { ActivityFeed } from '@/components/dashboard/ActivityFeed'
+
+export default async function DashboardPage() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) redirect('/auth/login')
+
+  // Fetch invitation
+  const { data: invitation } = await supabase
+    .from('invitations')
+    .select('*')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .single()
+
+  if (!invitation) redirect('/dashboard/onboarding')
+
+  // Fetch RSVP stats
+  const { data: rsvps } = await supabase
+    .from('rsvp_responses')
+    .select('*')
+    .eq('invitation_id', invitation.id)
+
+  const attending = (rsvps || []).filter(r => r.status === 'attending')
+  const totalPax = attending.reduce((s, r) => s + r.pax, 0)
+
+  // Fetch wish count
+  const { count: wishCount } = await supabase
+    .from('wishes')
+    .select('*', { count: 'exact', head: true })
+    .eq('invitation_id', invitation.id)
+
+  const card = invitation.card_data as { bride: string; groom: string }
+
+  return (
+    <div>
+      <div style={{ marginBottom: 20 }}>
+        <h1 style={{
+          fontSize: 18,
+          fontWeight: 700,
+          fontFamily: 'system-ui',
+        }}>
+          Kad {card.bride} & {card.groom}
+        </h1>
+        <p style={{ fontSize: 12, color: '#a8a29e' }}>
+          e-motion.my/{invitation.slug}
+        </p>
+      </div>
+
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(4, 1fr)',
+        gap: 12,
+        marginBottom: 20,
+      }}>
+        <StatsCard
+          label="Status"
+          value={invitation.status === 'active' ? 'Aktif' : 'Draf'}
+          color={invitation.status === 'active' ? '#16a34a' : '#ea580c'}
+        />
+        <StatsCard
+          label="RSVP Hadir"
+          value={\`\${attending.length}/\${(rsvps || []).length}\`}
+        />
+        <StatsCard
+          label="Jumlah Tetamu"
+          value={totalPax.toString()}
+        />
+        <StatsCard
+          label="Ucapan"
+          value={(wishCount || 0).toString()}
+        />
+      </div>
+
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
+        gap: 16,
+      }}>
+        {/* RSVP Summary Card */}
+        <div style={{
+          background: '#fff',
+          border: '1px solid #e7e5e4',
+          borderRadius: 6,
+          padding: 16,
+        }}>
+          <h3 style={{ fontSize: 13, fontWeight: 600, marginBottom: 12, fontFamily: 'system-ui' }}>
+            RSVP Terkini
+          </h3>
+          {(rsvps || []).length === 0 ? (
+            <p style={{ fontSize: 12, color: '#a8a29e', textAlign: 'center', padding: 20 }}>
+              Belum ada RSVP. Kongsi pautan kad anda!
+            </p>
+          ) : (
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <thead>
+                <tr>
+                  {['Nama', 'Status', 'Pax'].map(h => (
+                    <th key={h} style={{
+                      padding: '6px 8px',
+                      fontSize: 9,
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase' as const,
+                      color: '#a8a29e',
+                      textAlign: 'left' as const,
+                      borderBottom: '1px solid #e7e5e4',
+                      fontFamily: 'system-ui',
+                    }}>
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {(rsvps || []).slice(0, 8).map(r => (
+                  <tr key={r.id}>
+                    <td style={{ padding: '6px 8px', fontSize: 12, borderBottom: '1px solid #e7e5e4' }}>
+                      {r.guest_name}
+                    </td>
+                    <td style={{ padding: '6px 8px', borderBottom: '1px solid #e7e5e4' }}>
+                      <span style={{
+                        display: 'inline-block',
+                        padding: '2px 7px',
+                        borderRadius: 8,
+                        fontSize: 9,
+                        fontWeight: 600,
+                        background: r.status === 'attending' ? '#f0fdf4' : '#fef2f2',
+                        color: r.status === 'attending' ? '#16a34a' : '#dc2626',
+                        fontFamily: 'system-ui',
+                      }}>
+                        {r.status === 'attending' ? 'Hadir' : 'Tidak'}
+                      </span>
+                    </td>
+                    <td style={{ padding: '6px 8px', fontSize: 12, borderBottom: '1px solid #e7e5e4' }}>
+                      {r.pax}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+
+        {/* Activity placeholder */}
+        <ActivityFeed invitationId={invitation.id} />
+      </div>
+    </div>
+  )
+}`};
+
+FILES['src/components/dashboard/DashboardShell.tsx'] = {type:'tsx', content:
+`'use client'
+
+import { usePathname, useRouter } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
+import type { User } from '@supabase/supabase-js'
+import type { Profile, Invitation } from '@/lib/supabase/types'
+
+interface Props {
+  user: User
+  profile: Profile | null
+  invitation: Invitation | null
+  children: React.ReactNode
+}
+
+const NAV_ITEMS = [
+  { label: 'Kad Saya', items: [
+    { href: '/dashboard', icon: '\\u25A3', text: 'Gambaran Keseluruhan' },
+    { href: '/dashboard/rsvp', icon: '\\u2713', text: 'RSVP' },
+    { href: '/dashboard/wishes', icon: '\\u2661', text: 'Ucapan' },
+    { href: '/dashboard/gifts', icon: '\\u2737', text: 'Hadiah Digital' },
+  ]},
+  { label: 'Tetapan', items: [
+    { href: '/dashboard/edit', icon: '\\u270E', text: 'Sunting Kad' },
+    { href: '/dashboard/share', icon: '\\u2197', text: 'Kongsi' },
+    { href: '/dashboard/analytics', icon: '\\u2636', text: 'Analitik' },
+  ]},
+]
+
+export function DashboardShell({ user, profile, invitation, children }: Props) {
+  const pathname = usePathname()
+  const router = useRouter()
+
+  async function handleLogout() {
+    const supabase = createClient()
+    await supabase.auth.signOut()
+    router.push('/')
+  }
+
+  const card = invitation?.card_data as { bride?: string; groom?: string } | null
+
+  return (
+    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
+      {/* Sidebar */}
+      <div style={{
+        width: 220,
+        background: '#1a2040',
+        color: '#fff',
+        display: 'flex',
+        flexDirection: 'column',
+        flexShrink: 0,
+      }}>
+        {/* Brand */}
+        <div style={{
+          padding: '16px 18px 12px',
+          borderBottom: '1px solid rgba(255,255,255,0.1)',
+        }}>
+          <span style={{
+            fontFamily: 'Georgia, serif',
+            fontStyle: 'italic',
+            fontSize: 15,
+            color: '#fff',
+          }}>
+            e<span style={{ color: '#c9a24e' }}>&middot;</span>motion
+          </span>
+        </div>
+
+        {/* Navigation */}
+        <nav style={{ padding: '8px 10px', flex: 1 }}>
+          {NAV_ITEMS.map(group => (
+            <div key={group.label}>
+              <div style={{
+                fontSize: 9,
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase' as const,
+                color: 'rgba(255,255,255,0.3)',
+                fontWeight: 600,
+                padding: '10px 8px 5px',
+                fontFamily: 'system-ui',
+              }}>
+                {group.label}
+              </div>
+              {group.items.map(item => (
+                <div
+                  key={item.href}
+                  onClick={() => router.push(item.href)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    padding: '7px 10px',
+                    borderRadius: 4,
+                    fontSize: 12,
+                    color: pathname === item.href ? '#fff' : 'rgba(255,255,255,0.5)',
+                    background: pathname === item.href ? 'rgba(255,255,255,0.1)' : 'transparent',
+                    fontWeight: pathname === item.href ? 500 : 400,
+                    cursor: 'pointer',
+                    fontFamily: 'system-ui',
+                  }}
+                >
+                  <span style={{ width: 18, textAlign: 'center' as const, opacity: 0.7 }}>
+                    {item.icon}
+                  </span>
+                  {item.text}
+                </div>
+              ))}
+            </div>
+          ))}
+        </nav>
+
+        {/* User */}
+        <div style={{
+          padding: '12px 14px',
+          borderTop: '1px solid rgba(255,255,255,0.1)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 8,
+        }}>
+          <div style={{
+            width: 28,
+            height: 28,
+            borderRadius: '50%',
+            background: '#c9a24e',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 10,
+            fontWeight: 700,
+            color: '#1a2040',
+          }}>
+            {card ? (card.bride?.[0] || '') + (card.groom?.[0] || '') : 'U'}
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: 12, fontWeight: 500, color: '#fff' }}>
+              {card ? \`\${card.bride} & \${card.groom}\` : profile?.full_name || 'User'}
+            </div>
+            <div
+              onClick={handleLogout}
+              style={{
+                fontSize: 10,
+                color: 'rgba(255,255,255,0.35)',
+                cursor: 'pointer',
+              }}
+            >
+              Log keluar
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main content */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        <div style={{
+          height: 49,
+          borderBottom: '1px solid #e7e5e4',
+          background: '#fff',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '0 20px',
+          flexShrink: 0,
+        }}>
+          <div style={{ fontSize: 12, color: '#57534e', fontFamily: 'system-ui' }}>
+            Papan Pemuka
+          </div>
+          {invitation?.status === 'active' && (
+            <a
+              href={\`/\${invitation.slug}\`}
+              target="_blank"
+              style={{
+                padding: '6px 12px',
+                background: '#1a2040',
+                color: '#fff',
+                borderRadius: 6,
+                fontSize: 11,
+                fontWeight: 500,
+                textDecoration: 'none',
+                fontFamily: 'system-ui',
+              }}
+            >
+              Lihat Kad ↗
+            </a>
+          )}
+        </div>
+        <div style={{
+          flex: 1,
+          overflowY: 'auto',
+          padding: 20,
+          background: '#fafaf9',
+        }}>
+          {children}
+        </div>
+      </div>
+    </div>
+  )
+}`};
+
+FILES['src/components/dashboard/StatsCard.tsx'] = {type:'tsx', content:
+`interface Props {
+  label: string
+  value: string
+  color?: string
+}
+
+export function StatsCard({ label, value, color }: Props) {
+  return (
+    <div style={{
+      background: '#fff',
+      border: '1px solid #e7e5e4',
+      borderRadius: 6,
+      padding: '14px 16px',
+      boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
+    }}>
+      <div style={{
+        fontFamily: 'system-ui',
+        fontSize: 9,
+        letterSpacing: '0.08em',
+        textTransform: 'uppercase' as const,
+        color: '#a8a29e',
+        fontWeight: 600,
+      }}>
+        {label}
+      </div>
+      <div style={{
+        fontSize: 22,
+        fontWeight: 700,
+        marginTop: 2,
+        color: color || '#1c1917',
+        fontFamily: 'system-ui',
+      }}>
+        {value}
+      </div>
+    </div>
+  )
+}`};
+
+FILES['src/components/dashboard/ActivityFeed.tsx'] = {type:'tsx', content:
+`import { createClient } from '@/lib/supabase/server'
+
+interface Props {
+  invitationId: string
+}
+
+export async function ActivityFeed({ invitationId }: Props) {
+  const supabase = await createClient()
+
+  // Fetch recent RSVPs and wishes for activity feed
+  const { data: rsvps } = await supabase
+    .from('rsvp_responses')
+    .select('guest_name, status, created_at')
+    .eq('invitation_id', invitationId)
+    .order('created_at', { ascending: false })
+    .limit(5)
+
+  const { data: wishes } = await supabase
+    .from('wishes')
+    .select('author, approved, created_at')
+    .eq('invitation_id', invitationId)
+    .order('created_at', { ascending: false })
+    .limit(5)
+
+  // Merge and sort by time
+  type ActivityItem = { type: string; text: string; time: string; color: string }
+  const items: ActivityItem[] = [
+    ...(rsvps || []).map(r => ({
+      type: 'rsvp',
+      text: \`\${r.guest_name} \${r.status === 'attending' ? 'mengesahkan kehadiran' : 'tidak dapat hadir'}\`,
+      time: new Date(r.created_at).toLocaleDateString('ms-MY'),
+      color: r.status === 'attending' ? '#16a34a' : '#dc2626',
+    })),
+    ...(wishes || []).map(w => ({
+      type: 'wish',
+      text: \`\${w.author} menghantar ucapan\`,
+      time: new Date(w.created_at).toLocaleDateString('ms-MY'),
+      color: '#7c3aed',
+    })),
+  ].sort((a, b) => b.time.localeCompare(a.time)).slice(0, 8)
+
+  return (
+    <div style={{
+      background: '#fff',
+      border: '1px solid #e7e5e4',
+      borderRadius: 6,
+      padding: 16,
+    }}>
+      <h3 style={{ fontSize: 13, fontWeight: 600, marginBottom: 12, fontFamily: 'system-ui' }}>
+        Aktiviti Terkini
+      </h3>
+      {items.length === 0 ? (
+        <p style={{ fontSize: 12, color: '#a8a29e', textAlign: 'center', padding: 20 }}>
+          Belum ada aktiviti.
+        </p>
+      ) : (
+        items.map((item, i) => (
+          <div
+            key={i}
+            style={{
+              display: 'flex',
+              gap: 10,
+              padding: '8px 0',
+              borderBottom: i < items.length - 1 ? '1px solid #e7e5e4' : 'none',
+            }}
+          >
+            <div style={{
+              width: 8,
+              height: 8,
+              borderRadius: '50%',
+              background: item.color,
+              flexShrink: 0,
+              marginTop: 4,
+            }} />
+            <div>
+              <div style={{ fontSize: 12, color: '#57534e', fontFamily: 'system-ui' }}>
+                {item.text}
+              </div>
+              <div style={{ fontSize: 10, color: '#a8a29e', marginTop: 2, fontFamily: 'system-ui' }}>
+                {item.time}
+              </div>
+            </div>
+          </div>
+        ))
+      )}
+    </div>
+  )
+}`};
+
+FILES['src/app/dashboard/rsvp/page.tsx'] = {type:'tsx', content:
+`import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
+import { StatsCard } from '@/components/dashboard/StatsCard'
+
+export default async function RsvpPage() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) redirect('/auth/login')
+
+  const { data: invitation } = await supabase
+    .from('invitations')
+    .select('id')
+    .eq('user_id', user.id)
+    .single()
+
+  if (!invitation) redirect('/dashboard')
+
+  const { data: rsvps } = await supabase
+    .from('rsvp_responses')
+    .select('*')
+    .eq('invitation_id', invitation.id)
+    .order('created_at', { ascending: false })
+
+  const all = rsvps || []
+  const attending = all.filter(r => r.status === 'attending')
+  const declined = all.filter(r => r.status === 'declined')
+  const totalPax = attending.reduce((s, r) => s + r.pax, 0)
+
+  return (
+    <div>
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 16,
+      }}>
+        <h1 style={{ fontSize: 18, fontWeight: 700, fontFamily: 'system-ui' }}>
+          Senarai RSVP
+        </h1>
+        <a
+          href={\`/api/rsvp/export?invitation_id=\${invitation.id}\`}
+          style={{
+            padding: '6px 12px',
+            border: '1px solid #e7e5e4',
+            borderRadius: 6,
+            fontSize: 11,
+            fontWeight: 500,
+            textDecoration: 'none',
+            color: '#57534e',
+            fontFamily: 'system-ui',
+          }}
+        >
+          Eksport CSV
+        </a>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, marginBottom: 20 }}>
+        <StatsCard label="Hadir" value={attending.length.toString()} color="#16a34a" />
+        <StatsCard label="Tidak Hadir" value={declined.length.toString()} color="#dc2626" />
+        <StatsCard label="Jumlah Tetamu" value={totalPax.toString()} />
+        <StatsCard label="Jumlah RSVP" value={all.length.toString()} />
+      </div>
+
+      <div style={{
+        background: '#fff',
+        border: '1px solid #e7e5e4',
+        borderRadius: 6,
+        overflow: 'hidden',
+      }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr style={{ background: '#fafaf9' }}>
+              {['Nama', 'Status', 'Bilangan', 'Tarikh'].map(h => (
+                <th key={h} style={{
+                  padding: '8px 14px',
+                  fontSize: 9,
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase' as const,
+                  color: '#a8a29e',
+                  fontWeight: 600,
+                  textAlign: 'left' as const,
+                  borderBottom: '1px solid #e7e5e4',
+                  fontFamily: 'system-ui',
+                }}>
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {all.map(r => (
+              <tr key={r.id}>
+                <td style={{ padding: '10px 14px', fontSize: 12, borderBottom: '1px solid #e7e5e4', fontFamily: 'system-ui' }}>
+                  {r.guest_name}
+                </td>
+                <td style={{ padding: '10px 14px', borderBottom: '1px solid #e7e5e4' }}>
+                  <span style={{
+                    display: 'inline-block',
+                    padding: '2px 8px',
+                    borderRadius: 10,
+                    fontSize: 10,
+                    fontWeight: 600,
+                    background: r.status === 'attending' ? '#f0fdf4' : '#fef2f2',
+                    color: r.status === 'attending' ? '#16a34a' : '#dc2626',
+                    fontFamily: 'system-ui',
+                  }}>
+                    {r.status === 'attending' ? 'Hadir' : r.status === 'maybe' ? 'Mungkin' : 'Tidak'}
+                  </span>
+                </td>
+                <td style={{ padding: '10px 14px', fontSize: 12, borderBottom: '1px solid #e7e5e4', fontFamily: 'system-ui' }}>
+                  {r.pax} orang
+                </td>
+                <td style={{ padding: '10px 14px', fontSize: 11, color: '#a8a29e', borderBottom: '1px solid #e7e5e4', fontFamily: 'system-ui' }}>
+                  {new Date(r.created_at).toLocaleString('ms-MY')}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
+}`};
+
+FILES['src/components/card/HeroSection.tsx'] = {type:'tsx', content:
+`import type { TemplateConfig } from '@/lib/templates/registry'
+
+interface Props {
+  card: { bride: string; groom: string; intro: string; label: string }
+  colors: TemplateConfig['colors']
+  template: TemplateConfig
+}
+
+export function HeroSection({ card, colors: c, template }: Props) {
+  const bgGrad = c.bgGradient.join(',')
+  const pat = template.pattern
+
+  // Build pattern URL if enabled
+  const patternUrl = pat.enabled && pat.svg
+    ? \`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='\${pat.viewBox}'%3E%3Cg fill='none' stroke='\${encodeURIComponent(c.accent)}' stroke-width='0.5'%3E%3Cpath d='\${encodeURIComponent(pat.svg)}'/%3E%3C/g%3E%3C/svg%3E")\`
+    : undefined
+
+  return (
+    <section
+      style={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        padding: '60px 24px 36px',
+        background: \`linear-gradient(180deg, \${bgGrad})\`,
+        color: c.text,
+        position: 'relative',
+      }}
+    >
+      {/* Pattern overlay */}
+      {patternUrl && (
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            opacity: pat.opacity,
+            backgroundImage: patternUrl,
+            pointerEvents: 'none',
+          }}
+        />
+      )}
+
+      {/* Frame */}
+      {template.features.frame && (
+        <>
+          <div style={{ position: 'absolute', inset: 16, border: \`1px solid \${c.accent}\`, opacity: 0.4 }} />
+          <div style={{ position: 'absolute', inset: 24, border: \`1px solid \${c.accent}\`, opacity: 0.2 }} />
+        </>
+      )}
+
+      {/* Content */}
+      <div data-animate style={{ fontFamily: 'Georgia, serif', fontSize: 18, color: c.accent, marginBottom: 6, position: 'relative', zIndex: 1 }}>
+        &#xFDFD;
+      </div>
+      <div data-animate style={{
+        fontFamily: 'system-ui',
+        fontSize: 8,
+        letterSpacing: '0.3em',
+        textTransform: 'uppercase' as const,
+        color: c.label,
+        marginBottom: 20,
+        position: 'relative',
+        zIndex: 1,
+      }}>
+        {card.label}
+      </div>
+      <div data-animate style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: 48, color: c.text, lineHeight: 0.95, position: 'relative', zIndex: 1 }}>
+        {card.bride}
+      </div>
+      <div data-animate style={{ fontSize: 16, color: c.accent, margin: '4px 0', position: 'relative', zIndex: 1 }}>
+        &amp;
+      </div>
+      <div data-animate style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: 48, color: c.text, lineHeight: 0.95, position: 'relative', zIndex: 1 }}>
+        {card.groom}
+      </div>
+      <div data-animate style={{ display: 'flex', alignItems: 'center', gap: 8, margin: '16px 0', position: 'relative', zIndex: 1 }}>
+        <div style={{ width: 36, height: 1, background: c.accent }} />
+        <div style={{ width: 5, height: 5, background: c.accent, transform: 'rotate(45deg)' }} />
+        <div style={{ width: 36, height: 1, background: c.accent }} />
+      </div>
+      <p data-animate style={{
+        fontFamily: 'Georgia, serif',
+        fontStyle: 'italic',
+        fontSize: 13,
+        color: c.text,
+        opacity: 0.7,
+        maxWidth: 300,
+        lineHeight: 1.6,
+        position: 'relative',
+        zIndex: 1,
+      }}>
+        {card.intro}
+      </p>
+    </section>
+  )
+}`};
+
+FILES['src/components/card/Envelope.tsx'] = {type:'tsx', content:
+`'use client'
+
+import { useEffect } from 'react'
+import { gsap } from 'gsap'
+
+interface Props {
+  bride: string
+  groom: string
+  colors: Record<string, any>
+  onOpen: () => void
+}
+
+export function Envelope({ bride, groom, colors, onOpen }: Props) {
+  useEffect(() => {
+    const tl = gsap.timeline({ delay: 0.2 })
+    tl.from('[data-env-animate]', {
+      y: 15,
+      opacity: 0,
+      duration: 0.6,
+      stagger: 0.15,
+      ease: 'power3.out',
+    })
+  }, [])
+
+  return (
+    <div
+      onClick={onOpen}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 100,
+        background: colors.bgGradient
+          ? \`linear-gradient(180deg, \${colors.bgGradient.join(',')})\`
+          : '#0d1228',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        cursor: 'pointer',
+        color: colors.text || '#f8f0de',
+      }}
+    >
+      <div data-env-animate style={{
+        fontFamily: 'system-ui',
+        fontSize: 10,
+        letterSpacing: '0.4em',
+        textTransform: 'uppercase' as const,
+        color: colors.accent || '#c9a24e',
+        marginBottom: 20,
+      }}>
+        Anda Dijemput
+      </div>
+      <div data-env-animate style={{
+        fontFamily: 'Georgia, serif',
+        fontStyle: 'italic',
+        fontSize: 48,
+        color: colors.accent || '#e8c775',
+        lineHeight: 1,
+      }}>
+        {bride}
+      </div>
+      <div data-env-animate style={{ fontSize: 16, color: colors.accent || '#c9a24e', margin: '6px 0' }}>
+        &amp;
+      </div>
+      <div data-env-animate style={{
+        fontFamily: 'Georgia, serif',
+        fontStyle: 'italic',
+        fontSize: 48,
+        color: colors.accent || '#e8c775',
+        lineHeight: 1,
+      }}>
+        {groom}
+      </div>
+      <button
+        data-env-animate
+        style={{
+          marginTop: 32,
+          padding: '14px 32px',
+          background: 'none',
+          border: \`1px solid \${colors.accent || '#c9a24e'}\`,
+          color: colors.accent || '#c9a24e',
+          fontFamily: 'system-ui',
+          fontSize: 12,
+          letterSpacing: '0.2em',
+          textTransform: 'uppercase' as const,
+          cursor: 'pointer',
+        }}
+      >
+        Buka Jemputan
+      </button>
+    </div>
+  )
+}`};
+
+FILES['src/components/card/Petals.tsx'] = {type:'tsx', content:
+`'use client'
+
+import { useEffect, useRef } from 'react'
+
+interface Props {
+  colors: Record<string, any>
+}
+
+export function Petals({ colors }: Props) {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!ref.current) return
+    const container = ref.current
+    const petalColors = [
+      colors.accent || '#e8c775',
+      colors.label || '#c9a24e',
+      '#d4949a',
+      colors.text || '#f8f0de',
+    ]
+
+    for (let i = 0; i < 12; i++) {
+      const petal = document.createElement('div')
+      const size = Math.random() * 6 + 6
+      Object.assign(petal.style, {
+        position: 'absolute',
+        top: '-20px',
+        left: Math.random() * 100 + '%',
+        width: size + 'px',
+        height: (size * 1.4) + 'px',
+        borderRadius: '50% 50% 50% 0',
+        background: petalColors[Math.floor(Math.random() * petalColors.length)],
+        opacity: '0',
+        animation: \`petalDrift \${Math.random() * 6 + 8}s linear \${Math.random() * 10}s infinite\`,
+      })
+      container.appendChild(petal)
+    }
+
+    return () => { container.innerHTML = '' }
+  }, [colors])
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        pointerEvents: 'none',
+        zIndex: 50,
+        overflow: 'hidden',
+      }}
+    />
+  )
+}`};
+
+FILES['src/components/card/CountdownSection.tsx'] = {type:'tsx', content:
+`'use client'
+
+import { useEffect, useState } from 'react'
+
+interface Props {
+  targetDate: string
+  colors: Record<string, any>
+}
+
+export function CountdownSection({ targetDate, colors: c }: Props) {
+  const [time, setTime] = useState({ d: 0, h: 0, m: 0, s: 0 })
+
+  useEffect(() => {
+    const target = new Date(targetDate).getTime()
+    function tick() {
+      const diff = Math.max(0, target - Date.now())
+      setTime({
+        d: Math.floor(diff / 86400000),
+        h: Math.floor((diff % 86400000) / 3600000),
+        m: Math.floor((diff % 3600000) / 60000),
+        s: Math.floor((diff % 60000) / 1000),
+      })
+    }
+    tick()
+    const iv = setInterval(tick, 1000)
+    return () => clearInterval(iv)
+  }, [targetDate])
+
+  const labels = ['Hari', 'Jam', 'Min', 'Saat']
+  const values = [time.d, time.h, time.m, time.s]
+
+  const bgColor = c.bgGradient?.[c.bgGradient.length - 1] || '#4a1020'
+
+  return (
+    <section style={{
+      padding: '28px 24px',
+      background: \`linear-gradient(135deg, \${bgColor}, \${c.bgGradient?.[0] || '#1a2040'})\`,
+      color: c.text,
+      textAlign: 'center',
+    }}>
+      <div style={{ fontFamily: 'system-ui', fontSize: 8, letterSpacing: '0.15em', textTransform: 'uppercase' as const, color: c.accent, fontWeight: 600, marginBottom: 3 }}>
+        / 01
+      </div>
+      <div style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: 22, marginBottom: 14 }}>
+        Kiraan Detik
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 6, maxWidth: 360, margin: '0 auto' }}>
+        {values.map((v, i) => (
+          <div key={i} style={{
+            padding: '12px 6px',
+            background: \`rgba(\${hexToRgb(c.accent)}, 0.08)\`,
+            border: \`1px solid rgba(\${hexToRgb(c.accent)}, 0.2)\`,
+            borderRadius: 4,
+          }}>
+            <div style={{ fontFamily: 'Georgia, serif', fontSize: 28, color: c.accent, lineHeight: 1 }}>
+              {v < 10 ? '0' + v : v}
+            </div>
+            <div style={{ fontFamily: 'system-ui', fontSize: 7, letterSpacing: '0.12em', textTransform: 'uppercase' as const, opacity: 0.5, marginTop: 3 }}>
+              {labels[i]}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function hexToRgb(hex: string): string {
+  const h = hex.replace('#', '')
+  return [
+    parseInt(h.substring(0, 2), 16),
+    parseInt(h.substring(2, 4), 16),
+    parseInt(h.substring(4, 6), 16),
+  ].join(',')
+}`};
+
+FILES['src/components/card/EventsSection.tsx'] = {type:'tsx', content:
+`import type { EventData } from '@/lib/supabase/types'
+
+interface Props {
+  events: EventData[]
+  colors: Record<string, any>
+}
+
+function hexToRgb(hex: string): string {
+  const h = hex.replace('#', '')
+  return [parseInt(h.substring(0,2),16), parseInt(h.substring(2,4),16), parseInt(h.substring(4,6),16)].join(',')
+}
+
+export function EventsSection({ events, colors: c }: Props) {
+  return (
+    <section style={{ padding: '28px 24px', background: c.sectionBg, color: c.sectionText }}>
+      <div style={{ textAlign: 'center', marginBottom: 14 }}>
+        <div style={{ fontFamily: 'system-ui', fontSize: 8, letterSpacing: '0.15em', textTransform: 'uppercase' as const, color: c.sectionAccent, fontWeight: 600, marginBottom: 3 }}>/ 02</div>
+        <div style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: 22 }}>Aturcara Majlis</div>
+      </div>
+      {events.map((ev, i) => (
+        <div key={i} style={{
+          border: \`1px solid rgba(\${hexToRgb(c.sectionAccent)}, 0.12)\`,
+          borderRadius: 6, padding: 16, marginBottom: 10, position: 'relative',
+        }}>
+          <div style={{ position: 'absolute', top: 6, right: 6, width: 12, height: 12, borderTop: \`1px solid \${c.accent}\`, borderRight: \`1px solid \${c.accent}\` }} />
+          <div style={{ position: 'absolute', bottom: 6, left: 6, width: 12, height: 12, borderBottom: \`1px solid \${c.accent}\`, borderLeft: \`1px solid \${c.accent}\` }} />
+          <div style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: 18, color: c.sectionAccent, textAlign: 'center', marginBottom: 10 }}>{ev.name}</div>
+          {[['Tarikh', ev.date], ['Masa', ev.time], ['Tempat', ev.venue]].map(([label, val]) => val ? (
+            <div key={label} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, padding: '4px 0', borderBottom: '1px dashed rgba(128,128,128,0.15)' }}>
+              <span style={{ fontFamily: 'system-ui', fontSize: 8, letterSpacing: '0.08em', textTransform: 'uppercase' as const, fontWeight: 600, color: c.label, paddingTop: 2 }}>{label}</span>
+              <span style={{ fontFamily: 'Georgia, serif', fontSize: 13, textAlign: 'right' }}>{val}</span>
+            </div>
+          ) : null)}
+          {ev.dresscode && (
+            <div style={{ textAlign: 'center', marginTop: 8 }}>
+              <span style={{ display: 'inline-block', padding: '3px 10px', background: \`rgba(\${hexToRgb(c.accent)}, 0.1)\`, border: \`1px solid rgba(\${hexToRgb(c.accent)}, 0.25)\`, borderRadius: 16, fontFamily: 'system-ui', fontSize: 8, letterSpacing: '0.1em', textTransform: 'uppercase' as const, color: c.label, fontWeight: 600 }}>
+                {ev.dresscode}
+              </span>
+            </div>
+          )}
+        </div>
+      ))}
+    </section>
+  )
+}`};
+
+FILES['src/components/card/GallerySection.tsx'] = {type:'tsx', content:
+`import Image from 'next/image'
+
+interface MediaItem {
+  id: string
+  storage_path: string
+  type: string
+}
+
+interface Props {
+  slots: number
+  media: MediaItem[]
+  colors: Record<string, any>
+}
+
+function hexToRgb(hex: string): string {
+  const h = hex.replace('#', '')
+  return [parseInt(h.substring(0,2),16), parseInt(h.substring(2,4),16), parseInt(h.substring(4,6),16)].join(',')
+}
+
+export function GallerySection({ slots, media, colors: c }: Props) {
+  const bgGrad = c.bgGradient?.join(',') || '#1a2040,#2a3460'
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+
+  return (
+    <section style={{
+      padding: '28px 24px',
+      background: \`linear-gradient(180deg, \${bgGrad})\`,
+      color: c.text,
+      textAlign: 'center',
+    }}>
+      <div style={{ fontFamily: 'system-ui', fontSize: 8, letterSpacing: '0.15em', textTransform: 'uppercase' as const, color: c.accent, fontWeight: 600, marginBottom: 3 }}>/ 03</div>
+      <div style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: 22, marginBottom: 14 }}>Galeri Kenangan</div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 4 }}>
+        {Array.from({ length: slots }).map((_, i) => {
+          const photo = media[i]
+          if (photo && supabaseUrl) {
+            const url = \`\${supabaseUrl}/storage/v1/object/public/media/\${photo.storage_path}\`
+            return (
+              <div key={i} style={{ aspectRatio: '1', borderRadius: 3, overflow: 'hidden', position: 'relative' }}>
+                <Image src={url} alt={\`Photo \${i + 1}\`} fill style={{ objectFit: 'cover' }} sizes="120px" />
+              </div>
+            )
+          }
+          return (
+            <div key={i} style={{
+              aspectRatio: '1',
+              border: \`1px solid rgba(\${hexToRgb(c.accent)}, 0.12)\`,
+              borderRadius: 3,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 16, opacity: 0.3,
+              background: \`rgba(\${hexToRgb(c.accent)}, 0.04)\`,
+            }}>
+              &#128247;
+            </div>
+          )
+        })}
+      </div>
+    </section>
+  )
+}`};
+
+FILES['src/components/card/WishesSection.tsx'] = {type:'tsx', content:
+`'use client'
+
+import { useState } from 'react'
+import { createClient } from '@/lib/supabase/client'
+import type { Wish } from '@/lib/supabase/types'
+
+interface Props {
+  invitationId: string
+  wishes: Wish[]
+  colors: Record<string, any>
+}
+
+function hexToRgb(hex: string): string {
+  const h = hex.replace('#', '')
+  return [parseInt(h.substring(0,2),16), parseInt(h.substring(2,4),16), parseInt(h.substring(4,6),16)].join(',')
+}
+
+export function WishesSection({ invitationId, wishes: initialWishes, colors: c }: Props) {
+  const [wishes, setWishes] = useState(initialWishes)
+  const [text, setText] = useState('')
+  const [author, setAuthor] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [sent, setSent] = useState(false)
+
+  const bgGrad = c.bgGradient?.slice(0, 2).join(',') || '#2a3460,#1a2040'
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!text.trim() || !author.trim()) return
+    setLoading(true)
+
+    const supabase = createClient()
+    const { data, error } = await supabase.from('wishes').insert({
+      invitation_id: invitationId,
+      author: author.trim(),
+      message: text.trim(),
+    }).select().single()
+
+    if (!error && data) {
+      setSent(true)
+      setText('')
+      setAuthor('')
+    }
+    setLoading(false)
+  }
+
+  return (
+    <section style={{
+      padding: '28px 24px',
+      background: \`linear-gradient(180deg, \${bgGrad})\`,
+      color: c.text,
+      textAlign: 'center',
+    }}>
+      <div style={{ fontFamily: 'system-ui', fontSize: 8, letterSpacing: '0.15em', textTransform: 'uppercase' as const, color: c.accent, fontWeight: 600, marginBottom: 3 }}>/ 05</div>
+      <div style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: 22, marginBottom: 14 }}>Ucapan &amp; Doa</div>
+
+      {!sent ? (
+        <form onSubmit={handleSubmit} style={{ maxWidth: 380, margin: '0 auto 20px', textAlign: 'left' }}>
+          <textarea
+            value={text}
+            onChange={e => setText(e.target.value)}
+            placeholder="Tulis ucapan untuk pasangan..."
+            rows={3}
+            required
+            style={{
+              width: '100%', padding: '11px 14px',
+              border: \`1px solid rgba(\${hexToRgb(c.accent)}, 0.2)\`,
+              borderRadius: 4, fontFamily: 'Georgia, serif', fontStyle: 'italic',
+              fontSize: 14, color: c.text, resize: 'none',
+              background: \`rgba(\${hexToRgb(c.text)}, 0.04)\`,
+              outline: 'none', marginBottom: 10,
+            }}
+          />
+          <input
+            value={author}
+            onChange={e => setAuthor(e.target.value)}
+            placeholder="Nama anda"
+            required
+            style={{
+              width: '100%', padding: '11px 14px',
+              border: \`1px solid rgba(\${hexToRgb(c.accent)}, 0.2)\`,
+              borderRadius: 4, fontFamily: 'system-ui', fontSize: 13,
+              color: c.text, outline: 'none', marginBottom: 10,
+              background: \`rgba(\${hexToRgb(c.text)}, 0.04)\`,
+            }}
+          />
+          <button type="submit" disabled={loading} style={{
+            width: '100%', padding: 12,
+            background: \`linear-gradient(135deg, \${c.accent}, \${c.label})\`,
+            color: c.bgGradient?.[0] || '#1a2040',
+            border: 'none', borderRadius: 4, fontFamily: 'system-ui',
+            fontSize: 11, fontWeight: 700, letterSpacing: '0.12em',
+            textTransform: 'uppercase' as const, cursor: loading ? 'wait' : 'pointer',
+          }}>
+            {loading ? 'Menghantar...' : 'Hantar Ucapan \\u2728'}
+          </button>
+        </form>
+      ) : (
+        <div style={{ padding: 16, marginBottom: 16, fontSize: 13, color: c.accent }}>
+          \\u2713 Ucapan dihantar! Menunggu kelulusan pasangan.
+        </div>
+      )}
+
+      {wishes.length > 0 && (
+        <div style={{ maxWidth: 400, margin: '0 auto' }}>
+          {wishes.map(w => (
+            <div key={w.id} style={{
+              background: \`rgba(\${hexToRgb(c.text)}, 0.04)\`,
+              border: \`1px solid rgba(\${hexToRgb(c.accent)}, 0.1)\`,
+              borderRadius: 4, padding: 14, marginBottom: 8, textAlign: 'left',
+            }}>
+              <div style={{ fontStyle: 'italic', fontSize: 13, color: c.text, opacity: 0.75, lineHeight: 1.6, marginBottom: 6 }}>
+                &ldquo;{w.message}&rdquo;
+              </div>
+              <div style={{ fontFamily: 'system-ui', fontSize: 10, color: c.accent, fontWeight: 500 }}>
+                {w.author}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </section>
+  )
+}`};
+
+FILES['src/components/card/AngpauSection.tsx'] = {type:'tsx', content:
+`'use client'
+
+import { useState } from 'react'
+
+interface Props {
+  config: { bank: string; accountName: string; accountNo: string }
+  colors: Record<string, any>
+}
+
+function hexToRgb(hex: string): string {
+  const h = hex.replace('#', '')
+  return [parseInt(h.substring(0,2),16), parseInt(h.substring(2,4),16), parseInt(h.substring(4,6),16)].join(',')
+}
+
+export function AngpauSection({ config, colors: c }: Props) {
+  const [copied, setCopied] = useState(false)
+  const bgGrad = c.bgGradient?.slice(0, 2).join(',') || '#1a2040,#2a3460'
+
+  function handleCopy() {
+    navigator.clipboard?.writeText(config.accountNo)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  return (
+    <section style={{
+      padding: '28px 24px',
+      background: \`linear-gradient(135deg, \${bgGrad})\`,
+      color: c.text, textAlign: 'center',
+    }}>
+      <div style={{ fontFamily: 'system-ui', fontSize: 8, letterSpacing: '0.15em', textTransform: 'uppercase' as const, color: c.accent, fontWeight: 600, marginBottom: 3 }}>/ 06</div>
+      <div style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: 22, marginBottom: 14 }}>Hadiah Digital</div>
+      <div style={{
+        background: \`rgba(\${hexToRgb(c.accent)}, 0.06)\`,
+        border: \`1px solid rgba(\${hexToRgb(c.accent)}, 0.15)\`,
+        borderRadius: 6, padding: 20, maxWidth: 340, margin: '0 auto',
+      }}>
+        <div style={{ fontFamily: 'system-ui', fontSize: 8, letterSpacing: '0.15em', textTransform: 'uppercase' as const, color: c.accent, fontWeight: 600, marginBottom: 4 }}>
+          {config.bank}
+        </div>
+        <div style={{ fontSize: 14, marginBottom: 2 }}>{config.accountName}</div>
+        <div style={{ fontSize: 18, letterSpacing: '0.04em', color: c.accent, marginBottom: 12 }}>
+          {config.accountNo}
+        </div>
+        <button onClick={handleCopy} style={{
+          padding: '6px 14px',
+          background: copied ? c.accent : \`rgba(\${hexToRgb(c.accent)}, 0.12)\`,
+          border: \`1px solid \${c.accent}\`,
+          borderRadius: 3, fontFamily: 'system-ui', fontSize: 9,
+          letterSpacing: '0.08em', textTransform: 'uppercase' as const,
+          color: copied ? (c.bgGradient?.[0] || '#1a2040') : c.accent,
+          fontWeight: 600, cursor: 'pointer',
+        }}>
+          {copied ? '\\u2713 Disalin!' : 'Salin Nombor Akaun'}
+        </button>
+      </div>
+    </section>
+  )
+}`};
+
+FILES['src/components/card/FooterSection.tsx'] = {type:'tsx', content:
+`interface Props {
+  card: { bride: string; groom: string }
+  colors: Record<string, any>
+}
+
+export function FooterSection({ card, colors: c }: Props) {
+  const footerGrad = c.footerBg?.join(',') || '#0d1228,#05081a'
+
+  return (
+    <footer style={{
+      padding: '32px 24px',
+      textAlign: 'center',
+      background: \`linear-gradient(180deg, \${footerGrad})\`,
+      color: c.text,
+    }}>
+      <div style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: 20, color: c.accent, marginBottom: 4 }}>
+        {card.bride} &amp; {card.groom}
+      </div>
+      <div style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: 10, opacity: 0.35 }}>
+        Terima kasih atas doa &amp; restu anda
+      </div>
+      <div style={{
+        fontFamily: 'system-ui', fontSize: 8, letterSpacing: '0.12em',
+        textTransform: 'uppercase' as const, opacity: 0.15,
+        marginTop: 20, paddingBottom: 20,
+      }}>
+        Dibina dengan e-motion.my
+      </div>
+    </footer>
+  )
+}`};
+
+FILES['src/app/dashboard/wishes/page.tsx'] = {type:'tsx', content:
+`import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
+import { WishModeration } from '@/components/dashboard/WishModeration'
+
+export default async function WishesPage() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) redirect('/auth/login')
+
+  const { data: invitation } = await supabase
+    .from('invitations')
+    .select('id')
+    .eq('user_id', user.id)
+    .single()
+
+  if (!invitation) redirect('/dashboard')
+
+  const { data: wishes } = await supabase
+    .from('wishes')
+    .select('*')
+    .eq('invitation_id', invitation.id)
+    .order('created_at', { ascending: false })
+
+  return (
+    <div>
+      <h1 style={{ fontSize: 18, fontWeight: 700, fontFamily: 'system-ui', marginBottom: 16 }}>
+        Ucapan & Doa
+      </h1>
+      <WishModeration wishes={wishes || []} />
+    </div>
+  )
+}`};
+
+FILES['src/components/dashboard/WishModeration.tsx'] = {type:'tsx', content:
+`'use client'
+
+import { useState } from 'react'
+import { createClient } from '@/lib/supabase/client'
+import type { Wish } from '@/lib/supabase/types'
+
+interface Props {
+  wishes: Wish[]
+}
+
+export function WishModeration({ wishes: initial }: Props) {
+  const [wishes, setWishes] = useState(initial)
+
+  async function approve(id: string) {
+    const supabase = createClient()
+    await supabase.from('wishes').update({ approved: true }).eq('id', id)
+    setWishes(prev => prev.map(w => w.id === id ? { ...w, approved: true } : w))
+  }
+
+  async function remove(id: string) {
+    const supabase = createClient()
+    await supabase.from('wishes').delete().eq('id', id)
+    setWishes(prev => prev.filter(w => w.id !== id))
+  }
+
+  const pending = wishes.filter(w => !w.approved)
+  const approved = wishes.filter(w => w.approved)
+
+  return (
+    <div>
+      {pending.length > 0 && (
+        <div style={{ marginBottom: 24 }}>
+          <h3 style={{ fontSize: 13, fontWeight: 600, fontFamily: 'system-ui', marginBottom: 10, color: '#ea580c' }}>
+            Menunggu Kelulusan ({pending.length})
+          </h3>
+          {pending.map(w => (
+            <div key={w.id} style={{
+              background: '#fff', border: '1px solid #e7e5e4', borderRadius: 6,
+              padding: 14, marginBottom: 8, display: 'flex', justifyContent: 'space-between',
+              alignItems: 'flex-start', gap: 12,
+            }}>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontStyle: 'italic', fontSize: 13, color: '#57534e', marginBottom: 4 }}>
+                  &ldquo;{w.message}&rdquo;
+                </div>
+                <div style={{ fontSize: 11, color: '#a8a29e', fontFamily: 'system-ui' }}>
+                  {w.author} &middot; {new Date(w.created_at).toLocaleDateString('ms-MY')}
+                </div>
+              </div>
+              <div style={{ display: 'flex', gap: 4, flexShrink: 0 }}>
+                <button onClick={() => approve(w.id)} style={{
+                  padding: '4px 10px', background: '#16a34a', color: '#fff',
+                  border: 'none', borderRadius: 4, fontSize: 10, fontWeight: 600,
+                  cursor: 'pointer', fontFamily: 'system-ui',
+                }}>Lulus</button>
+                <button onClick={() => remove(w.id)} style={{
+                  padding: '4px 10px', background: 'none', color: '#dc2626',
+                  border: '1px solid #fecaca', borderRadius: 4, fontSize: 10,
+                  fontWeight: 600, cursor: 'pointer', fontFamily: 'system-ui',
+                }}>Padam</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <h3 style={{ fontSize: 13, fontWeight: 600, fontFamily: 'system-ui', marginBottom: 10, color: '#16a34a' }}>
+        Diluluskan ({approved.length})
+      </h3>
+      {approved.length === 0 ? (
+        <p style={{ fontSize: 12, color: '#a8a29e', padding: 20, textAlign: 'center' }}>
+          Belum ada ucapan yang diluluskan.
+        </p>
+      ) : approved.map(w => (
+        <div key={w.id} style={{
+          background: '#fff', border: '1px solid #e7e5e4', borderRadius: 6,
+          padding: 14, marginBottom: 8,
+        }}>
+          <div style={{ fontStyle: 'italic', fontSize: 13, color: '#57534e', marginBottom: 4 }}>
+            &ldquo;{w.message}&rdquo;
+          </div>
+          <div style={{ fontSize: 11, color: '#a8a29e', fontFamily: 'system-ui' }}>
+            {w.author}
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}`};
+
+FILES['src/app/dashboard/checkout/page.tsx'] = {type:'tsx', content:
+`'use client'
+
+import { useState } from 'react'
+import { createClient } from '@/lib/supabase/client'
+import { useRouter } from 'next/navigation'
+
+const PLANS = [
+  {
+    id: 'motion', name: 'Motion', price: 29, duration: '1 tahun',
+    features: ['Semua templat Warisan', 'Kesan CSS penuh', 'Sistem RSVP', 'Galeri 6 foto', 'Muzik latar'],
+  },
+  {
+    id: 'cinematic', name: 'Cinematic', price: 59, duration: '2 tahun',
+    features: ['Semua + templat eksklusif', 'Kesan GSAP penuh', 'Video penutup MP4', 'Dwibahasa', 'Tanpa branding', 'Digital Angpau'],
+  },
+]
+
+export default function CheckoutPage() {
+  const [selected, setSelected] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
+
+  async function handleCheckout() {
+    if (!selected) return
+    setLoading(true)
+
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) { router.push('/auth/login'); return }
+
+    // Get invitation
+    const { data: inv } = await supabase
+      .from('invitations')
+      .select('id, card_data')
+      .eq('user_id', user.id)
+      .single()
+
+    if (!inv) { setLoading(false); return }
+
+    const plan = PLANS.find(p => p.id === selected)!
+    const card = inv.card_data as { bride: string; groom: string }
+
+    // Create payment record
+    const { data: payment } = await supabase.from('payments').insert({
+      user_id: user.id,
+      invitation_id: inv.id,
+      amount: plan.price * 100,
+      plan: selected,
+      status: 'pending',
+    }).select().single()
+
+    // Call Billplz API to create bill
+    const res = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        payment_id: payment?.id,
+        plan: selected,
+        email: user.email,
+        name: \`\${card.bride} & \${card.groom}\`,
+      }),
+    })
+
+    const { url } = await res.json()
+    // Redirect to Billplz checkout page
+    window.location.href = url
+  }
+
+  return (
+    <div style={{ maxWidth: 700, margin: '0 auto' }}>
+      <h1 style={{ fontSize: 18, fontWeight: 700, fontFamily: 'system-ui', marginBottom: 4 }}>
+        Naik Taraf Kad Anda
+      </h1>
+      <p style={{ fontSize: 12, color: '#a8a29e', marginBottom: 24, fontFamily: 'system-ui' }}>
+        Pilih pelan untuk menerbitkan kad jemputan anda.
+      </p>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 24 }}>
+        {PLANS.map(plan => (
+          <div
+            key={plan.id}
+            onClick={() => setSelected(plan.id)}
+            style={{
+              background: '#fff',
+              border: \`2px solid \${selected === plan.id ? '#c9a24e' : '#e7e5e4'}\`,
+              borderRadius: 8, padding: 24, cursor: 'pointer',
+              position: 'relative',
+              transition: 'border-color 0.2s',
+            }}
+          >
+            {selected === plan.id && (
+              <div style={{
+                position: 'absolute', top: 10, right: 10, width: 22, height: 22,
+                background: '#c9a24e', color: '#1a2040', borderRadius: '50%',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 12, fontWeight: 700,
+              }}>\\u2713</div>
+            )}
+            <div style={{ fontFamily: 'Georgia, serif', fontSize: 20, marginBottom: 4 }}>{plan.name}</div>
+            <div style={{ fontSize: 32, fontWeight: 700, fontFamily: 'system-ui', marginBottom: 4 }}>
+              <sup style={{ fontSize: 14, fontWeight: 400 }}>RM</sup>{plan.price}
+            </div>
+            <div style={{ fontSize: 11, color: '#a8a29e', marginBottom: 16, fontFamily: 'system-ui' }}>
+              Bayar sekali &middot; aktif {plan.duration}
+            </div>
+            {plan.features.map(f => (
+              <div key={f} style={{ fontSize: 12, padding: '3px 0', display: 'flex', gap: 6, alignItems: 'center', fontFamily: 'system-ui', color: '#57534e' }}>
+                <span style={{ color: '#16a34a', fontWeight: 700 }}>\\u2713</span> {f}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+
+      <button
+        onClick={handleCheckout}
+        disabled={!selected || loading}
+        style={{
+          width: '100%', padding: 14,
+          background: selected ? 'linear-gradient(135deg, #c9a24e, #8a6d2a)' : '#e7e5e4',
+          color: selected ? '#1a2040' : '#a8a29e',
+          border: 'none', borderRadius: 6, fontFamily: 'system-ui',
+          fontSize: 12, fontWeight: 700, letterSpacing: '0.1em',
+          textTransform: 'uppercase' as const,
+          cursor: selected && !loading ? 'pointer' : 'default',
+          opacity: loading ? 0.7 : 1,
+        }}
+      >
+        {loading ? 'Menghubungi Billplz...' : 'Bayar Sekarang'}
+      </button>
+    </div>
+  )
+}`};
+
+FILES['src/app/api/checkout/route.ts'] = {type:'ts', content:
+`import { NextRequest, NextResponse } from 'next/server'
+import { createClient } from '@/lib/supabase/server'
+import { createBill, PLANS } from '@/lib/billplz'
+
+export async function POST(request: NextRequest) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  if (!user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  const body = await request.json()
+  const { payment_id, plan, email, name } = body
+
+  const planConfig = PLANS[plan as keyof typeof PLANS]
+  if (!planConfig) {
+    return NextResponse.json({ error: 'Invalid plan' }, { status: 400 })
+  }
+
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+
+  // Create Billplz bill
+  const bill = await createBill({
+    collection_id: process.env.BILLPLZ_COLLECTION_ID!,
+    email,
+    name,
+    amount: planConfig.amount,
+    callback_url: \`\${appUrl}/api/webhooks/billplz\`,
+    redirect_url: \`\${appUrl}/dashboard?payment=success\`,
+    description: \`e-motion.my \${planConfig.label} Plan\`,
+    reference_1_label: 'Payment ID',
+    reference_1: payment_id,
+  })
+
+  // Store Billplz bill ID
+  await supabase
+    .from('payments')
+    .update({ billplz_bill_id: bill.id })
+    .eq('id', payment_id)
+
+  return NextResponse.json({ url: bill.url })
+}`};
+
+FILES['src/app/api/wishes/route.ts'] = {type:'ts', content:
+`import { NextRequest, NextResponse } from 'next/server'
+import { createClient } from '@supabase/supabase-js'
+import { z } from 'zod'
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+)
+
+const wishSchema = z.object({
+  invitation_id: z.string().uuid(),
+  author: z.string().min(1).max(100),
+  message: z.string().min(1).max(500),
+})
+
+export async function POST(request: NextRequest) {
+  const body = await request.json()
+  const parsed = wishSchema.safeParse(body)
+
+  if (!parsed.success) {
+    return NextResponse.json(
+      { error: 'Invalid data', details: parsed.error.issues },
+      { status: 400 }
+    )
+  }
+
+  // Verify invitation exists and is active
+  const { data: inv } = await supabase
+    .from('invitations')
+    .select('id')
+    .eq('id', parsed.data.invitation_id)
+    .eq('status', 'active')
+    .single()
+
+  if (!inv) {
+    return NextResponse.json({ error: 'Invitation not found' }, { status: 404 })
+  }
+
+  const { data, error } = await supabase
+    .from('wishes')
+    .insert({ ...parsed.data, approved: false })
+    .select()
+    .single()
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 })
+  }
+
+  return NextResponse.json({ ok: true, wish: data })
+}`};
+
+FILES['README.md'] = {type:'md', content:
+`# e-motion.my
+
+Kad jemputan digital perkahwinan warisan Melayu.
+
+## Tech Stack
+- **Frontend:** Next.js 15 (App Router)
+- **Backend:** Supabase (PostgreSQL + Auth + Storage)
+- **Payments:** Billplz (FPX)
+- **Email:** Resend
+- **Animation:** GSAP 3
+- **Hosting:** Vercel
+
+## Setup
+
+\\\`\\\`\\\`bash
+# 1. Clone and install
+git clone <repo>
+cd e-motion-my
+npm install
+
+# 2. Setup Supabase
+npx supabase init
+npx supabase start
+npx supabase db push  # runs schema.sql
+
+# 3. Configure environment
+cp .env.example .env.local
+# Fill in your Supabase and Billplz keys
+
+# 4. Run dev server
+npm run dev
+\\\`\\\`\\\`
+
+## Project Structure
+\\\`\\\`\\\`
+src/
+  app/
+    [slug]/page.tsx      # Guest card (SSR)
+    dashboard/           # Couple dashboard
+    auth/                # Login/signup
+    api/
+      rsvp/              # RSVP endpoints
+      webhooks/billplz/  # Payment webhook
+  components/
+    card/                # Card rendering components
+  lib/
+    supabase/            # Supabase client + types
+    templates/           # Template registry
+    billplz.ts           # Payment integration
+supabase/
+  schema.sql             # Database schema
+\\\`\\\`\\\`
+
+## Key Files
+| File | Purpose |
+|------|---------|
+| \\\`supabase/schema.sql\\\` | Full DB schema with RLS |
+| \\\`src/lib/templates/registry.ts\\\` | Template config system |
+| \\\`src/app/[slug]/page.tsx\\\` | Guest card page (SSR) |
+| \\\`src/components/card/CardRenderer.tsx\\\` | Card rendering engine |
+| \\\`src/app/api/webhooks/billplz/route.ts\\\` | Payment webhook |`};
+
+// ===== SETUP GUIDE =====
+var SETUP_HTML = `
+<div class="setup-section">
+  <div class="setup-title">e-motion.my Production Codebase</div>
+  <div class="setup-text">Complete Next.js 15 + Supabase + Billplz project. Browse the file tree on the left, click any file to view its source code.</div>
+</div>
+<div class="setup-section">
+  <div class="setup-title">Quick Start</div>
+  <div class="setup-code">npx create-next-app@latest e-motion-my --typescript --app
+cd e-motion-my
+npm install @supabase/supabase-js @supabase/ssr gsap zod resend</div>
+  <div class="setup-text">Then copy each file from this explorer into your project.</div>
+</div>
+<div class="setup-section">
+  <div class="setup-title">Project Structure (${Object.keys(FILES).length} files)</div>
+  <div class="setup-code">${Object.keys(FILES).sort().map(f => f).join('\n')}</div>
+</div>
+<div class="setup-section">
+  <div class="setup-title">Key Architecture Decisions</div>
+  <div class="setup-text" style="line-height:2">
+    <span style="color:var(--gold)">&#9632;</span> <strong>Guest cards are SSR</strong> — \`/[slug]/page.tsx\` fetches from Supabase at request time for fresh RSVP counts and OG meta tags<br>
+    <span style="color:var(--gold)">&#9632;</span> <strong>Template system is data-driven</strong> — JSON config in \`registry.ts\` maps to visual output via \`CardRenderer\`<br>
+    <span style="color:var(--gold)">&#9632;</span> <strong>RLS on every table</strong> — guests can insert RSVPs/wishes but can't read other guests' data<br>
+    <span style="color:var(--gold)">&#9632;</span> <strong>Billplz webhook activates cards</strong> — payment confirmation triggers status change from draft→active<br>
+    <span style="color:var(--gold)">&#9632;</span> <strong>Middleware protects dashboard</strong> — all \`/dashboard/*\` routes require auth, redirect to login<br>
+    <span style="color:var(--gold)">&#9632;</span> <strong>Slug generation prevents collisions</strong> — SQL function appends year + counter if slug exists
+  </div>
+</div>
+<div class="setup-section">
+  <div class="setup-title">Database Setup</div>
+  <div class="setup-text">Click <strong>supabase/schema.sql</strong> in the tree to see the full schema. Run it with:</div>
+  <div class="setup-code">npx supabase db push</div>
+  <div class="setup-text">This creates 6 tables with Row Level Security: profiles, invitations, rsvp_responses, wishes, payments, media.</div>
+</div>`;
+
+// ===== BUILD TREE =====
+function buildTree(){
+  var tree = {};
+  Object.keys(FILES).sort().forEach(function(path){
+    var parts = path.split('/');
+    var current = tree;
+    for(var i=0;i<parts.length-1;i++){
+      if(!current[parts[i]]) current[parts[i]] = {};
+      current = current[parts[i]];
+    }
+    current[parts[parts.length-1]] = FILES[path];
+  });
+  return tree;
+}
+
+function renderTree(node, parentPath, depth){
+  var html = '';
+  var entries = Object.entries(node).sort(function(a,b){
+    var aIsDir = typeof a[1] === 'object' && !a[1].content;
+    var bIsDir = typeof b[1] === 'object' && !b[1].content;
+    if(aIsDir && !bIsDir) return -1;
+    if(!aIsDir && bIsDir) return 1;
+    return a[0].localeCompare(b[0]);
+  });
+
+  entries.forEach(function(entry){
+    var name = entry[0];
+    var val = entry[1];
+    var fullPath = parentPath ? parentPath+'/'+name : name;
+    var pad = depth * 12;
+
+    if(val.content !== undefined){
+      // File
+      var ext = name.split('.').pop();
+      var iconClass = 'file-'+ext;
+      if(ext==='tsx'||ext==='jsx') iconClass='file-tsx';
+      if(ext==='local'||ext==='example') iconClass='file-env';
+      var icon = ext==='ts'||ext==='tsx'?'TS':ext==='css'?'#':ext==='json'?'{}':ext==='sql'?'DB':ext==='md'?'MD':'F';
+      html += '<div class="tree-file" style="padding-left:'+(28+pad)+'px" onclick="openFile(\''+fullPath+'\')" data-path="'+fullPath+'"><span class="tree-file-icon '+iconClass+'">'+icon+'</span>'+name+'</div>';
+    } else {
+      // Folder
+      html += '<div class="tree-folder open" style="padding-left:'+pad+'px">';
+      html += '<div class="tree-folder-head" onclick="this.parentElement.classList.toggle(\'open\')"><span class="tree-folder-arrow">&#9654;</span><span class="tree-folder-icon">&#128193;</span>'+name+'</div>';
+      html += '<div class="tree-folder-children">'+renderTree(val, fullPath, depth+1)+'</div></div>';
+    }
+  });
+  return html;
+}
+
+var tree = buildTree();
+document.getElementById('treeBody').innerHTML = renderTree(tree, '', 0);
+
+// ===== SETUP PANEL =====
+document.getElementById('setupPanel').innerHTML = SETUP_HTML;
+
+function showSetup(){
+  currentFile = null;
+  document.getElementById('setupPanel').style.display = 'block';
+  document.getElementById('setupPanel').classList.add('active');
+  document.getElementById('codeWrap').style.display = 'none';
+  document.getElementById('copyBtn').style.display = 'none';
+  document.getElementById('breadcrumb').innerHTML = '<span>e-motion.my</span>';
+  document.getElementById('statusFile').textContent = 'Setup Guide';
+  document.querySelectorAll('.tree-file').forEach(function(f){f.classList.remove('active')});
+}
+
+// ===== OPEN FILE =====
+function openFile(path){
+  var file = FILES[path];
+  if(!file) return;
+  currentFile = path;
+
+  document.getElementById('setupPanel').style.display = 'none';
+  document.getElementById('codeWrap').style.display = 'flex';
+  document.getElementById('copyBtn').style.display = 'block';
+
+  var lines = file.content.split('\n');
+  document.getElementById('lineNums').innerHTML = lines.map(function(_,i){return '<div>'+(i+1)+'</div>'}).join('');
+
+  // Basic syntax highlighting
+  var highlighted = file.content
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/(\/\/.*$)/gm,'<span class="s-cm">$1</span>')
+    .replace(/(\/\*[\s\S]*?\*\/)/g,'<span class="s-cm">$1</span>')
+    .replace(/('(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*"|`(?:[^`\\]|\\.)*`)/g,'<span class="s-str">$1</span>')
+    .replace(/\b(import|export|from|const|let|var|function|return|if|else|async|await|new|typeof|type|interface|extends|implements|class|default|throw|try|catch|for|of|in)\b/g,'<span class="s-kw">$1</span>')
+    .replace(/\b(string|number|boolean|null|undefined|true|false|void|any|Record|Promise)\b/g,'<span class="s-type">$1</span>')
+    .replace(/\b(\d+)\b/g,'<span class="s-num">$1</span>');
+
+  document.getElementById('codeContent').innerHTML = highlighted;
+
+  // Breadcrumb
+  var parts = path.split('/');
+  document.getElementById('breadcrumb').innerHTML = '<span>e-motion.my</span> / ' + parts.map(function(p,i){
+    return i===parts.length-1 ? '<span style="color:var(--gold)">'+p+'</span>' : '<span>'+p+'</span>';
+  }).join(' / ');
+
+  document.getElementById('statusFile').textContent = path;
+
+  // Active state
+  document.querySelectorAll('.tree-file').forEach(function(f){
+    f.classList.toggle('active', f.dataset.path === path);
+  });
+}
+
+function copyCode(){
+  if(!currentFile || !FILES[currentFile]) return;
+  var text = FILES[currentFile].content;
+  if(navigator.clipboard) navigator.clipboard.writeText(text);
+  var btn = document.getElementById('copyBtn');
+  btn.textContent = 'Copied!';
+  setTimeout(function(){ btn.textContent = 'Copy'; }, 1500);
+}
+
+function filterTree(q){
+  q = q.toLowerCase();
+  document.querySelectorAll('.tree-file').forEach(function(f){
+    var path = f.dataset.path || '';
+    f.style.display = !q || path.toLowerCase().indexOf(q)>-1 ? '' : 'none';
+  });
+}
+
+function switchTab(id, btn){
+  // For future: config/schema/output tabs in editor
+}
+</script>
+</body>
+</html>

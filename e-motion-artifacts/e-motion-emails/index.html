@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>e-motion.my Email Templates</title>
+<style>
+:root{
+  --brand:#1a2040;--gold:#c9a24e;--gold-lt:#e8c775;--gold-dk:#8a6d2a;
+  --maroon:#6b1d2e;--ivory:#f8f0de;--cream:#faf4e3;
+  --bg:#f5f5f4;--white:#fff;--border:#e7e5e4;
+  --text:#1c1917;--text2:#57534e;--text3:#a8a29e;
+  --green:#16a34a;--r:6px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;font-size:13px}
+
+.app{display:flex;height:100%}
+
+/* SIDEBAR */
+.sidebar{width:260px;background:var(--white);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.sb-head{padding:16px 18px;border-bottom:1px solid var(--border)}
+.sb-logo{font-family:Georgia,serif;font-style:italic;font-size:16px;color:var(--brand);margin-bottom:2px}
+.sb-logo span{color:var(--gold)}
+.sb-sub{font-size:10px;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.sb-section{padding:8px 10px}
+.sb-section-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);font-weight:600;padding:10px 8px 6px}
+.sb-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--r);cursor:pointer;transition:all .15s;font-size:12px;color:var(--text2)}
+.sb-item:hover{background:var(--bg);color:var(--text)}
+.sb-item.active{background:rgba(201,162,78,.1);color:var(--brand);font-weight:600}
+.sb-item-icon{width:28px;height:28px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.sb-item-info{min-width:0}
+.sb-item-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-item-trigger{font-size:9px;color:var(--text3);margin-top:1px}
+
+/* MAIN */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.toolbar{height:48px;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:12px;flex-shrink:0}
+.toolbar-title{font-size:13px;font-weight:600;flex:1}
+.toolbar-group{display:flex;gap:2px;background:var(--bg);padding:2px;border-radius:var(--r)}
+.toolbar-btn{padding:5px 12px;font-size:10px;font-weight:500;border:none;background:none;cursor:pointer;border-radius:4px;font-family:inherit;color:var(--text2);transition:all .15s}
+.toolbar-btn.active{background:var(--white);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.06);font-weight:600}
+.toolbar-meta{font-size:10px;color:var(--text3);display:flex;align-items:center;gap:6px}
+.toolbar-dot{width:6px;height:6px;border-radius:50%}
+
+/* PREVIEW AREA */
+.preview-area{flex:1;overflow:auto;display:flex;justify-content:center;padding:24px;background:var(--bg)}
+.email-frame{transition:width .4s cubic-bezier(.19,1,.22,1);box-shadow:0 2px 12px rgba(0,0,0,.08);border-radius:4px;overflow:hidden;background:var(--white)}
+.email-frame.desktop{width:600px}
+.email-frame.mobile{width:375px}
+
+/* EMAIL TEMPLATE STYLES */
+.eml{font-family:Georgia,'Times New Roman',serif;color:#333;line-height:1.6}
+.eml-header{background:var(--brand);padding:28px 32px;text-align:center}
+.eml-header-logo{font-family:Georgia,serif;font-style:italic;font-size:18px;color:var(--gold-lt);margin-bottom:4px}
+.eml-header-logo small{font-size:10px;color:var(--gold);font-style:normal;margin-left:3px;letter-spacing:.1em}
+.eml-header-line{width:40px;height:1px;background:var(--gold);margin:8px auto 0;opacity:.5}
+.eml-body{padding:32px;background:var(--white)}
+.eml-greeting{font-size:14px;color:var(--text2);margin-bottom:16px}
+.eml-title{font-family:Georgia,serif;font-size:24px;font-style:italic;color:var(--brand);margin-bottom:12px;line-height:1.3}
+.eml-text{font-family:-apple-system,system-ui,sans-serif;font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.7}
+.eml-card{border:1px solid var(--border);border-radius:var(--r);padding:20px;margin:20px 0;background:var(--cream)}
+.eml-card-label{font-family:-apple-system,system-ui,sans-serif;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-dk);font-weight:600;margin-bottom:6px}
+.eml-card-value{font-size:16px;color:var(--brand);font-weight:400}
+.eml-card-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.05);font-family:-apple-system,system-ui,sans-serif;font-size:12px}
+.eml-card-row:last-child{border-bottom:none}
+.eml-card-row-label{color:var(--text3);font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.06em}
+.eml-btn{display:inline-block;padding:12px 28px;background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:var(--brand);font-family:-apple-system,system-ui,sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-radius:var(--r);margin:8px 0}
+.eml-btn-outline{display:inline-block;padding:10px 24px;border:1px solid var(--border);color:var(--text2);font-family:-apple-system,system-ui,sans-serif;font-size:11px;font-weight:500;text-decoration:none;border-radius:var(--r);margin:4px 0}
+.eml-divider{height:1px;background:var(--border);margin:24px 0}
+.eml-footer{background:var(--brand);padding:24px 32px;text-align:center}
+.eml-footer-text{font-family:-apple-system,system-ui,sans-serif;font-size:10px;color:rgba(248,240,222,.35);line-height:1.6}
+.eml-footer-text a{color:var(--gold);text-decoration:none}
+.eml-highlight{background:rgba(201,162,78,.08);border-left:3px solid var(--gold);padding:12px 16px;margin:16px 0;font-family:-apple-system,system-ui,sans-serif;font-size:12px;color:var(--text2);line-height:1.6}
+.eml-stat-row{display:flex;gap:12px;margin:16px 0}
+.eml-stat{flex:1;background:var(--cream);border:1px solid var(--border);border-radius:var(--r);padding:14px;text-align:center}
+.eml-stat-val{font-size:24px;color:var(--brand);font-weight:400;font-family:Georgia,serif}
+.eml-stat-label{font-family:-apple-system,system-ui,sans-serif;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);font-weight:600;margin-top:2px}
+.eml-tag{display:inline-block;padding:3px 8px;border-radius:10px;font-family:-apple-system,system-ui,sans-serif;font-size:10px;font-weight:600}
+.eml-tag-green{background:#f0fdf4;color:#16a34a}
+.eml-tag-gold{background:rgba(201,162,78,.12);color:var(--gold-dk)}
+.eml-names{font-family:Georgia,serif;font-style:italic;font-size:28px;color:var(--gold-dk);text-align:center;margin:12px 0}
+.eml-names-amp{font-size:14px;color:var(--gold);display:block;margin:2px 0}
+
+@media(max-width:700px){
+  .sidebar{width:200px}
+  .sb-item-trigger{display:none}
+}
+@media print{
+  .sidebar,.toolbar{display:none!important}
+  .preview-area{padding:0}
+  .email-frame{width:100%!important;box-shadow:none!important}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sb-head">
+    <div class="sb-logo">e<span>&middot;</span>motion</div>
+    <div class="sb-sub">Email Templates</div>
+  </div>
+  <div class="sb-section" id="emailList"></div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="toolbar">
+    <div class="toolbar-title" id="toolbarTitle">Selamat Datang</div>
+    <div class="toolbar-meta" id="toolbarMeta"></div>
+    <div class="toolbar-group">
+      <button class="toolbar-btn active" onclick="setView('desktop',this)">Desktop</button>
+      <button class="toolbar-btn" onclick="setView('mobile',this)">Mobile</button>
+    </div>
+  </div>
+  <div class="preview-area">
+    <div class="email-frame desktop" id="emailFrame"></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+var EMAILS = [
+  {id:'welcome',name:'Selamat Datang',trigger:'Selepas daftar',category:'Onboarding',
+   icon:'&#9993;',iconBg:'#eff6ff',iconColor:'#2563eb',
+   subject:'Selamat datang ke e-motion.my!',
+   build: function(){
+     return header() +
+       '<div class="eml-body">' +
+         '<div class="eml-greeting">Assalamualaikum Farah & Adam,</div>' +
+         '<div class="eml-title">Selamat datang ke e-motion.my!</div>' +
+         '<div class="eml-text">Terima kasih kerana mendaftar. Akaun anda telah berjaya dicipta dan kad jemputan anda sedang menunggu untuk dihidupkan.</div>' +
+         '<div class="eml-card">' +
+           '<div class="eml-card-label">Akaun Anda</div>' +
+           '<div class="eml-card-row"><span class="eml-card-row-label">E-mel</span><span>farah@email.com</span></div>' +
+           '<div class="eml-card-row"><span class="eml-card-row-label">Pelan</span><span><span class="eml-tag eml-tag-gold">Percuma</span></span></div>' +
+           '<div class="eml-card-row"><span class="eml-card-row-label">Status Kad</span><span><span class="eml-tag eml-tag-gold">Draf</span></span></div>' +
+         '</div>' +
+         '<div class="eml-text">Langkah seterusnya: lengkapkan kad jemputan anda dan pilih pelan untuk menerbitkannya.</div>' +
+         '<div style="text-align:center"><a class="eml-btn" href="#">Lengkapkan Kad Saya &#10022;</a></div>' +
+         '<div class="eml-divider"></div>' +
+         '<div class="eml-text" style="font-size:11px;color:var(--text3)">Perlukan bantuan? Balas e-mel ini atau hubungi kami di WhatsApp.</div>' +
+       '</div>' + footer();
+   }},
+  {id:'published',name:'Kad Diterbitkan',trigger:'Selepas terbitkan kad',category:'Onboarding',
+   icon:'&#10003;',iconBg:'#f0fdf4',iconColor:'#16a34a',
+   subject:'Kad anda sudah hidup!',
+   build: function(){
+     return header() +
+       '<div class="eml-body">' +
+         '<div class="eml-greeting">Tahniah Farah & Adam!</div>' +
+         '<div class="eml-title">Kad jemputan anda kini hidup!</div>' +
+         '<div class="eml-text">Kad perkahwinan anda telah berjaya diterbitkan dan boleh diakses oleh tetamu anda melalui pautan di bawah.</div>' +
+         '<div class="eml-card" style="text-align:center">' +
+           '<div class="eml-card-label">Pautan Kad Anda</div>' +
+           '<div style="font-size:16px;color:var(--brand);font-weight:500;margin:8px 0;word-break:break-all">e-motion.my/farah-adam-2026</div>' +
+           '<div style="margin-top:8px"><a class="eml-btn" href="#">Lihat Kad &#8599;</a></div>' +
+         '</div>' +
+         '<div class="eml-highlight">&#128161; <strong>Tip:</strong> Kongsi pautan ini melalui WhatsApp kepada semua tetamu anda. Mereka boleh RSVP terus dari kad!</div>' +
+         '<div class="eml-stat-row">' +
+           '<div class="eml-stat"><div class="eml-stat-val">0</div><div class="eml-stat-label">RSVP</div></div>' +
+           '<div class="eml-stat"><div class="eml-stat-val">0</div><div class="eml-stat-label">Paparan</div></div>' +
+           '<div class="eml-stat"><div class="eml-stat-val">0</div><div class="eml-stat-label">Kongsi</div></div>' +
+         '</div>' +
+         '<div style="text-align:center;margin-top:8px"><a class="eml-btn-outline" href="#">Buka Papan Pemuka &rarr;</a></div>' +
+       '</div>' + footer();
+   }},
+  {id:'payment',name:'Resit Pembayaran',trigger:'Selepas bayar Billplz',category:'Transaksi',
+   icon:'&#9733;',iconBg:'rgba(201,162,78,.1)',iconColor:'var(--gold-dk)',
+   subject:'Resit pembayaran e-motion.my',
+   build: function(){
+     return header() +
+       '<div class="eml-body">' +
+         '<div class="eml-greeting">Terima kasih atas pembelian anda!</div>' +
+         '<div class="eml-title">Resit Pembayaran</div>' +
+         '<div class="eml-card">' +
+           '<div class="eml-card-label">Butiran Transaksi</div>' +
+           '<div class="eml-card-row"><span class="eml-card-row-label">No. Rujukan</span><span>BPZ-20260412-7A3F</span></div>' +
+           '<div class="eml-card-row"><span class="eml-card-row-label">Tarikh</span><span>12 April 2026</span></div>' +
+           '<div class="eml-card-row"><span class="eml-card-row-label">Pelan</span><span><span class="eml-tag eml-tag-gold">Motion</span></span></div>' +
+           '<div class="eml-card-row"><span class="eml-card-row-label">Tempoh</span><span>1 tahun (sehingga 12 Apr 2027)</span></div>' +
+           '<div class="eml-card-row" style="font-weight:700;font-size:14px"><span class="eml-card-row-label" style="font-size:11px">Jumlah</span><span style="color:var(--brand)">RM 29.00</span></div>' +
+           '<div class="eml-card-row"><span class="eml-card-row-label">Kaedah</span><span>Billplz (FPX)</span></div>' +
+           '<div class="eml-card-row"><span class="eml-card-row-label">Status</span><span><span class="eml-tag eml-tag-green">Berjaya</span></span></div>' +
+         '</div>' +
+         '<div class="eml-text" style="font-size:11px;color:var(--text3)">Simpan e-mel ini sebagai resit. Jika anda mempunyai sebarang pertanyaan, sila hubungi support@e-motion.my.</div>' +
+       '</div>' + footer();
+   }},
+  {id:'rsvp-notify',name:'RSVP Baru',trigger:'Apabila tetamu RSVP',category:'Notifikasi',
+   icon:'&#9829;',iconBg:'#fef2f2',iconColor:'#dc2626',
+   subject:'RSVP baru: Kak Siti akan hadir!',
+   build: function(){
+     return header() +
+       '<div class="eml-body">' +
+         '<div class="eml-greeting">Hai Farah & Adam,</div>' +
+         '<div class="eml-title">RSVP baru diterima!</div>' +
+         '<div class="eml-card">' +
+           '<div class="eml-card-row"><span class="eml-card-row-label">Tetamu</span><span style="font-weight:600">Kak Siti</span></div>' +
+           '<div class="eml-card-row"><span class="eml-card-row-label">Status</span><span><span class="eml-tag eml-tag-green">Hadir</span></span></div>' +
+           '<div class="eml-card-row"><span class="eml-card-row-label">Bilangan</span><span>4 orang</span></div>' +
+           '<div class="eml-card-row"><span class="eml-card-row-label">Masa</span><span>12 Apr 2026, 3:21 PM</span></div>' +
+         '</div>' +
+         '<div class="eml-stat-row">' +
+           '<div class="eml-stat"><div class="eml-stat-val">6</div><div class="eml-stat-label">Hadir</div></div>' +
+           '<div class="eml-stat"><div class="eml-stat-val">1</div><div class="eml-stat-label">Mungkin</div></div>' +
+           '<div class="eml-stat"><div class="eml-stat-val">20</div><div class="eml-stat-label">Jumlah Pax</div></div>' +
+         '</div>' +
+         '<div style="text-align:center"><a class="eml-btn-outline" href="#">Lihat Semua RSVP &rarr;</a></div>' +
+       '</div>' + footer();
+   }},
+  {id:'wish-notify',name:'Ucapan Baru',trigger:'Apabila tetamu hantar ucapan',category:'Notifikasi',
+   icon:'&#9825;',iconBg:'#f5f3ff',iconColor:'#7c3aed',
+   subject:'Ucapan baru dari Auntie Zara',
+   build: function(){
+     return header() +
+       '<div class="eml-body">' +
+         '<div class="eml-greeting">Hai Farah & Adam,</div>' +
+         '<div class="eml-title">Ucapan baru diterima!</div>' +
+         '<div class="eml-card" style="text-align:center">' +
+           '<div style="font-style:italic;font-size:16px;color:var(--brand);margin-bottom:10px;line-height:1.5">&ldquo;MasyaAllah, kad jemputan cantik sangat! Selamat pengantin baru. Semoga berbahagia.&rdquo;</div>' +
+           '<div style="font-family:-apple-system,system-ui,sans-serif;font-size:11px;color:var(--text3);font-weight:500">Auntie Zara &middot; 14 Apr 2026</div>' +
+         '</div>' +
+         '<div class="eml-highlight">Ucapan ini menunggu kelulusan anda. Luluskan untuk memaparkannya pada kad awam.</div>' +
+         '<div style="text-align:center"><a class="eml-btn" href="#">Luluskan Ucapan</a> <a class="eml-btn-outline" href="#" style="margin-left:6px">Lihat Semua</a></div>' +
+       '</div>' + footer();
+   }},
+  {id:'weekly',name:'Laporan Mingguan',trigger:'Setiap hari Isnin',category:'Notifikasi',
+   icon:'&#9636;',iconBg:'rgba(201,162,78,.1)',iconColor:'var(--gold-dk)',
+   subject:'Laporan mingguan kad anda',
+   build: function(){
+     return header() +
+       '<div class="eml-body">' +
+         '<div class="eml-greeting">Hai Farah & Adam,</div>' +
+         '<div class="eml-title">Laporan Mingguan Anda</div>' +
+         '<div class="eml-text">Berikut adalah ringkasan aktiviti kad jemputan anda untuk minggu 7&ndash;13 April 2026.</div>' +
+         '<div class="eml-stat-row">' +
+           '<div class="eml-stat"><div class="eml-stat-val">147</div><div class="eml-stat-label">Paparan</div></div>' +
+           '<div class="eml-stat"><div class="eml-stat-val">8</div><div class="eml-stat-label">RSVP Baru</div></div>' +
+           '<div class="eml-stat"><div class="eml-stat-val">24</div><div class="eml-stat-label">Kongsi</div></div>' +
+         '</div>' +
+         '<div class="eml-card">' +
+           '<div class="eml-card-label">Ringkasan RSVP</div>' +
+           '<div class="eml-card-row"><span class="eml-card-row-label">Hadir</span><span style="color:var(--green);font-weight:600">6 (20 pax)</span></div>' +
+           '<div class="eml-card-row"><span class="eml-card-row-label">Mungkin</span><span>1 (2 pax)</span></div>' +
+           '<div class="eml-card-row"><span class="eml-card-row-label">Tidak Hadir</span><span>1</span></div>' +
+           '<div class="eml-card-row"><span class="eml-card-row-label">Ucapan Menunggu</span><span>2</span></div>' +
+         '</div>' +
+         '<div class="eml-highlight">&#128197; <strong>42 hari</strong> lagi ke majlis anda. Pastikan semua tetamu telah menerima pautan kad!</div>' +
+         '<div style="text-align:center"><a class="eml-btn-outline" href="#">Buka Papan Pemuka &rarr;</a></div>' +
+       '</div>' + footer();
+   }},
+  {id:'reminder',name:'Peringatan Tamat',trigger:'7 hari sebelum tamat',category:'Transaksi',
+   icon:'&#9888;',iconBg:'#fff7ed',iconColor:'#ea580c',
+   subject:'Kad anda akan tamat dalam 7 hari',
+   build: function(){
+     return header() +
+       '<div class="eml-body">' +
+         '<div class="eml-greeting">Hai Farah & Adam,</div>' +
+         '<div class="eml-title">Kad anda akan tamat tidak lama lagi</div>' +
+         '<div class="eml-text">Pelan <strong>Motion</strong> anda akan tamat pada <strong>12 April 2027</strong>. Selepas itu, kad anda tidak lagi boleh diakses oleh tetamu.</div>' +
+         '<div class="eml-card" style="text-align:center">' +
+           '<div class="eml-card-label">Status Pelan</div>' +
+           '<div style="font-size:20px;color:var(--maroon);font-weight:600;margin:8px 0">7 hari lagi</div>' +
+           '<div style="font-family:-apple-system,system-ui,sans-serif;font-size:11px;color:var(--text3)">Tamat: 12 April 2027</div>' +
+         '</div>' +
+         '<div class="eml-text">Perbaharui sekarang untuk memastikan kad anda kekal aktif dan semua data RSVP serta ucapan disimpan.</div>' +
+         '<div style="text-align:center"><a class="eml-btn" href="#">Perbaharui Pelan &rarr;</a></div>' +
+       '</div>' + footer();
+   }},
+];
+
+function header(){
+  return '<div class="eml"><div class="eml-header"><div class="eml-header-logo">e<span>&middot;</span>motion <small>.MY</small></div><div class="eml-header-line"></div></div>';
+}
+function footer(){
+  return '<div class="eml-footer"><div class="eml-footer-text">e-motion.my &middot; Kad Jemputan Digital Warisan Melayu<br><a href="#">Nyahlanggan</a> &middot; <a href="#">Privasi</a> &middot; <a href="#">Bantuan</a><br><br>&copy; 2026 Warisan & E-motion. Hak cipta terpelihara.</div></div></div>';
+}
+
+// ===== STATE =====
+var currentEmail = 'welcome';
+var currentView = 'desktop';
+
+// ===== RENDER =====
+function init(){
+  renderSidebar();
+  renderEmail();
+}
+
+function renderSidebar(){
+  var cats = {};
+  EMAILS.forEach(function(e){ if(!cats[e.category]) cats[e.category]=[]; cats[e.category].push(e); });
+
+  var html = '';
+  for(var cat in cats){
+    html += '<div class="sb-section-label">'+cat+'</div>';
+    cats[cat].forEach(function(e){
+      html += '<div class="sb-item'+(currentEmail===e.id?' active':'')+'" onclick="selectEmail(\''+e.id+'\')">' +
+        '<div class="sb-item-icon" style="background:'+e.iconBg+';color:'+e.iconColor+'">'+e.icon+'</div>' +
+        '<div class="sb-item-info"><div class="sb-item-name">'+e.name+'</div><div class="sb-item-trigger">'+e.trigger+'</div></div></div>';
+    });
+  }
+  document.getElementById('emailList').innerHTML = html;
+}
+
+function selectEmail(id){
+  currentEmail = id;
+  renderSidebar();
+  renderEmail();
+}
+
+function renderEmail(){
+  var e = EMAILS.find(function(em){return em.id===currentEmail});
+  if(!e) return;
+
+  document.getElementById('toolbarTitle').textContent = e.name;
+  document.getElementById('toolbarMeta').innerHTML =
+    '<div class="toolbar-dot" style="background:'+e.iconColor+'"></div>' +
+    '<span>Subject: '+e.subject+'</span>';
+
+  document.getElementById('emailFrame').innerHTML = e.build();
+}
+
+function setView(view, btn){
+  currentView = view;
+  var frame = document.getElementById('emailFrame');
+  frame.classList.remove('desktop','mobile');
+  frame.classList.add(view);
+  btn.parentElement.querySelectorAll('.toolbar-btn').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+}
+
+init();
+</script>
+</body>
+</html>

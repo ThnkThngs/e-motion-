@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>e-motion.my Product Suite</title>
+<style>
+:root{
+  --brand:#1a2040;--brand2:#2a3460;--gold:#c9a24e;--gold-lt:#e8c775;--gold-dk:#8a6d2a;
+  --maroon:#6b1d2e;--ivory:#f8f0de;--cream:#faf4e3;
+  --bg:#fafaf9;--white:#fff;--border:#e7e5e4;
+  --text:#1c1917;--text2:#57534e;--text3:#a8a29e;
+  --green:#16a34a;--blue:#2563eb;--purple:#7c3aed;--orange:#ea580c;
+  --r:6px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--cream);color:var(--text);-webkit-font-smoothing:antialiased;font-size:13px;min-height:100vh}
+
+.wrap{max-width:1000px;margin:0 auto;padding:48px 32px 100px}
+
+/* HEADER */
+.hdr{text-align:center;margin-bottom:48px}
+.hdr-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;background:var(--brand);color:var(--gold);font-size:9px;letter-spacing:.15em;text-transform:uppercase;font-weight:700;border-radius:20px;margin-bottom:16px}
+.hdr-badge-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hdr-title{font-family:Georgia,serif;font-size:clamp(32px,5vw,48px);font-style:italic;color:var(--brand);margin-bottom:8px;line-height:1.15;letter-spacing:-.01em}
+.hdr-title em{color:var(--maroon);font-style:italic}
+.hdr-sub{font-size:14px;color:var(--text2);max-width:520px;margin:0 auto;line-height:1.6}
+
+/* STATS ROW */
+.stats{display:flex;justify-content:center;gap:32px;margin-bottom:48px;padding:20px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stat{text-align:center}
+.stat-val{font-family:Georgia,serif;font-size:28px;color:var(--brand)}
+.stat-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);font-weight:600;margin-top:2px}
+
+/* ARTIFACT CARDS */
+.artifacts{display:flex;flex-direction:column;gap:12px}
+.artifact{background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden;display:grid;grid-template-columns:64px 1fr auto;align-items:center;transition:all .25s;cursor:pointer;text-decoration:none;color:inherit}
+.artifact:hover{border-color:var(--gold);box-shadow:0 4px 20px rgba(201,162,78,.1);transform:translateY(-2px)}
+.artifact-num{display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:20px;color:var(--text3);border-right:1px solid var(--border);align-self:stretch;min-height:88px}
+.artifact-body{padding:16px 20px}
+.artifact-name{font-size:15px;font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:8px}
+.artifact-folder{font-family:'Menlo',monospace;font-size:10px;color:var(--text3);margin-bottom:6px}
+.artifact-desc{font-size:12px;color:var(--text2);line-height:1.5}
+.artifact-tags{display:flex;gap:4px;margin-top:8px;flex-wrap:wrap}
+.artifact-right{padding:16px 20px;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.artifact-screens{font-family:Georgia,serif;font-size:18px;color:var(--brand)}
+.artifact-screens-label{font-size:9px;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.artifact-arrow{font-size:14px;color:var(--text3);transition:color .2s}
+.artifact:hover .artifact-arrow{color:var(--gold)}
+
+.tag{display:inline-block;padding:2px 8px;border-radius:8px;font-size:9px;font-weight:600;letter-spacing:.02em}
+.t-public{background:rgba(37,99,235,.08);color:var(--blue)}
+.t-auth{background:rgba(124,58,237,.08);color:var(--purple)}
+.t-core{background:rgba(22,163,74,.08);color:var(--green)}
+.t-admin{background:rgba(234,88,12,.08);color:var(--orange)}
+.t-comm{background:rgba(201,162,78,.1);color:var(--gold-dk)}
+.t-docs{background:var(--bg);color:var(--text3)}
+
+/* FLOW SECTION */
+.flow-section{margin-top:48px;padding-top:32px;border-top:1px solid var(--border)}
+.flow-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--maroon);font-weight:600;margin-bottom:8px;text-align:center}
+.flow-title{font-family:Georgia,serif;font-size:22px;font-style:italic;color:var(--brand);text-align:center;margin-bottom:24px}
+.flow-map{display:flex;align-items:center;justify-content:center;gap:0;overflow-x:auto;padding:8px 0 16px}
+.flow-node{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center;min-width:110px;transition:all .2s}
+.flow-node:hover{border-color:var(--gold);transform:translateY(-2px)}
+.flow-node-num{font-size:8px;color:var(--text3);font-weight:600;letter-spacing:.1em;margin-bottom:2px}
+.flow-node-name{font-size:11px;font-weight:600;margin-bottom:1px}
+.flow-node-artifact{font-size:8px;color:var(--gold-dk);font-family:'Menlo',monospace}
+.flow-arrow{color:var(--text3);font-size:14px;flex-shrink:0;padding:0 4px}
+
+/* FOOTER */
+.footer{margin-top:48px;text-align:center;padding-top:24px;border-top:1px solid var(--border)}
+.footer-brand{font-family:Georgia,serif;font-style:italic;font-size:16px;color:var(--brand);margin-bottom:4px}
+.footer-brand span{color:var(--gold)}
+.footer-text{font-size:11px;color:var(--text3)}
+
+@media(max-width:700px){
+  .wrap{padding:24px 16px 80px}
+  .artifact{grid-template-columns:48px 1fr}
+  .artifact-right{display:none}
+  .stats{gap:16px;flex-wrap:wrap}
+  .flow-map{justify-content:flex-start}
+}
+@media print{
+  .wrap{padding:20px}
+  .artifact{page-break-inside:avoid}
+  .artifact:hover{transform:none;box-shadow:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hdr">
+    <div class="hdr-badge"><div class="hdr-badge-dot"></div>Product Prototype Suite</div>
+    <h1 class="hdr-title">e-motion<em>.my</em></h1>
+    <p class="hdr-sub">Kad jemputan digital perkahwinan warisan Melayu. 9 artifak interaktif merangkumi keseluruhan produk dari halaman pemasaran hingga skema pangkalan data.</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-val">9</div><div class="stat-label">Artifak</div></div>
+    <div class="stat"><div class="stat-val">28</div><div class="stat-label">Skrin</div></div>
+    <div class="stat"><div class="stat-val">3</div><div class="stat-label">Aliran</div></div>
+    <div class="stat"><div class="stat-val">12</div><div class="stat-label">Templat</div></div>
+    <div class="stat"><div class="stat-val">7</div><div class="stat-label">E-mel</div></div>
+    <div class="stat"><div class="stat-val">6</div><div class="stat-label">Jadual DB</div></div>
+  </div>
+
+  <div class="artifacts" id="artifacts"></div>
+
+  <!-- FLOW A -->
+  <div class="flow-section">
+    <div class="flow-label">User Journey</div>
+    <div class="flow-title">Flow A: Couple creates a card</div>
+    <div class="flow-map">
+      <div class="flow-node"><div class="flow-node-num">01</div><div class="flow-node-name">Homepage</div><div class="flow-node-artifact">immersive</div></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node"><div class="flow-node-num">02</div><div class="flow-node-name">Templates</div><div class="flow-node-artifact">templates</div></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node"><div class="flow-node-num">03</div><div class="flow-node-name">Builder</div><div class="flow-node-artifact">immersive</div></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node"><div class="flow-node-num">04</div><div class="flow-node-name">Onboarding</div><div class="flow-node-artifact">onboarding</div></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node"><div class="flow-node-num">05</div><div class="flow-node-name">Checkout</div><div class="flow-node-artifact">flow</div></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node"><div class="flow-node-num">06</div><div class="flow-node-name">Dashboard</div><div class="flow-node-artifact">dashboard</div></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node"><div class="flow-node-num">07</div><div class="flow-node-name">WhatsApp</div><div class="flow-node-artifact">whatsapp</div></div>
+    </div>
+  </div>
+
+  <!-- FLOW B -->
+  <div class="flow-section" style="border-top:none;padding-top:16px">
+    <div class="flow-title">Flow B: Guest views the card</div>
+    <div class="flow-map">
+      <div class="flow-node"><div class="flow-node-num">01</div><div class="flow-node-name">WA Link</div><div class="flow-node-artifact">whatsapp</div></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node"><div class="flow-node-num">02</div><div class="flow-node-name">Open Card</div><div class="flow-node-artifact">card</div></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node"><div class="flow-node-num">03</div><div class="flow-node-name">RSVP</div><div class="flow-node-artifact">card</div></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node"><div class="flow-node-num">04</div><div class="flow-node-name">Ucapan</div><div class="flow-node-artifact">card</div></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node"><div class="flow-node-num">05</div><div class="flow-node-name">Angpau</div><div class="flow-node-artifact">card</div></div>
+    </div>
+  </div>
+
+  <!-- FLOW C -->
+  <div class="flow-section" style="border-top:none;padding-top:16px">
+    <div class="flow-title">Flow C: Couple checks RSVPs</div>
+    <div class="flow-map">
+      <div class="flow-node"><div class="flow-node-num">01</div><div class="flow-node-name">Email Alert</div><div class="flow-node-artifact">emails</div></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node"><div class="flow-node-num">02</div><div class="flow-node-name">Dashboard</div><div class="flow-node-artifact">dashboard</div></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node"><div class="flow-node-num">03</div><div class="flow-node-name">RSVP Table</div><div class="flow-node-artifact">dashboard</div></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node"><div class="flow-node-num">04</div><div class="flow-node-name">Moderate</div><div class="flow-node-artifact">dashboard</div></div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node"><div class="flow-node-num">05</div><div class="flow-node-name">Export CSV</div><div class="flow-node-artifact">dashboard</div></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">e<span>&middot;</span>motion<span>.my</span></div>
+    <div class="footer-text">Warisan yang diwariskan dalam cahaya digital</div>
+  </div>
+
+</div>
+
+<script>
+var ARTIFACTS = [
+  {num:'01',name:'Marketing Landing Page',folder:'e-motion-immersive',screens:8,
+   desc:'Full Zajno-style immersive homepage with scroll reveals, parallax, horizontal scroll effects gallery, template showcase, builder section, pricing, FAQ, testimonials, and floating interactions.',
+   tags:[{t:'Public',c:'t-public'},{t:'Marketing',c:'t-comm'},{t:'Core',c:'t-core'}]},
+  {num:'02',name:'Admin Dashboards',folder:'e-motion-dashboard',screens:10,
+   desc:'Three-role SPA dashboard (Couple / Wedding Planner / Vendor Admin) with working tables, charts, form editor, QR share page, toggle switches, and complete CRUD views.',
+   tags:[{t:'Auth',c:'t-auth'},{t:'Dashboard',c:'t-admin'},{t:'Core',c:'t-core'}]},
+  {num:'03',name:'End-to-End Flow Prototype',folder:'e-motion-flow',screens:6,
+   desc:'Connected clickable prototype walking through all 3 user flows (A/B/C) with localStorage persistence. RSVP and wishes sync across flows.',
+   tags:[{t:'Public',c:'t-public'},{t:'Auth',c:'t-auth'},{t:'Core',c:'t-core'}]},
+  {num:'04',name:'Guest Invitation Card',folder:'e-motion-card',screens:6,
+   desc:'Standalone full-screen guest experience: envelope opening, GSAP hero animation, sakura petals, live countdown, working RSVP with confetti, wishes wall, digital angpau.',
+   tags:[{t:'Public',c:'t-public'},{t:'Core',c:'t-core'}]},
+  {num:'05',name:'Template Showcase Gallery',folder:'e-motion-templates',screens:2,
+   desc:'12 browsable templates rendered as live mini-invitations with category/plan filters, sorting, click-to-select, and full preview modal with phone mockup.',
+   tags:[{t:'Public',c:'t-public'},{t:'Conversion',c:'t-comm'}]},
+  {num:'06',name:'Onboarding Wizard',folder:'e-motion-onboarding',screens:5,
+   desc:'5-step guided setup after signup: couple info, event details, template picker, feature toggles, completion celebration with confetti.',
+   tags:[{t:'Auth',c:'t-auth'},{t:'Onboarding',c:'t-comm'}]},
+  {num:'07',name:'Email Templates',folder:'e-motion-emails',screens:7,
+   desc:'7 transactional emails (welcome, published, receipt, RSVP alert, wish alert, weekly report, expiry warning) with desktop/mobile preview switcher.',
+   tags:[{t:'Communication',c:'t-comm'},{t:'Docs',c:'t-docs'}]},
+  {num:'08',name:'WhatsApp Message Generator',folder:'e-motion-whatsapp',screens:1,
+   desc:'6 message templates (formal, casual, Islamic, bilingual, short, parents) with variable insertion, live WhatsApp chat preview including OG link card.',
+   tags:[{t:'Distribution',c:'t-comm'},{t:'Core',c:'t-core'}]},
+  {num:'09',name:'Product Architecture',folder:'e-motion-architecture',screens:6,
+   desc:'6-tab technical reference: flow maps, 28-screen inventory, tech stack (Next.js/Supabase/Billplz), database schema, 13 API endpoints, 8-phase roadmap.',
+   tags:[{t:'Documentation',c:'t-docs'},{t:'Technical',c:'t-admin'}]},
+];
+
+document.getElementById('artifacts').innerHTML = ARTIFACTS.map(function(a){
+  return '<div class="artifact">' +
+    '<div class="artifact-num">'+a.num+'</div>' +
+    '<div class="artifact-body">' +
+      '<div class="artifact-name">'+a.name+'</div>' +
+      '<div class="artifact-folder">artifacts/'+a.folder+'/</div>' +
+      '<div class="artifact-desc">'+a.desc+'</div>' +
+      '<div class="artifact-tags">'+a.tags.map(function(t){return '<span class="tag '+t.c+'">'+t.t+'</span>'}).join('')+'</div>' +
+    '</div>' +
+    '<div class="artifact-right">' +
+      '<div class="artifact-screens">'+a.screens+'</div>' +
+      '<div class="artifact-screens-label">screens</div>' +
+      '<div class="artifact-arrow">&nearr;</div>' +
+    '</div>' +
+  '</div>';
+}).join('');
+</script>
+</body>
+</html>

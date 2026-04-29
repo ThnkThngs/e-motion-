@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>e-motion.my Product Architecture</title>
+<style>
+:root{
+  --brand:#1a2040;--brand2:#2a3460;--gold:#c9a24e;--gold-lt:#e8c775;--gold-dk:#8a6d2a;
+  --maroon:#6b1d2e;--ivory:#f8f0de;--cream:#faf4e3;
+  --bg:#fafaf9;--white:#fff;--border:#e7e5e4;
+  --text:#1c1917;--text2:#57534e;--text3:#a8a29e;
+  --green:#16a34a;--blue:#2563eb;--purple:#7c3aed;--orange:#ea580c;--red:#dc2626;
+  --r:6px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--cream);color:var(--text);-webkit-font-smoothing:antialiased;font-size:13px}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;background:var(--brand);padding:12px 32px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:Georgia,serif;font-style:italic;font-size:16px;color:var(--gold-lt)}
+.nav-logo small{font-style:normal;font-size:9px;color:var(--gold);margin-left:4px;letter-spacing:.12em}
+.nav-tabs{display:flex;gap:2px;background:rgba(255,255,255,.08);padding:2px;border-radius:var(--r)}
+.nav-tab{padding:6px 14px;font-size:10px;font-weight:500;border:none;background:none;color:rgba(255,255,255,.5);cursor:pointer;border-radius:4px;font-family:inherit;transition:all .15s;letter-spacing:.04em;text-transform:uppercase}
+.nav-tab.active{background:var(--gold);color:var(--brand);font-weight:700}
+.nav-tab:hover{color:#fff}
+
+/* PAGES */
+.page{display:none;padding:32px;max-width:1200px;margin:0 auto}
+.page.active{display:block}
+
+/* SECTION */
+.sec-head{margin-bottom:24px}
+.sec-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--maroon);font-weight:600;margin-bottom:4px}
+.sec-title{font-family:Georgia,serif;font-size:clamp(22px,3vw,32px);font-style:italic;color:var(--brand);margin-bottom:6px}
+.sec-desc{font-size:13px;color:var(--text2);max-width:560px;line-height:1.6}
+
+/* FLOW MAP */
+.flow-map{display:flex;gap:0;align-items:flex-start;overflow-x:auto;padding:8px 0 24px;scrollbar-width:thin}
+.flow-col{display:flex;flex-direction:column;align-items:center;min-width:160px;flex-shrink:0}
+.flow-node{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:14px 16px;width:152px;text-align:center;position:relative;transition:all .2s;cursor:default}
+.flow-node:hover{border-color:var(--gold);box-shadow:0 4px 12px rgba(0,0,0,.06);transform:translateY(-2px)}
+.flow-node-icon{font-size:20px;margin-bottom:6px}
+.flow-node-name{font-size:12px;font-weight:600;margin-bottom:2px}
+.flow-node-sub{font-size:9px;color:var(--text3);line-height:1.4}
+.flow-node-tag{position:absolute;top:-8px;right:-8px;font-size:8px;font-weight:700;padding:2px 6px;border-radius:8px;letter-spacing:.04em}
+.flow-arrow{display:flex;align-items:center;justify-content:center;min-width:40px;color:var(--text3);font-size:16px;padding-top:14px;flex-shrink:0}
+.flow-sub{font-size:9px;color:var(--text3);margin-top:6px;text-align:center;max-width:140px}
+.flow-group-label{font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-dk);font-weight:700;margin-bottom:8px;padding:3px 8px;background:rgba(201,162,78,.1);border-radius:3px}
+
+/* SCREEN GRID */
+.screen-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-bottom:32px}
+.screen-card{background:var(--white);border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:all .2s;cursor:pointer}
+.screen-card:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(0,0,0,.06);transform:translateY(-2px)}
+.screen-swatch{height:80px;display:flex;align-items:center;justify-content:center;font-size:28px;position:relative}
+.screen-body{padding:12px 14px}
+.screen-name{font-size:13px;font-weight:600;margin-bottom:2px}
+.screen-desc{font-size:10px;color:var(--text3);line-height:1.5}
+.screen-tags{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}
+.tag{display:inline-block;padding:2px 7px;border-radius:8px;font-size:8px;font-weight:600;letter-spacing:.03em}
+
+/* TECH TABLE */
+.tech-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:32px}
+.tech-card{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:18px 20px}
+.tech-card-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.tech-card-icon{width:36px;height:36px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.tech-card-name{font-size:14px;font-weight:600}
+.tech-card-role{font-size:10px;color:var(--text3)}
+.tech-card-items{list-style:none}
+.tech-card-items li{font-size:11px;color:var(--text2);padding:3px 0;border-bottom:1px solid var(--border);display:flex;gap:6px;align-items:center}
+.tech-card-items li:last-child{border-bottom:none}
+.tech-card-items li::before{content:'\2022';color:var(--gold);font-weight:700;font-size:14px;line-height:1}
+
+/* DB SCHEMA */
+.schema-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:32px}
+.schema-card{background:var(--white);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.schema-head{padding:10px 14px;background:var(--brand);color:var(--gold-lt);font-size:12px;font-weight:600;font-family:'Menlo',monospace;display:flex;align-items:center;gap:6px}
+.schema-head-icon{font-size:14px}
+.schema-body{padding:0}
+.schema-row{display:flex;align-items:center;padding:6px 14px;font-size:11px;border-bottom:1px solid var(--border);font-family:'Menlo',monospace}
+.schema-row:last-child{border-bottom:none}
+.schema-row:hover{background:var(--bg)}
+.schema-col{flex:1;color:var(--text)}
+.schema-type{color:var(--text3);font-size:10px;flex:0 0 80px;text-align:right}
+.schema-key{color:var(--gold-dk);font-size:9px;margin-left:4px;font-weight:700}
+
+/* API TABLE */
+.api-table{width:100%;border-collapse:collapse;background:var(--white);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:32px}
+.api-table th{padding:8px 14px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);font-weight:600;text-align:left;background:var(--bg);border-bottom:1px solid var(--border)}
+.api-table td{padding:8px 14px;font-size:12px;border-bottom:1px solid var(--border);vertical-align:top}
+.api-table tr:last-child td{border-bottom:none}
+.api-table tr:hover td{background:rgba(201,162,78,.02)}
+.api-method{font-family:'Menlo',monospace;font-size:10px;font-weight:700;padding:2px 6px;border-radius:3px}
+.api-get{background:#eff6ff;color:#2563eb}
+.api-post{background:#f0fdf4;color:#16a34a}
+.api-put{background:#fff7ed;color:#ea580c}
+.api-del{background:#fef2f2;color:#dc2626}
+.api-path{font-family:'Menlo',monospace;font-size:11px;color:var(--text)}
+
+/* METRICS */
+.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.metric{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:16px 18px;text-align:center}
+.metric-val{font-family:Georgia,serif;font-size:28px;color:var(--brand);margin-bottom:2px}
+.metric-label{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);font-weight:600}
+
+/* TIMELINE */
+.timeline{position:relative;padding-left:24px;margin-bottom:32px}
+.timeline::before{content:'';position:absolute;left:7px;top:4px;bottom:4px;width:2px;background:var(--border)}
+.tl-item{position:relative;padding:0 0 20px 20px}
+.tl-item:last-child{padding-bottom:0}
+.tl-dot{position:absolute;left:-20px;top:4px;width:12px;height:12px;border-radius:50%;border:2px solid var(--border);background:var(--white)}
+.tl-item.done .tl-dot{background:var(--green);border-color:var(--green)}
+.tl-item.current .tl-dot{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,78,.2)}
+.tl-phase{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);font-weight:600}
+.tl-title{font-size:13px;font-weight:600;margin:2px 0}
+.tl-desc{font-size:11px;color:var(--text2);line-height:1.5}
+
+.mb-24{margin-bottom:24px}
+.mb-32{margin-bottom:32px}
+
+@media(max-width:700px){
+  .nav{padding:10px 16px}
+  .page{padding:20px 16px}
+  .metric-grid{grid-template-columns:repeat(2,1fr)}
+  .flow-map{padding-bottom:16px}
+}
+@media print{
+  .nav{position:relative;background:var(--brand);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page{display:block!important;page-break-after:always;padding:20px}
+  .flow-map{overflow:visible}
+}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-logo">e<span style="color:var(--gold);font-style:normal">&middot;</span>motion <small>.MY</small> Architecture</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('overview',this)">Overview</button>
+    <button class="nav-tab" onclick="showPage('screens',this)">Screens</button>
+    <button class="nav-tab" onclick="showPage('tech',this)">Tech Stack</button>
+    <button class="nav-tab" onclick="showPage('data',this)">Data Model</button>
+    <button class="nav-tab" onclick="showPage('api',this)">API</button>
+    <button class="nav-tab" onclick="showPage('roadmap',this)">Roadmap</button>
+  </div>
+</div>
+
+<!-- ===== OVERVIEW ===== -->
+<div class="page active" id="page-overview">
+  <div class="sec-head">
+    <div class="sec-label">Product Architecture</div>
+    <div class="sec-title">Gambaran keseluruhan sistem</div>
+    <div class="sec-desc">Kad jemputan digital perkahwinan warisan Melayu. Tiga aliran pengguna, satu platform.</div>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric"><div class="metric-val">28</div><div class="metric-label">Skrin Unik</div></div>
+    <div class="metric"><div class="metric-val">3</div><div class="metric-label">Aliran Pengguna</div></div>
+    <div class="metric"><div class="metric-val">7</div><div class="metric-label">E-mel Automatik</div></div>
+    <div class="metric"><div class="metric-val">6</div><div class="metric-label">Jadual DB</div></div>
+  </div>
+
+  <div class="sec-label mb-24">Flow A: Couple Creates Card</div>
+  <div class="flow-map">
+    <div class="flow-col"><div class="flow-group-label">Acquisition</div><div class="flow-node" style="border-color:var(--maroon)"><div class="flow-node-icon">&#127968;</div><div class="flow-node-name">Homepage</div><div class="flow-node-sub">Landing page + hero + pricing</div><div class="flow-node-tag" style="background:#fef2f2;color:var(--red)">Public</div></div><div class="flow-sub">SEO / Iklan / WoM</div></div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-col"><div class="flow-group-label">Conversion</div><div class="flow-node" style="border-color:var(--gold)"><div class="flow-node-icon">&#9998;</div><div class="flow-node-name">Builder</div><div class="flow-node-sub">Form + live preview. No auth yet.</div></div><div class="flow-sub">Zero friction</div></div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-col"><div class="flow-group-label">Auth</div><div class="flow-node" style="border-color:var(--blue)"><div class="flow-node-icon">&#128274;</div><div class="flow-node-name">Daftar</div><div class="flow-node-sub">Email + password. Supabase Auth.</div></div><div class="flow-sub">Card saved as draft</div></div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-col"><div class="flow-group-label">Payment</div><div class="flow-node" style="border-color:var(--green)"><div class="flow-node-icon">&#128179;</div><div class="flow-node-name">Checkout</div><div class="flow-node-sub">Motion RM29 / Cinematic RM59</div></div><div class="flow-sub">Billplz FPX</div></div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-col"><div class="flow-group-label">Retention</div><div class="flow-node" style="border-color:var(--brand)"><div class="flow-node-icon">&#128202;</div><div class="flow-node-name">Dashboard</div><div class="flow-node-sub">RSVP, wishes, analytics, edit</div></div><div class="flow-sub">Core loop</div></div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-col"><div class="flow-group-label">Distribution</div><div class="flow-node" style="border-color:#25D366"><div class="flow-node-icon">&#128172;</div><div class="flow-node-name">WhatsApp</div><div class="flow-node-sub">Message generator + share</div></div><div class="flow-sub">Viral loop</div></div>
+  </div>
+
+  <div class="sec-label mb-24">Flow B: Guest Views Card</div>
+  <div class="flow-map">
+    <div class="flow-col"><div class="flow-node" style="border-color:#25D366"><div class="flow-node-icon">&#128241;</div><div class="flow-node-name">WhatsApp Link</div><div class="flow-node-sub">Guest taps link from couple</div></div></div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-col"><div class="flow-node" style="border-color:var(--gold)"><div class="flow-node-icon">&#128140;</div><div class="flow-node-name">Kad Jemputan</div><div class="flow-node-sub">Full-screen animated card</div></div></div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-col"><div class="flow-node" style="border-color:var(--green)"><div class="flow-node-icon">&#10003;</div><div class="flow-node-name">RSVP</div><div class="flow-node-sub">Name, status, pax count</div></div></div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-col"><div class="flow-node" style="border-color:var(--purple)"><div class="flow-node-icon">&#9825;</div><div class="flow-node-name">Ucapan</div><div class="flow-node-sub">Write wish (pending approval)</div></div></div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-col"><div class="flow-node" style="border-color:var(--orange)"><div class="flow-node-icon">&#128176;</div><div class="flow-node-name">Angpau</div><div class="flow-node-sub">Copy bank account number</div></div></div>
+  </div>
+
+  <div class="sec-label mb-24">Flow C: Couple Manages RSVPs</div>
+  <div class="flow-map">
+    <div class="flow-col"><div class="flow-node"><div class="flow-node-icon">&#128272;</div><div class="flow-node-name">Log Masuk</div><div class="flow-node-sub">Supabase Auth session</div></div></div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-col"><div class="flow-node"><div class="flow-node-icon">&#128203;</div><div class="flow-node-name">RSVP Table</div><div class="flow-node-sub">Filter, sort, total pax</div></div></div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-col"><div class="flow-node"><div class="flow-node-icon">&#9733;</div><div class="flow-node-name">Moderate Wishes</div><div class="flow-node-sub">Approve / reject</div></div></div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-col"><div class="flow-node"><div class="flow-node-icon">&#128190;</div><div class="flow-node-name">Export CSV</div><div class="flow-node-sub">For caterer / planner</div></div></div>
+  </div>
+</div>
+
+<!-- ===== SCREENS ===== -->
+<div class="page" id="page-screens">
+  <div class="sec-head"><div class="sec-label">All Screens</div><div class="sec-title">28 skrin unik merentasi 8 artifak</div></div>
+  <div class="screen-grid" id="screenGrid"></div>
+</div>
+
+<!-- ===== TECH STACK ===== -->
+<div class="page" id="page-tech">
+  <div class="sec-head"><div class="sec-label">Tech Stack</div><div class="sec-title">Seni bina teknikal</div><div class="sec-desc">Serverless-first. Malaysian payment rails. Fully edge-deployed.</div></div>
+  <div class="tech-grid" id="techGrid"></div>
+</div>
+
+<!-- ===== DATA MODEL ===== -->
+<div class="page" id="page-data">
+  <div class="sec-head"><div class="sec-label">Data Model</div><div class="sec-title">Skema pangkalan data Supabase</div><div class="sec-desc">PostgreSQL dengan Row Level Security. 6 jadual teras.</div></div>
+  <div class="schema-grid" id="schemaGrid"></div>
+</div>
+
+<!-- ===== API ===== -->
+<div class="page" id="page-api">
+  <div class="sec-head"><div class="sec-label">API Endpoints</div><div class="sec-title">RESTful API via Supabase</div><div class="sec-desc">Auto-generated from schema + custom Edge Functions for webhooks.</div></div>
+  <div id="apiContent"></div>
+</div>
+
+<!-- ===== ROADMAP ===== -->
+<div class="page" id="page-roadmap">
+  <div class="sec-head"><div class="sec-label">Roadmap</div><div class="sec-title">Pelan pembangunan</div></div>
+  <div class="timeline" id="timeline"></div>
+</div>
+
+<script>
+// NAV
+function showPage(id,btn){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active')});
+  btn.classList.add('active');
+}
+
+// SCREENS DATA
+var SCREENS=[
+  {name:'Homepage',artifact:'immersive',desc:'Landing page with hero, effects, templates, pricing, FAQ',color:'var(--brand)',icon:'\u{1F3E0}',tags:['Public','Marketing']},
+  {name:'Template Gallery',artifact:'templates',desc:'12 templates with filters, preview modal, selection',color:'var(--gold)',icon:'\u{1F3A8}',tags:['Public','Conversion']},
+  {name:'Builder',artifact:'immersive',desc:'Live form + phone preview, zero-auth card creation',color:'var(--cream)',icon:'\u270E',tags:['Public','Core']},
+  {name:'Onboarding Wizard',artifact:'onboarding',desc:'5-step guided setup after signup',color:'#eff6ff',icon:'\u{1F9ED}',tags:['Auth','Onboarding']},
+  {name:'Auth / Signup',artifact:'flow',desc:'Email + password, Google OAuth',color:'var(--brand)',icon:'\u{1F512}',tags:['Auth']},
+  {name:'Checkout',artifact:'flow',desc:'Plan selection, Billplz payment, receipt',color:'#f0fdf4',icon:'\u{1F4B3}',tags:['Auth','Payment']},
+  {name:'Guest Card',artifact:'card',desc:'Full-screen animated invitation with envelope',color:'var(--maroon)',icon:'\u{1F48C}',tags:['Public','Core']},
+  {name:'RSVP Form',artifact:'card',desc:'Name, status, pax inside guest card',color:'#f0fdf4',icon:'\u2713',tags:['Public','Core']},
+  {name:'Wishes Form',artifact:'card',desc:'Guest writes wish, pending moderation',color:'#f5f3ff',icon:'\u2661',tags:['Public']},
+  {name:'Digital Angpau',artifact:'card',desc:'Bank account display + copy',color:'var(--cream)',icon:'\u{1F4B0}',tags:['Public']},
+  {name:'Couple Dashboard',artifact:'dashboard',desc:'Overview, stats, activity feed, card preview',color:'var(--bg)',icon:'\u{1F4CA}',tags:['Auth','Dashboard']},
+  {name:'RSVP Management',artifact:'dashboard',desc:'Table with filters, export CSV',color:'var(--bg)',icon:'\u{1F4CB}',tags:['Auth','Dashboard']},
+  {name:'Wish Moderation',artifact:'dashboard',desc:'Approve/reject guest wishes',color:'var(--bg)',icon:'\u2605',tags:['Auth','Dashboard']},
+  {name:'Card Editor',artifact:'dashboard',desc:'Edit all card fields, toggle features',color:'var(--bg)',icon:'\u{1F527}',tags:['Auth','Dashboard']},
+  {name:'Share Page',artifact:'dashboard',desc:'QR code, copy link, share channels',color:'var(--bg)',icon:'\u{1F517}',tags:['Auth','Dashboard']},
+  {name:'Analytics',artifact:'dashboard',desc:'Views, traffic sources, RSVP rate charts',color:'var(--bg)',icon:'\u{1F4C8}',tags:['Auth','Dashboard']},
+  {name:'Planner Portfolio',artifact:'dashboard',desc:'Multi-client table with progress bars',color:'var(--bg)',icon:'\u{1F465}',tags:['Auth','Planner']},
+  {name:'Planner Calendar',artifact:'dashboard',desc:'Client wedding dates countdown',color:'var(--bg)',icon:'\u{1F4C5}',tags:['Auth','Planner']},
+  {name:'Planner Invoices',artifact:'dashboard',desc:'Invoice table with status tracking',color:'var(--bg)',icon:'\u{1F4B5}',tags:['Auth','Planner']},
+  {name:'Vendor Dashboard',artifact:'dashboard',desc:'MRR, customers, revenue charts',color:'var(--bg)',icon:'\u{1F3E2}',tags:['Auth','Admin']},
+  {name:'Customer Table',artifact:'dashboard',desc:'All customers with plan/status filters',color:'var(--bg)',icon:'\u{1F464}',tags:['Auth','Admin']},
+  {name:'Support Tickets',artifact:'dashboard',desc:'Ticket queue with priority levels',color:'var(--bg)',icon:'\u{1F4E9}',tags:['Auth','Admin']},
+  {name:'Platform Settings',artifact:'dashboard',desc:'Pricing, features, API keys',color:'var(--bg)',icon:'\u2699',tags:['Auth','Admin']},
+  {name:'WhatsApp Generator',artifact:'whatsapp',desc:'6 message templates, live WA preview',color:'#dcfce7',icon:'\u{1F4AC}',tags:['Auth','Distribution']},
+  {name:'Welcome Email',artifact:'emails',desc:'Post-signup confirmation',color:'#eff6ff',icon:'\u2709',tags:['Email']},
+  {name:'Payment Receipt',artifact:'emails',desc:'Billplz transaction receipt',color:'#f0fdf4',icon:'\u{1F4E7}',tags:['Email']},
+  {name:'RSVP Notification',artifact:'emails',desc:'Guest RSVP alert to couple',color:'#fef2f2',icon:'\u2764',tags:['Email']},
+  {name:'Weekly Report',artifact:'emails',desc:'Monday digest with stats',color:'rgba(201,162,78,.1)',icon:'\u{1F4CA}',tags:['Email']},
+];
+
+function renderScreens(){
+  var tagColors={Public:'background:rgba(37,99,235,.1);color:#2563eb',Auth:'background:rgba(124,58,237,.1);color:#7c3aed',Marketing:'background:rgba(234,88,12,.1);color:#ea580c',Core:'background:rgba(22,163,74,.1);color:#16a34a',Dashboard:'background:var(--bg);color:var(--text3)',Planner:'background:rgba(201,162,78,.1);color:var(--gold-dk)',Admin:'background:rgba(220,38,38,.1);color:#dc2626',Email:'background:#eff6ff;color:#2563eb',Onboarding:'background:#f5f3ff;color:#7c3aed',Payment:'background:#f0fdf4;color:#16a34a',Conversion:'background:rgba(201,162,78,.1);color:var(--gold-dk)',Distribution:'background:#dcfce7;color:#16a34a'};
+  document.getElementById('screenGrid').innerHTML=SCREENS.map(function(s){
+    return '<div class="screen-card"><div class="screen-swatch" style="background:'+s.color+'"><span>'+s.icon+'</span></div><div class="screen-body"><div class="screen-name">'+s.name+'</div><div class="screen-desc">'+s.desc+'</div><div class="screen-tags">'+s.tags.map(function(t){return '<span class="tag" style="'+(tagColors[t]||'')+'">'+t+'</span>'}).join('')+'</div></div></div>';
+  }).join('');
+}
+
+// TECH STACK
+var TECH=[
+  {name:'Next.js 15',role:'Frontend Framework',icon:'\u25B2',bg:'#000',color:'#fff',items:['App Router + Server Components','Static generation for card pages','Edge runtime for API routes','Middleware for auth redirects']},
+  {name:'Supabase',role:'Backend as a Service',icon:'\u26A1',bg:'#3ecf8e',color:'#fff',items:['PostgreSQL with Row Level Security','Auth (email, Google OAuth)','Storage for media (MP3, photos, video)','Realtime subscriptions for live preview']},
+  {name:'Billplz',role:'Payment Gateway',icon:'\u{1F4B3}',bg:'#ff6600',color:'#fff',items:['FPX direct debit (Malaysian banks)','Webhook for payment confirmation','One-time payment (no subscription)','Auto-generate receipt PDF']},
+  {name:'Vercel',role:'Hosting & Edge',icon:'\u25B3',bg:'#000',color:'#fff',items:['Edge Functions for API','Global CDN for card pages','Preview deployments for staging','Analytics + Web Vitals']},
+  {name:'GSAP 3',role:'Animation Engine',icon:'\u2728',bg:'var(--gold)',color:'var(--brand)',items:['Scroll-triggered reveals','Staggered entrance animations','Timeline-based hero sequences','Smooth easing curves']},
+  {name:'Resend',role:'Transactional Email',icon:'\u2709',bg:'#000',color:'#fff',items:['7 email templates','React Email components','Delivery tracking','Unsubscribe management']},
+];
+
+function renderTech(){
+  document.getElementById('techGrid').innerHTML=TECH.map(function(t){
+    return '<div class="tech-card"><div class="tech-card-head"><div class="tech-card-icon" style="background:'+t.bg+';color:'+t.color+'">'+t.icon+'</div><div><div class="tech-card-name">'+t.name+'</div><div class="tech-card-role">'+t.role+'</div></div></div><ul class="tech-card-items">'+t.items.map(function(i){return '<li>'+i+'</li>'}).join('')+'</ul></div>';
+  }).join('');
+}
+
+// SCHEMA
+var SCHEMA=[
+  {name:'users',icon:'\u{1F464}',cols:[['id','uuid','PK'],['email','text',''],['name','text',''],['role','enum','couple|planner|admin'],['created_at','timestamptz','']]},
+  {name:'invitations',icon:'\u{1F48C}',cols:[['id','uuid','PK'],['user_id','uuid','FK'],['slug','text','UNIQUE'],['template','text',''],['plan','enum','free|motion|cinematic'],['status','enum','draft|active|expired'],['card_data','jsonb','all form fields'],['expires_at','timestamptz',''],['created_at','timestamptz','']]},
+  {name:'rsvp_responses',icon:'\u2713',cols:[['id','uuid','PK'],['invitation_id','uuid','FK'],['guest_name','text',''],['status','enum','attending|declined|maybe'],['pax','int4',''],['created_at','timestamptz','']]},
+  {name:'wishes',icon:'\u2661',cols:[['id','uuid','PK'],['invitation_id','uuid','FK'],['author','text',''],['message','text',''],['approved','boolean','default false'],['created_at','timestamptz','']]},
+  {name:'payments',icon:'\u{1F4B3}',cols:[['id','uuid','PK'],['user_id','uuid','FK'],['invitation_id','uuid','FK'],['billplz_id','text',''],['amount','int4','cents'],['plan','enum',''],['status','enum','pending|paid|failed'],['paid_at','timestamptz','']]},
+  {name:'media',icon:'\u{1F4F7}',cols:[['id','uuid','PK'],['invitation_id','uuid','FK'],['type','enum','photo|music|video'],['storage_path','text','Supabase Storage'],['order','int4',''],['created_at','timestamptz','']]}
+];
+
+function renderSchema(){
+  document.getElementById('schemaGrid').innerHTML=SCHEMA.map(function(s){
+    return '<div class="schema-card"><div class="schema-head"><span class="schema-head-icon">'+s.icon+'</span>'+s.name+'</div><div class="schema-body">'+s.cols.map(function(c){return '<div class="schema-row"><div class="schema-col">'+c[0]+(c[2]?'<span class="schema-key">'+c[2]+'</span>':'')+'</div><div class="schema-type">'+c[1]+'</div></div>'}).join('')+'</div></div>';
+  }).join('');
+}
+
+// API
+function renderAPI(){
+  var endpoints=[
+    ['GET','/api/invitations/:slug','Fetch card by slug (public)','Guest card page SSR'],
+    ['POST','/api/invitations','Create new invitation','After signup, save draft'],
+    ['PUT','/api/invitations/:id','Update invitation data','Edit card from dashboard'],
+    ['POST','/api/rsvp','Submit RSVP response','Guest submits RSVP form'],
+    ['GET','/api/rsvp/:invitation_id','List RSVPs for a card','Dashboard RSVP table'],
+    ['POST','/api/wishes','Submit a wish','Guest writes wish'],
+    ['PUT','/api/wishes/:id/approve','Approve a wish','Couple moderates'],
+    ['POST','/api/webhooks/billplz','Billplz payment webhook','Activate card on payment'],
+    ['POST','/api/auth/signup','Register new user','Supabase Auth wrapper'],
+    ['POST','/api/auth/login','Login','Supabase Auth wrapper'],
+    ['GET','/api/analytics/:invitation_id','Card analytics','Views, shares, traffic'],
+    ['GET','/api/rsvp/:invitation_id/export','Export CSV','Download for caterer'],
+    ['POST','/api/media/upload','Upload media file','Photos, MP3, video'],
+  ];
+  var methodClass={GET:'api-get',POST:'api-post',PUT:'api-put',DELETE:'api-del'};
+  document.getElementById('apiContent').innerHTML='<table class="api-table"><thead><tr><th>Method</th><th>Endpoint</th><th>Description</th><th>Trigger</th></tr></thead><tbody>'+endpoints.map(function(e){return '<tr><td><span class="api-method '+methodClass[e[0]]+'">'+e[0]+'</span></td><td class="api-path">'+e[1]+'</td><td style="font-size:11px;color:var(--text2)">'+e[2]+'</td><td style="font-size:10px;color:var(--text3)">'+e[3]+'</td></tr>'}).join('')+'</tbody></table>';
+}
+
+// ROADMAP
+var ROADMAP=[
+  {phase:'Phase 1',title:'MVP Launch',desc:'Landing page, builder, auth, checkout, guest card, RSVP, WhatsApp share. Single template (Songket Biru). Malay only.',status:'done'},
+  {phase:'Phase 2',title:'Template Expansion',desc:'8 templates, template gallery, onboarding wizard, music upload, photo gallery (6 photos).',status:'done'},
+  {phase:'Phase 3',title:'Dashboard & Analytics',desc:'Couple dashboard (RSVP table, wish moderation, CSV export, analytics charts). Email notifications.',status:'current'},
+  {phase:'Phase 4',title:'Multi-language',desc:'English, Chinese, Hindi translations. Dwibahasa card option. RTL Jawi support.',status:'pending'},
+  {phase:'Phase 5',title:'Planner Portal',desc:'Multi-client management, calendar view, invoicing, team collaboration.',status:'pending'},
+  {phase:'Phase 6',title:'Video & Premium',desc:'MP4 closing video, GSAP premium animations, love story timeline, digital angpau with payment integration.',status:'pending'},
+  {phase:'Phase 7',title:'Mobile App',desc:'React Native app for couple dashboard. Push notifications for RSVP. Offline card editing.',status:'pending'},
+  {phase:'Phase 8',title:'Marketplace',desc:'User-submitted templates, planner marketplace, vendor directory, affiliate program.',status:'pending'},
+];
+
+function renderRoadmap(){
+  document.getElementById('timeline').innerHTML=ROADMAP.map(function(r){
+    return '<div class="tl-item '+r.status+'"><div class="tl-dot"></div><div class="tl-phase">'+r.phase+'</div><div class="tl-title">'+r.title+'</div><div class="tl-desc">'+r.desc+'</div></div>';
+  }).join('');
+}
+
+// INIT
+renderScreens();
+renderTech();
+renderSchema();
+renderAPI();
+renderRoadmap();
+</script>
+</body>
+</html>

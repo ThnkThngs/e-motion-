@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>e-motion.my Kongsi WhatsApp</title>
+<style>
+:root{
+  --brand:#1a2040;--gold:#c9a24e;--gold-lt:#e8c775;--gold-dk:#8a6d2a;
+  --maroon:#6b1d2e;--ivory:#f8f0de;--cream:#faf4e3;
+  --bg:#f5f5f4;--white:#fff;--border:#e7e5e4;
+  --text:#1c1917;--text2:#57534e;--text3:#a8a29e;
+  --green:#25D366;--green-dk:#1da852;--r:6px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--cream);color:var(--text);-webkit-font-smoothing:antialiased;font-size:13px;overflow-x:hidden}
+
+/* LAYOUT */
+.page{max-width:960px;margin:0 auto;padding:24px 24px 80px}
+
+/* HEADER */
+.hdr{text-align:center;padding:24px 0 32px}
+.hdr-logo{font-family:Georgia,serif;font-style:italic;font-size:18px;color:var(--brand);margin-bottom:4px}
+.hdr-logo span{color:var(--gold)}
+.hdr-title{font-family:Georgia,serif;font-size:clamp(24px,4vw,36px);font-style:italic;color:var(--brand);margin-bottom:6px}
+.hdr-title em{color:var(--maroon)}
+.hdr-sub{font-size:13px;color:var(--text2);max-width:420px;margin:0 auto}
+
+/* SPLIT */
+.split{display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start}
+
+/* EDITOR PANEL */
+.editor{background:var(--white);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.editor-head{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.editor-title{font-size:13px;font-weight:600}
+.editor-badge{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--green-dk);font-weight:600;display:flex;align-items:center;gap:4px}
+.editor-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green)}
+.editor-body{padding:20px}
+
+/* TEMPLATE SELECTOR */
+.tpl-row{display:flex;gap:6px;margin-bottom:16px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.tpl-row::-webkit-scrollbar{display:none}
+.tpl-chip{padding:7px 14px;border:1px solid var(--border);border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;white-space:nowrap;transition:all .2s;background:var(--white);color:var(--text2);flex-shrink:0}
+.tpl-chip:hover{border-color:var(--gold)}
+.tpl-chip.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+
+/* FORM */
+.fg{margin-bottom:14px}
+.label{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);font-weight:600;margin-bottom:4px}
+.input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--r);font-size:13px;font-family:inherit;color:var(--text);outline:none;background:var(--white);transition:border-color .2s}
+.input:focus{border-color:var(--gold)}
+.input::placeholder{color:var(--text3)}
+textarea.input{resize:vertical;min-height:100px;line-height:1.6}
+.char-count{font-size:10px;color:var(--text3);text-align:right;margin-top:3px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hint{font-size:10px;color:var(--text3);margin-top:4px;line-height:1.5}
+
+/* VARIABLES CHIPS */
+.var-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.var-chip{padding:3px 8px;background:rgba(201,162,78,.1);border:1px solid rgba(201,162,78,.25);border-radius:3px;font-size:10px;color:var(--gold-dk);cursor:pointer;font-family:monospace;transition:all .15s}
+.var-chip:hover{background:var(--gold);color:var(--brand);border-color:var(--gold)}
+
+/* ACTIONS */
+.action-row{display:flex;gap:8px;margin-top:20px}
+.btn{padding:11px 20px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border:none;cursor:pointer;font-family:inherit;border-radius:var(--r);transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-wa{background:linear-gradient(135deg,var(--green),var(--green-dk));color:#fff;flex:1;justify-content:center}
+.btn-wa:hover{box-shadow:0 4px 12px rgba(37,211,102,.3);transform:translateY(-1px)}
+.btn-copy{background:var(--white);border:1px solid var(--border);color:var(--text2)}
+.btn-copy:hover{border-color:var(--text3)}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:var(--brand)}
+
+/* PREVIEW PANEL */
+.preview{position:sticky;top:24px}
+.preview-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text3);font-weight:600;margin-bottom:10px;text-align:center}
+
+/* WHATSAPP CHAT MOCKUP */
+.wa-chat{width:100%;background:#e5ddd5;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08);border:1px solid var(--border)}
+.wa-chat-header{background:#075e54;padding:10px 14px;display:flex;align-items:center;gap:10px}
+.wa-chat-avatar{width:32px;height:32px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--brand);flex-shrink:0}
+.wa-chat-name{font-size:13px;font-weight:600;color:#fff}
+.wa-chat-status{font-size:10px;color:rgba(255,255,255,.6)}
+.wa-chat-body{padding:12px;min-height:300px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect fill='%23e5ddd5'/%3E%3Cg opacity='.03'%3E%3Ccircle cx='50' cy='50' r='20' fill='%23000'/%3E%3Ccircle cx='150' cy='100' r='15' fill='%23000'/%3E%3Ccircle cx='250' cy='50' r='18' fill='%23000'/%3E%3Ccircle cx='100' cy='200' r='22' fill='%23000'/%3E%3Ccircle cx='200' cy='250' r='16' fill='%23000'/%3E%3C/g%3E%3C/svg%3E")}
+
+/* Message bubble */
+.wa-bubble{max-width:85%;background:#dcf8c6;border-radius:8px 8px 0 8px;padding:8px 10px;margin-bottom:6px;position:relative;margin-left:auto;box-shadow:0 1px 1px rgba(0,0,0,.06)}
+.wa-bubble-text{font-size:13px;color:#303030;line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
+.wa-bubble-link{color:#039be5;text-decoration:none;word-break:break-all}
+.wa-bubble-time{font-size:10px;color:rgba(0,0,0,.35);text-align:right;margin-top:3px;display:flex;align-items:center;justify-content:flex-end;gap:3px}
+.wa-bubble-check{color:#53bdeb;font-size:11px}
+
+/* Link preview card inside bubble */
+.wa-link-preview{border:1px solid rgba(0,0,0,.06);border-radius:6px;overflow:hidden;margin-top:6px;background:#fff}
+.wa-link-header{height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16px;position:relative}
+.wa-link-header-pat{position:absolute;inset:0;opacity:.08}
+.wa-link-name{font-family:Georgia,serif;font-style:italic;font-size:22px;position:relative;z-index:1}
+.wa-link-amp{font-size:10px;display:block;margin:2px 0;position:relative;z-index:1}
+.wa-link-meta{padding:8px 10px;border-top:1px solid rgba(0,0,0,.04)}
+.wa-link-domain{font-size:10px;color:rgba(0,0,0,.4);text-transform:uppercase;letter-spacing:.04em}
+.wa-link-title{font-size:12px;font-weight:600;color:#303030;margin-top:2px;line-height:1.3}
+.wa-link-desc{font-size:11px;color:rgba(0,0,0,.5);margin-top:2px;line-height:1.4}
+
+/* STATS BAR */
+.stats-bar{margin-top:16px;background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
+.stats-bar-val{font-size:18px;font-weight:700;color:var(--brand);font-family:Georgia,serif}
+.stats-bar-label{font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);font-weight:600;margin-top:1px}
+
+/* TOAST */
+.toast{position:fixed;bottom:60px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--brand);color:#fff;padding:10px 20px;border-radius:var(--r);font-size:12px;font-weight:500;opacity:0;z-index:99;pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,.2);transition:all .3s;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media(max-width:800px){
+  .split{grid-template-columns:1fr}
+  .preview{position:relative;top:0;order:-1}
+  .wa-chat{max-width:400px;margin:0 auto}
+}
+@media print{
+  .editor,.action-row,.tpl-row,.var-row,.stats-bar,.hdr{display:none!important}
+  .page{padding:16px}
+  .split{display:block}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="hdr">
+  <div class="hdr-logo">e<span>&middot;</span>motion</div>
+  <h1 class="hdr-title">Kongsi kad via <em>WhatsApp</em></h1>
+  <p class="hdr-sub">Pilih templat mesej, sesuaikan, dan pratonton bagaimana ia akan kelihatan dalam WhatsApp tetamu anda.</p>
+</div>
+
+<div class="split">
+  <!-- EDITOR -->
+  <div>
+    <div class="editor">
+      <div class="editor-head">
+        <div class="editor-title">Penyunting Mesej</div>
+        <div class="editor-badge">Sinkron langsung</div>
+      </div>
+      <div class="editor-body">
+        <div class="label">Templat Mesej</div>
+        <div class="tpl-row" id="tplRow"></div>
+
+        <div class="row2">
+          <div class="fg"><div class="label">Nama Pengantin Perempuan</div><input class="input" id="fBride" value="Farah" oninput="up()"></div>
+          <div class="fg"><div class="label">Nama Pengantin Lelaki</div><input class="input" id="fGroom" value="Adam" oninput="up()"></div>
+        </div>
+        <div class="row2">
+          <div class="fg"><div class="label">Tarikh Majlis</div><input class="input" id="fDate" value="25 Mei 2026" oninput="up()"></div>
+          <div class="fg"><div class="label">Tempat</div><input class="input" id="fVenue" value="Dewan Seri Warisan" oninput="up()"></div>
+        </div>
+        <div class="fg">
+          <div class="label">Pautan Kad</div>
+          <input class="input" id="fUrl" value="e-motion.my/farah-adam-2026" oninput="up()">
+        </div>
+        <div class="fg">
+          <div class="label">Mesej</div>
+          <textarea class="input" id="fMsg" oninput="up()"></textarea>
+          <div class="char-count" id="charCount">0 / 1000</div>
+          <div class="hint">Klik pemboleh ubah di bawah untuk memasukkannya ke dalam mesej:</div>
+          <div class="var-row">
+            <div class="var-chip" onclick="insertVar('{{bride}}')">{bride}</div>
+            <div class="var-chip" onclick="insertVar('{{groom}}')">{groom}</div>
+            <div class="var-chip" onclick="insertVar('{{date}}')">{date}</div>
+            <div class="var-chip" onclick="insertVar('{{venue}}')">{venue}</div>
+            <div class="var-chip" onclick="insertVar('{{url}}')">{url}</div>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button class="btn btn-wa" onclick="shareWA()">&#9742; Kongsi WhatsApp</button>
+          <button class="btn btn-copy" onclick="copyMsg()">Salin</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="preview">
+    <div class="preview-label">Pratonton WhatsApp</div>
+    <div class="wa-chat">
+      <div class="wa-chat-header">
+        <div class="wa-chat-avatar" id="waAvatar">FA</div>
+        <div><div class="wa-chat-name" id="waName">Farah & Adam</div><div class="wa-chat-status">online</div></div>
+      </div>
+      <div class="wa-chat-body">
+        <div class="wa-bubble">
+          <div class="wa-bubble-text" id="waBubble"></div>
+          <div class="wa-link-preview" id="waLinkPreview">
+            <div class="wa-link-header" id="waLinkHeader" style="background:linear-gradient(180deg,#1a2040,#2a3460);color:#f8f0de">
+              <div class="wa-link-header-pat" style="background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Cg fill='none' stroke='%23e8c775' stroke-width='.5'%3E%3Cpath d='M30 5L34 18L47 20L36 28L40 42L30 35L20 42L24 28L13 20L26 18Z'/%3E%3C/g%3E%3C/svg%3E&quot;)"></div>
+              <div class="wa-link-name" id="waLinkBride" style="color:#e8c775">Farah</div>
+              <div class="wa-link-amp" style="color:#c9a24e">&amp;</div>
+              <div class="wa-link-name" id="waLinkGroom" style="color:#e8c775">Adam</div>
+            </div>
+            <div class="wa-link-meta">
+              <div class="wa-link-domain">E-MOTION.MY</div>
+              <div class="wa-link-title" id="waLinkTitle">Kad Jemputan Perkahwinan Farah & Adam</div>
+              <div class="wa-link-desc">Kad jemputan digital perkahwinan dengan animasi warisan Melayu</div>
+            </div>
+          </div>
+          <div class="wa-bubble-time">3:21 PM <span class="wa-bubble-check">&#10003;&#10003;</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-bar">
+      <div><div class="stats-bar-val">~200</div><div class="stats-bar-label">Tetamu</div></div>
+      <div><div class="stats-bar-val">85%</div><div class="stats-bar-label">Kadar Buka</div></div>
+      <div><div class="stats-bar-val">62%</div><div class="stats-bar-label">RSVP</div></div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var TEMPLATES = [
+  {id:'formal',name:'Formal',
+   msg:'Assalamualaikum w.b.t. dan Salam Sejahtera,\n\nDengan segala hormatnya, kami {{bride}} & {{groom}} ingin menjemput Tuan/Puan hadir ke Majlis Perkahwinan kami.\n\n\ud83d\udcc5 {{date}}\n\ud83d\udccd {{venue}}\n\nSila buka kad jemputan digital kami di sini:\n\ud83d\udc8c {{url}}\n\nMohon sahkan kehadiran anda melalui kad tersebut.\n\nSekian, terima kasih.\n\n\u2728 {{bride}} & {{groom}}'},
+  {id:'casual',name:'Santai',
+   msg:'Heyy! \ud83c\udf89\n\n{{bride}} & {{groom}} nak kahwin dah! \ud83d\udc70\ud83e\udd35\n\nJom datang celebrate sama-sama:\n\ud83d\udcc5 {{date}}\n\ud83d\udccd {{venue}}\n\nBuka kad digital kitorg:\n\ud83d\udc8c {{url}}\n\nJangan lupa RSVP tau! See you there! \u2764\ufe0f'},
+  {id:'islamic',name:'Islamik',
+   msg:'Bismillahirrahmanirrahim \ud83c\udf3f\n\nAssalamualaikum warahmatullahi wabarakatuh,\n\nDengan penuh rasa kesyukuran, kami\n{{bride}} & {{groom}}\nmenjemput Tuan/Puan ke walimatul urus kami.\n\n\ud83d\udcc5 {{date}}\n\ud83d\udccd {{venue}}\n\nKad Jemputan:\n{{url}}\n\nSemoga dengan kehadiran dan doa Tuan/Puan, majlis kami diberkati. Aamiin.\n\n\u2728 {{bride}} & {{groom}}'},
+  {id:'bilingual',name:'Dwibahasa',
+   msg:'Assalamualaikum / Hello! \ud83c\udf38\n\n{{bride}} & {{groom}} warmly invite you to our wedding celebration.\n\nKami menjemput anda ke majlis perkahwinan kami.\n\n\ud83d\udcc5 {{date}}\n\ud83d\udccd {{venue}}\n\nDigital invitation / Kad jemputan digital:\n\ud83d\udc8c {{url}}\n\nPlease RSVP via the card.\nMohon sahkan kehadiran melalui kad.\n\nWith love / Dengan kasih,\n{{bride}} & {{groom}} \u2764\ufe0f'},
+  {id:'short',name:'Ringkas',
+   msg:'{{bride}} & {{groom}} \ud83d\udc92\n{{date}} \u00b7 {{venue}}\n\nKad jemputan: {{url}}\n\nRSVP di kad ya! \u2728'},
+  {id:'family',name:'Ibu Bapa',
+   msg:'Assalamualaikum w.b.t.,\n\nDengan sukacitanya, kami sekeluarga menjemput Tuan/Puan/Saudara/i ke Majlis Perkahwinan puteri/putera kami:\n\n\ud83d\udc70 {{bride}}\n\ud83e\udd35 {{groom}}\n\n\ud83d\udcc5 {{date}}\n\ud83d\udccd {{venue}}\n\nKad jemputan digital:\n{{url}}\n\nKehadiran dan doa restu Tuan/Puan amatlah kami hargai.\n\nDaripada,\nKeluarga kedua belah pihak'}
+];
+
+var state = {tpl:'formal'};
+
+function init(){
+  renderTpls();
+  loadTpl('formal');
+}
+
+function renderTpls(){
+  document.getElementById('tplRow').innerHTML = TEMPLATES.map(function(t){
+    return '<div class="tpl-chip'+(state.tpl===t.id?' active':'')+'" onclick="loadTpl(\''+t.id+'\')">'+t.name+'</div>';
+  }).join('');
+}
+
+function loadTpl(id){
+  state.tpl = id;
+  var t = TEMPLATES.find(function(t){return t.id===id});
+  if(t) document.getElementById('fMsg').value = t.msg;
+  renderTpls();
+  up();
+}
+
+function up(){
+  var bride = document.getElementById('fBride').value || 'Farah';
+  var groom = document.getElementById('fGroom').value || 'Adam';
+  var date = document.getElementById('fDate').value || '';
+  var venue = document.getElementById('fVenue').value || '';
+  var url = document.getElementById('fUrl').value || '';
+  var msg = document.getElementById('fMsg').value;
+
+  // Replace variables
+  var rendered = msg
+    .replace(/\{\{bride\}\}/g, bride)
+    .replace(/\{\{groom\}\}/g, groom)
+    .replace(/\{\{date\}\}/g, date)
+    .replace(/\{\{venue\}\}/g, venue)
+    .replace(/\{\{url\}\}/g, url);
+
+  // Update char count
+  document.getElementById('charCount').textContent = rendered.length + ' / 1000';
+
+  // Update bubble — make URLs clickable
+  var escaped = rendered.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  var withLinks = escaped.replace(/(e-motion\.my\/[^\s]+)/g, '<span class="wa-bubble-link">$1</span>');
+  document.getElementById('waBubble').innerHTML = withLinks;
+
+  // Update link preview
+  document.getElementById('waLinkBride').textContent = bride;
+  document.getElementById('waLinkGroom').textContent = groom;
+  document.getElementById('waLinkTitle').textContent = 'Kad Jemputan Perkahwinan ' + bride + ' & ' + groom;
+
+  // Update header
+  document.getElementById('waAvatar').textContent = bride[0] + groom[0];
+  document.getElementById('waName').textContent = bride + ' & ' + groom;
+}
+
+function insertVar(v){
+  var ta = document.getElementById('fMsg');
+  var start = ta.selectionStart;
+  var end = ta.selectionEnd;
+  var text = ta.value;
+  ta.value = text.substring(0,start) + v + text.substring(end);
+  ta.selectionStart = ta.selectionEnd = start + v.length;
+  ta.focus();
+  up();
+}
+
+function getRendered(){
+  var bride = document.getElementById('fBride').value || 'Farah';
+  var groom = document.getElementById('fGroom').value || 'Adam';
+  var date = document.getElementById('fDate').value || '';
+  var venue = document.getElementById('fVenue').value || '';
+  var url = document.getElementById('fUrl').value || '';
+  return document.getElementById('fMsg').value
+    .replace(/\{\{bride\}\}/g, bride)
+    .replace(/\{\{groom\}\}/g, groom)
+    .replace(/\{\{date\}\}/g, date)
+    .replace(/\{\{venue\}\}/g, venue)
+    .replace(/\{\{url\}\}/g, url);
+}
+
+function copyMsg(){
+  var text = getRendered();
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(text);
+  }
+  toast('Mesej disalin ke papan keratan!');
+}
+
+function shareWA(){
+  var text = getRendered();
+  var waUrl = 'https://wa.me/?text=' + encodeURIComponent(text);
+  toast('Membuka WhatsApp...');
+  // In production this would window.open(waUrl)
+}
+
+function toast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show')},2500);
+}
+
+init();
+</script>
+</body>
+</html>

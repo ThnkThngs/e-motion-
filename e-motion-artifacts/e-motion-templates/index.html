@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>e-motion.my Templat Warisan</title>
+<style>
+:root{
+  --brand:#1a2040;--brand2:#2a3460;--maroon:#6b1d2e;--maroon-dk:#4a1020;
+  --gold:#c9a24e;--gold-lt:#e8c775;--gold-dk:#8a6d2a;--gold-pale:#f0d68c;
+  --ivory:#f8f0de;--cream:#faf4e3;--emerald:#2d5a3f;
+  --bg:#fafaf9;--white:#fff;--border:#e7e5e4;
+  --text:#1c1917;--text2:#57534e;--text3:#a8a29e;
+  --r:6px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--cream);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,244,227,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(201,162,78,.15);padding:0 32px;height:52px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:Georgia,serif;font-style:italic;font-size:18px;color:var(--brand);text-decoration:none;display:flex;align-items:baseline;gap:2px}
+.nav-logo span{color:var(--gold);font-style:normal;font-size:14px}
+.nav-logo small{font-family:-apple-system,system-ui,sans-serif;font-style:normal;font-size:9px;color:var(--gold);margin-left:4px;letter-spacing:.15em;font-weight:600}
+.nav-right{display:flex;align-items:center;gap:12px}
+.nav-btn{padding:8px 16px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border:none;cursor:pointer;font-family:inherit;transition:all .2s;border-radius:var(--r)}
+.nav-btn-outline{background:none;border:1px solid var(--border);color:var(--text2)}
+.nav-btn-outline:hover{border-color:var(--gold);color:var(--brand)}
+.nav-btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:var(--brand)}
+.nav-btn-gold:hover{box-shadow:0 4px 12px rgba(201,162,78,.3)}
+
+/* HERO */
+.hero{padding:100px 32px 48px;text-align:center;background:linear-gradient(180deg,var(--cream) 0%,var(--ivory) 100%)}
+.hero-label{font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(--maroon);font-weight:600;margin-bottom:12px;display:inline-flex;align-items:center;gap:10px}
+.hero-label::before,.hero-label::after{content:'';width:20px;height:1px;background:var(--maroon)}
+.hero-title{font-family:Georgia,serif;font-size:clamp(32px,5vw,52px);font-weight:400;font-style:italic;color:var(--brand);line-height:1.1;margin-bottom:12px}
+.hero-title em{font-family:Georgia,serif;color:var(--maroon);font-style:italic}
+.hero-sub{font-size:14px;color:var(--text2);max-width:480px;margin:0 auto 28px;line-height:1.6}
+.hero-count{font-size:12px;color:var(--text3)}
+.hero-count strong{color:var(--gold-dk);font-size:20px;font-family:Georgia,serif;vertical-align:-1px}
+
+/* FILTERS */
+.filters{position:sticky;top:52px;z-index:90;background:rgba(250,244,227,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,162,78,.1);padding:12px 32px;display:flex;align-items:center;gap:8px;overflow-x:auto;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.filter-chip{padding:6px 14px;border:1px solid var(--border);border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;background:var(--white);color:var(--text2);transition:all .2s;white-space:nowrap;font-family:inherit}
+.filter-chip:hover{border-color:var(--gold);color:var(--brand)}
+.filter-chip.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.filter-count{font-size:10px;margin-left:2px;opacity:.6}
+.filter-sep{width:1px;height:20px;background:var(--border);flex-shrink:0;margin:0 4px}
+.filter-sort{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text3);flex-shrink:0}
+.filter-sort select{border:1px solid var(--border);border-radius:var(--r);padding:4px 8px;font-size:11px;font-family:inherit;color:var(--text2);background:var(--white);cursor:pointer;outline:none}
+
+/* GRID */
+.grid{max-width:1280px;margin:0 auto;padding:24px 32px 80px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+
+/* TEMPLATE CARD */
+.tcard{background:var(--white);border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:all .4s cubic-bezier(.19,1,.22,1);position:relative}
+.tcard:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(26,32,64,.12);border-color:var(--gold)}
+.tcard.selected{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold),0 12px 36px rgba(201,162,78,.15)}
+.tcard.selected::after{content:'\2713';position:absolute;top:10px;right:10px;width:24px;height:24px;background:var(--gold);color:var(--brand);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;z-index:5}
+.tcard-preview{height:320px;position:relative;overflow:hidden}
+.tcard-preview-inner{position:absolute;inset:0;transition:transform .6s ease}
+.tcard:hover .tcard-preview-inner{transform:scale(1.04)}
+
+/* Mini invitation inside each card */
+.mini-inv{height:100%;display:flex;flex-direction:column}
+.mini-hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px 16px;position:relative}
+.mini-hero-pattern{position:absolute;inset:0;opacity:.1}
+.mini-bismillah{font-family:Georgia,serif;font-size:11px;margin-bottom:4px;position:relative;z-index:1}
+.mini-label{font-size:6px;letter-spacing:.25em;text-transform:uppercase;margin-bottom:10px;position:relative;z-index:1}
+.mini-name{font-family:Georgia,serif;font-style:italic;font-size:28px;line-height:.95;position:relative;z-index:1}
+.mini-amp{font-size:10px;display:block;margin:3px 0;position:relative;z-index:1}
+.mini-divider{display:flex;align-items:center;gap:5px;margin:8px 0;position:relative;z-index:1}
+.mini-divider .l{width:20px;height:1px}
+.mini-divider .d{width:3px;height:3px;transform:rotate(45deg)}
+.mini-intro{font-family:Georgia,serif;font-style:italic;font-size:8px;max-width:160px;line-height:1.5;opacity:.65;position:relative;z-index:1}
+.mini-section{padding:10px 12px;font-size:8px}
+.mini-sec-label{font-size:5px;letter-spacing:.15em;text-transform:uppercase;font-weight:600;margin-bottom:2px}
+.mini-ev-name{font-family:Georgia,serif;font-style:italic;font-size:9px;margin-bottom:3px}
+.mini-ev-row{display:flex;justify-content:space-between;font-size:7px;padding:1px 0}
+
+.tcard-meta{padding:14px 16px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border)}
+.tcard-info{}
+.tcard-name{font-family:Georgia,serif;font-size:15px;font-weight:400;color:var(--text);margin-bottom:2px}
+.tcard-desc{font-size:10px;color:var(--text3)}
+.tcard-tags{display:flex;gap:4px;align-items:center}
+.tag{display:inline-block;padding:3px 8px;border-radius:10px;font-size:9px;font-weight:600;letter-spacing:.03em}
+.tag-free{background:rgba(45,90,63,.1);color:var(--emerald)}
+.tag-motion{background:rgba(201,162,78,.15);color:var(--gold-dk)}
+.tag-cinematic{background:rgba(107,29,46,.1);color:var(--maroon)}
+.tag-new{background:rgba(37,99,235,.1);color:#2563eb}
+
+/* PREVIEW MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(13,18,40,.7);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(8px)}
+.modal-bg.open{display:flex}
+.modal{background:var(--white);border-radius:12px;width:90%;max-width:900px;max-height:90vh;display:grid;grid-template-columns:380px 1fr;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.25)}
+.modal-phone{background:var(--brand);padding:24px;display:flex;align-items:flex-start;justify-content:center;overflow-y:auto}
+.modal-phone-device{width:280px;background:var(--brand);border-radius:32px;padding:7px;box-shadow:0 0 0 1px rgba(201,162,78,.3);flex-shrink:0}
+.modal-phone-notch{width:90px;height:18px;background:var(--brand);border-radius:0 0 12px 12px;margin:0 auto 2px}
+.modal-phone-screen{height:480px;border-radius:26px;overflow:hidden;overflow-y:auto;scrollbar-width:none}
+.modal-phone-screen::-webkit-scrollbar{display:none}
+.modal-details{padding:32px;overflow-y:auto;display:flex;flex-direction:column}
+.modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;background:rgba(0,0,0,.05);border:none;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text3);transition:all .2s;z-index:5}
+.modal-close:hover{background:rgba(0,0,0,.1);color:var(--text)}
+.modal-tpl-name{font-family:Georgia,serif;font-size:24px;font-style:italic;color:var(--brand);margin-bottom:4px}
+.modal-tpl-desc{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:20px}
+.modal-section{margin-bottom:20px}
+.modal-section-title{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);font-weight:600;margin-bottom:8px}
+.modal-feat{display:flex;gap:8px;align-items:center;font-size:12px;padding:4px 0;color:var(--text2)}
+.modal-feat-icon{color:var(--gold-dk);font-weight:700;flex-shrink:0}
+.modal-actions{margin-top:auto;padding-top:20px;border-top:1px solid var(--border);display:flex;gap:10px}
+.modal-btn{flex:1;padding:12px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border:none;border-radius:var(--r);cursor:pointer;font-family:inherit;transition:all .2s;text-align:center}
+.modal-btn-primary{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:var(--brand)}
+.modal-btn-primary:hover{box-shadow:0 4px 12px rgba(201,162,78,.3)}
+.modal-btn-outline{background:none;border:1px solid var(--border);color:var(--text2)}
+
+/* EMPTY */
+.no-results{grid-column:1/-1;text-align:center;padding:60px 24px;color:var(--text3);font-size:14px}
+
+/* RESPONSIVE */
+@media(max-width:800px){
+  .modal{grid-template-columns:1fr;max-height:95vh}
+  .modal-phone{padding:16px;max-height:400px}
+  .modal-phone-device{width:240px}
+  .modal-phone-screen{height:360px}
+  .nav{padding:0 16px}
+  .hero{padding:80px 20px 36px}
+  .filters{padding:10px 16px}
+  .grid{padding:16px;gap:14px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+}
+
+@media print{
+  .nav,.filters,.modal-bg{display:none!important}
+  .hero{padding:24px}
+  .grid{display:block}
+  .tcard{page-break-inside:avoid;margin-bottom:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <a class="nav-logo" href="#">e<span>&middot;</span>motion <small>.MY</small></a>
+  <div class="nav-right">
+    <button class="nav-btn nav-btn-outline" onclick="window.history.back()">&#8592; Kembali</button>
+    <button class="nav-btn nav-btn-gold" id="useBtn" disabled onclick="useTpl()">Guna Templat</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Pustaka Templat</div>
+  <h1 class="hero-title">Pilih <em>reka bentuk</em> pilihan anda</h1>
+  <p class="hero-sub">Setiap templat dicipta khusus dengan motif warisan Melayu. Pilih satu dan pratonton secara langsung sebelum membina kad anda.</p>
+  <div class="hero-count"><strong id="tplCount">0</strong> templat tersedia</div>
+</div>
+
+<!-- FILTERS -->
+<div class="filters" id="filters"></div>
+
+<!-- GRID -->
+<div class="grid" id="grid"></div>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg" onclick="if(event.target===this)closePreview()">
+  <div class="modal" style="position:relative">
+    <button class="modal-close" onclick="closePreview()">&times;</button>
+    <div class="modal-phone"><div class="modal-phone-device"><div class="modal-phone-notch"></div><div class="modal-phone-screen" id="modalPhone"></div></div></div>
+    <div class="modal-details" id="modalDetails"></div>
+  </div>
+</div>
+
+<script src="https://artifactcdn.diabrowser.engineering/ajax/libs/gsap/gsap.min.js"></script>
+<script>
+// ===== TEMPLATE DATA =====
+var TEMPLATES = [
+  {id:'songket-biru',name:'Songket Biru',plan:'Percuma',category:'classic',isNew:false,
+   desc:'Reka bentuk klasik dengan motif songket biru indigo dan aksen emas. Sesuai untuk majlis tradisional yang mewah.',
+   colors:{bg:'linear-gradient(180deg,#1a2040,#2a3460,#4a1020)',text:'#f8f0de',accent:'#e8c775',label:'#c9a24e',secBg:'#faf4e3',secText:'#1a2040',secAccent:'#6b1d2e'},
+   pattern:"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Cg fill='none' stroke='%23e8c775' stroke-width='.5'%3E%3Cpath d='M30 5L34 18L47 20L36 28L40 42L30 35L20 42L24 28L13 20L26 18Z'/%3E%3C/g%3E%3C/svg%3E\")",
+   features:['Motif songket SVG','Animasi CSS','Pautan kongsi','1 foto galeri']},
+  {id:'batik-kayangan',name:'Batik Kayangan',plan:'Motion',category:'classic',isNew:false,
+   desc:'Corak batik diagonal dengan latar merah marun. Kesan fade sinematik menjadikan pembukaan kad sangat dramatik.',
+   colors:{bg:'linear-gradient(135deg,#6b1d2e,#8a2838)',text:'#f8f0de',accent:'#e8c775',label:'#f0d68c',secBg:'#faf4e3',secText:'#1a2040',secAccent:'#6b1d2e'},
+   pattern:"repeating-linear-gradient(45deg,transparent,transparent 14px,rgba(232,199,117,.1) 14px,rgba(232,199,117,.1) 15px)",
+   features:['Fade sinematik','Kesan CSS penuh','RSVP','Galeri 6 foto','Muzik latar']},
+  {id:'warisan-emas',name:'Warisan Emas',plan:'Cinematic',category:'luxury',isNew:false,
+   desc:'Latar krim dengan aksen emas mewah. Reka bentuk minimalis tetapi sophisticated dengan sentuhan warisan halus.',
+   colors:{bg:'linear-gradient(180deg,#f8f0de,#f2e6c8)',text:'#6b1d2e',accent:'#8a6d2a',label:'#8a6d2a',secBg:'#1a2040',secText:'#f8f0de',secAccent:'#c9a24e'},
+   pattern:"none",
+   features:['Kesan GSAP penuh','Video penutup','Dwibahasa','Tanpa branding','Digital Angpau']},
+  {id:'kerawang-ungu',name:'Kerawang Ungu',plan:'Motion',category:'modern',isNew:false,
+   desc:'Warna ungu diraja dengan motif kerawang bulatan. Gabungan moden dan tradisional yang anggun.',
+   colors:{bg:'linear-gradient(180deg,#3a2150,#5a3570)',text:'#f8f0de',accent:'#e8c775',label:'#c9a24e',secBg:'#faf4e3',secText:'#1a2040',secAccent:'#3a2150'},
+   pattern:"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23e8c775' stroke-width='.5' opacity='.3'%3E%3Ccircle cx='40' cy='40' r='28'/%3E%3Cpath d='M40 12L44 28L60 30L48 38L52 56L40 46L28 56L32 38L20 30L36 28Z'/%3E%3C/g%3E%3C/svg%3E\")",
+   features:['Fade sinematik','Kesan CSS penuh','RSVP','Galeri 6 foto','Muzik latar']},
+  {id:'tropika-segar',name:'Tropika Segar',plan:'Percuma',category:'modern',isNew:false,
+   desc:'Nuansa hijau tropika yang segar. Sesuai untuk majlis outdoor atau tema taman.',
+   colors:{bg:'linear-gradient(135deg,#2d5a3f,#4a7856)',text:'#f8f0de',accent:'#e8c775',label:'#f0d68c',secBg:'#faf4e3',secText:'#1a2040',secAccent:'#2d5a3f'},
+   pattern:"none",
+   features:['Animasi CSS asas','Pautan kongsi','1 foto galeri']},
+  {id:'mewah-klasik',name:'Mewah Klasik',plan:'Cinematic',category:'luxury',isNew:false,
+   desc:'Hitam gelap dengan bingkai emas berganda. Kesan paling premium dan eksklusif dalam koleksi.',
+   colors:{bg:'linear-gradient(180deg,#0d1228,#1a2040)',text:'#f8f0de',accent:'#c9a24e',label:'#c9a24e',secBg:'#faf4e3',secText:'#1a2040',secAccent:'#0d1228'},
+   pattern:"none",frame:true,
+   features:['Kesan GSAP penuh','Video penutup','Dwibahasa','Tanpa branding','Digital Angpau']},
+  {id:'rustik-cinta',name:'Rustik Cinta',plan:'Motion',category:'modern',isNew:true,
+   desc:'Warna tanah hangat dengan sentuhan rustik yang romantic. Sesuai untuk majlis santai atau outdoor.',
+   colors:{bg:'linear-gradient(180deg,#f0e0c0,#e4cfa0)',text:'#6b1d2e',accent:'#6b1d2e',label:'#8a6d2a',secBg:'#1a2040',secText:'#f8f0de',secAccent:'#c9a24e'},
+   pattern:"none",
+   features:['Fade sinematik','Kesan CSS penuh','RSVP','Galeri 6 foto','Muzik latar']},
+  {id:'minimalis-jawi',name:'Minimalis Jawi',plan:'Percuma',category:'minimal',isNew:false,
+   desc:'Garis emas tebal dengan latar krim. Reka bentuk paling bersih dan ringkas.',
+   colors:{bg:'linear-gradient(180deg,#faf4e3,#f0e6d0)',text:'#1a2040',accent:'#c9a24e',label:'#8a6d2a',secBg:'#1a2040',secText:'#f8f0de',secAccent:'#c9a24e'},
+   pattern:"none",stripes:true,
+   features:['Animasi CSS asas','Pautan kongsi','1 foto galeri']},
+  {id:'pucuk-rebung',name:'Pucuk Rebung',plan:'Motion',category:'classic',isNew:true,
+   desc:'Motif pucuk rebung merah dengan aksen emas. Simbol harapan dan pertumbuhan dalam budaya Melayu.',
+   colors:{bg:'linear-gradient(135deg,#7a1020,#b52030)',text:'#f8f0de',accent:'#f0d68c',label:'#f0d68c',secBg:'#faf4e3',secText:'#1a2040',secAccent:'#7a1020'},
+   pattern:"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 60'%3E%3Cg fill='none' stroke='%23f0d68c' stroke-width='.5' opacity='.3'%3E%3Cpath d='M20 5L20 55'/%3E%3Cpath d='M10 15L20 5L30 15'/%3E%3Cpath d='M10 35L20 25L30 35'/%3E%3C/g%3E%3C/svg%3E\")",
+   features:['Fade sinematik','Kesan CSS penuh','RSVP','Galeri 6 foto','Muzik latar']},
+  {id:'zamrud-emas',name:'Zamrud Emas',plan:'Cinematic',category:'luxury',isNew:true,
+   desc:'Hijau zamrud dengan motif bintang songket emas. Kombinasi warna diraja yang memukau.',
+   colors:{bg:'linear-gradient(135deg,#2d5a3f,#3a7050)',text:'#f8f0de',accent:'#e8c775',label:'#c9a24e',secBg:'#faf4e3',secText:'#1a2040',secAccent:'#2d5a3f'},
+   pattern:"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg fill='none' stroke='%23e8c775' stroke-width='.5' opacity='.35'%3E%3Cpath d='M20 5L25 15L35 17L27 24L30 35L20 29L10 35L13 24L5 17L15 15Z'/%3E%3C/g%3E%3C/svg%3E\")",
+   features:['Kesan GSAP penuh','Video penutup','Dwibahasa','Tanpa branding','Digital Angpau']},
+  {id:'sutera-biru',name:'Sutera Biru',plan:'Percuma',category:'minimal',isNew:false,
+   desc:'Biru tenang dengan corak sutera halus. Reka bentuk yang damai dan elegan.',
+   colors:{bg:'linear-gradient(135deg,#1a3050,#2a5080)',text:'#f8f0de',accent:'#c9a24e',label:'#c9a24e',secBg:'#faf4e3',secText:'#1a2040',secAccent:'#1a3050'},
+   pattern:"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cg fill='none' stroke='%23c9a24e' stroke-width='.3' opacity='.25'%3E%3Cpath d='M5 15Q15 5,25 15Q15 25,5 15Z'/%3E%3C/g%3E%3C/svg%3E\")",
+   features:['Animasi CSS asas','Pautan kongsi','1 foto galeri']},
+  {id:'tenun-kopi',name:'Tenun Kopi',plan:'Motion',category:'modern',isNew:false,
+   desc:'Warna coklat hangat dengan corak tenun silang. Estetika earthy yang selesa.',
+   colors:{bg:'linear-gradient(135deg,#5a3a20,#8a6040)',text:'#f8f0de',accent:'#e8c775',label:'#f0d68c',secBg:'#faf4e3',secText:'#1a2040',secAccent:'#5a3a20'},
+   pattern:"repeating-linear-gradient(0deg,transparent,transparent 5px,rgba(232,199,117,.08) 5px,rgba(232,199,117,.08) 6px),repeating-linear-gradient(90deg,transparent,transparent 5px,rgba(232,199,117,.08) 5px,rgba(232,199,117,.08) 6px)",
+   features:['Fade sinematik','Kesan CSS penuh','RSVP','Galeri 6 foto','Muzik latar']}
+];
+
+var state = {filter:'all', selected:null, sort:'popular'};
+
+// ===== RENDER =====
+function render() {
+  renderFilters();
+  renderGrid();
+  document.getElementById('tplCount').textContent = TEMPLATES.length;
+}
+
+function renderFilters() {
+  var cats = [
+    {id:'all',label:'Semua',count:TEMPLATES.length},
+    {id:'classic',label:'Klasik',count:TEMPLATES.filter(function(t){return t.category==='classic'}).length},
+    {id:'modern',label:'Moden',count:TEMPLATES.filter(function(t){return t.category==='modern'}).length},
+    {id:'luxury',label:'Mewah',count:TEMPLATES.filter(function(t){return t.category==='luxury'}).length},
+    {id:'minimal',label:'Minimalis',count:TEMPLATES.filter(function(t){return t.category==='minimal'}).length},
+  ];
+  var plans = [
+    {id:'Percuma',label:'Percuma',count:TEMPLATES.filter(function(t){return t.plan==='Percuma'}).length},
+    {id:'Motion',label:'Motion',count:TEMPLATES.filter(function(t){return t.plan==='Motion'}).length},
+    {id:'Cinematic',label:'Cinematic',count:TEMPLATES.filter(function(t){return t.plan==='Cinematic'}).length},
+  ];
+
+  document.getElementById('filters').innerHTML =
+    cats.map(function(c){
+      return '<button class="filter-chip'+(state.filter===c.id?' active':'')+'" onclick="setFilter(\''+c.id+'\')">'+c.label+'<span class="filter-count">'+c.count+'</span></button>';
+    }).join('') +
+    '<div class="filter-sep"></div>' +
+    plans.map(function(p){
+      return '<button class="filter-chip'+(state.filter===p.id?' active':'')+'" onclick="setFilter(\''+p.id+'\')">'+p.label+'<span class="filter-count">'+p.count+'</span></button>';
+    }).join('') +
+    '<div class="filter-sort"><span>Susun:</span><select onchange="state.sort=this.value;renderGrid()"><option value="popular">Popular</option><option value="newest">Terbaru</option><option value="name">Nama</option></select></div>';
+}
+
+function setFilter(f) {
+  state.filter = f;
+  renderFilters();
+  renderGrid();
+}
+
+function getFiltered() {
+  var list = TEMPLATES.filter(function(t){
+    if(state.filter==='all') return true;
+    if(state.filter==='classic'||state.filter==='modern'||state.filter==='luxury'||state.filter==='minimal') return t.category===state.filter;
+    return t.plan===state.filter;
+  });
+  if(state.sort==='newest') list.sort(function(a,b){return (b.isNew?1:0)-(a.isNew?1:0)});
+  if(state.sort==='name') list.sort(function(a,b){return a.name.localeCompare(b.name)});
+  return list;
+}
+
+function renderGrid() {
+  var filtered = getFiltered();
+  var grid = document.getElementById('grid');
+
+  if(filtered.length===0){
+    grid.innerHTML = '<div class="no-results">Tiada templat ditemui untuk penapis ini.</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(function(t){
+    var c = t.colors;
+    var planTag = t.plan==='Cinematic'?'tag-cinematic':t.plan==='Motion'?'tag-motion':'tag-free';
+    return '<div class="tcard'+(state.selected===t.id?' selected':'')+'" onclick="selectTpl(\''+t.id+'\')" ondblclick="openPreview(\''+t.id+'\')">' +
+      '<div class="tcard-preview"><div class="tcard-preview-inner">' +
+        '<div class="mini-inv"><div class="mini-hero" style="background:'+c.bg+';color:'+c.text+'">' +
+          (t.pattern!=='none'?'<div class="mini-hero-pattern" style="background-image:'+t.pattern+'"></div>':'') +
+          (t.frame?'<div style="position:absolute;inset:14px;border:1px solid '+c.accent+';opacity:.4;z-index:0"></div><div style="position:absolute;inset:20px;border:1px solid '+c.accent+';opacity:.2;z-index:0"></div>':'') +
+          (t.stripes?'<div style="position:absolute;left:0;right:0;top:24px;height:5px;background:linear-gradient(90deg,'+c.accent+','+c.label+','+c.accent+');z-index:0"></div><div style="position:absolute;left:0;right:0;bottom:24px;height:5px;background:linear-gradient(90deg,'+c.accent+','+c.label+','+c.accent+');z-index:0"></div>':'') +
+          '<div class="mini-bismillah" style="color:'+c.accent+'">&#xFDFD;</div>' +
+          '<div class="mini-label" style="color:'+c.label+'">Dengan Rasa Syukur</div>' +
+          '<div class="mini-name" style="color:'+c.text+'">Farah</div>' +
+          '<div class="mini-amp" style="color:'+c.accent+'">&amp;</div>' +
+          '<div class="mini-name" style="color:'+c.text+'">Adam</div>' +
+          '<div class="mini-divider"><div class="l" style="background:'+c.accent+'"></div><div class="d" style="background:'+c.accent+'"></div><div class="l" style="background:'+c.accent+'"></div></div>' +
+          '<div class="mini-intro" style="color:'+c.text+'">Kami menjemput anda hadir ke majlis perkahwinan kami.</div>' +
+        '</div>' +
+        '<div class="mini-section" style="background:'+c.secBg+';color:'+c.secText+'">' +
+          '<div class="mini-sec-label" style="color:'+c.secAccent+'">/ 01</div>' +
+          '<div class="mini-ev-name" style="color:'+c.secAccent+'">Akad Nikah</div>' +
+          '<div class="mini-ev-row"><span style="color:'+c.label+';font-weight:600;font-size:5px;text-transform:uppercase;letter-spacing:.06em">Tarikh</span><span>25 Mei 2026</span></div>' +
+          '<div class="mini-ev-row"><span style="color:'+c.label+';font-weight:600;font-size:5px;text-transform:uppercase;letter-spacing:.06em">Masa</span><span>9:00 Pagi</span></div>' +
+        '</div></div>' +
+      '</div></div>' +
+      '<div class="tcard-meta"><div class="tcard-info"><div class="tcard-name">'+t.name+'</div><div class="tcard-desc">'+t.category.charAt(0).toUpperCase()+t.category.slice(1)+'</div></div><div class="tcard-tags">'+(t.isNew?'<span class="tag tag-new">Baru</span>':'')+'<span class="tag '+planTag+'">'+t.plan+'</span></div></div>' +
+    '</div>';
+  }).join('');
+
+  // Stagger entrance
+  gsap.fromTo('.tcard',{opacity:0,y:30},{opacity:1,y:0,duration:.6,stagger:.06,ease:'power3.out'});
+}
+
+function selectTpl(id) {
+  state.selected = state.selected===id ? null : id;
+  document.getElementById('useBtn').disabled = !state.selected;
+  document.querySelectorAll('.tcard').forEach(function(c){
+    var tid = null;
+    var onclick = c.getAttribute('onclick');
+    if(onclick){ var m = onclick.match(/'([^']+)'/); if(m) tid=m[1]; }
+    c.classList.toggle('selected', tid===state.selected);
+  });
+}
+
+function useTpl() {
+  if(!state.selected) return;
+  var t = TEMPLATES.find(function(t){return t.id===state.selected});
+  if(t) alert('Templat "'+t.name+'" dipilih! Dalam produksi, anda akan dibawa ke pembina kad.');
+}
+
+// ===== PREVIEW MODAL =====
+function openPreview(id) {
+  var t = TEMPLATES.find(function(t){return t.id===id});
+  if(!t) return;
+  state.selected = id;
+  document.getElementById('useBtn').disabled = false;
+
+  var c = t.colors;
+  var planTag = t.plan==='Cinematic'?'tag-cinematic':t.plan==='Motion'?'tag-motion':'tag-free';
+
+  // Phone screen
+  document.getElementById('modalPhone').innerHTML =
+    '<div style="min-height:100%;display:flex;flex-direction:column">' +
+      '<div style="flex:1;background:'+c.bg+';color:'+c.text+';display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 14px;position:relative">' +
+        (t.pattern!=='none'?'<div style="position:absolute;inset:0;opacity:.12;background-image:'+t.pattern+'"></div>':'') +
+        '<div style="font-family:Georgia,serif;font-size:14px;color:'+c.accent+';margin-bottom:4px;position:relative;z-index:1">&#xFDFD;</div>' +
+        '<div style="font-size:7px;letter-spacing:.25em;text-transform:uppercase;color:'+c.label+';margin-bottom:14px;position:relative;z-index:1">Dengan Rasa Syukur</div>' +
+        '<div style="font-family:Georgia,serif;font-style:italic;font-size:32px;color:'+c.text+';line-height:.95;position:relative;z-index:1">Farah</div>' +
+        '<div style="font-size:12px;color:'+c.accent+';margin:3px 0;position:relative;z-index:1">&amp;</div>' +
+        '<div style="font-family:Georgia,serif;font-style:italic;font-size:32px;color:'+c.text+';line-height:.95;position:relative;z-index:1">Adam</div>' +
+        '<div style="display:flex;align-items:center;gap:6px;margin:12px 0;position:relative;z-index:1"><div style="width:24px;height:1px;background:'+c.accent+'"></div><div style="width:4px;height:4px;background:'+c.accent+';transform:rotate(45deg)"></div><div style="width:24px;height:1px;background:'+c.accent+'"></div></div>' +
+        '<div style="font-family:Georgia,serif;font-style:italic;font-size:10px;color:'+c.text+';opacity:.6;max-width:180px;line-height:1.5;position:relative;z-index:1">Kami menjemput anda hadir ke majlis perkahwinan kami.</div>' +
+      '</div>' +
+      '<div style="padding:14px;background:'+c.secBg+';color:'+c.secText+'">' +
+        '<div style="font-size:7px;letter-spacing:.15em;text-transform:uppercase;color:'+c.secAccent+';font-weight:600;margin-bottom:3px">/ 01</div>' +
+        '<div style="font-family:Georgia,serif;font-style:italic;font-size:14px;color:'+c.secAccent+';margin-bottom:8px">Akad Nikah</div>' +
+        '<div style="display:flex;justify-content:space-between;font-size:10px;padding:3px 0;border-bottom:1px dashed rgba(0,0,0,.06)"><span style="font-size:7px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;color:'+c.label+'">Tarikh</span><span>25 Mei 2026</span></div>' +
+        '<div style="display:flex;justify-content:space-between;font-size:10px;padding:3px 0;border-bottom:1px dashed rgba(0,0,0,.06)"><span style="font-size:7px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;color:'+c.label+'">Masa</span><span>9:00 Pagi</span></div>' +
+        '<div style="display:flex;justify-content:space-between;font-size:10px;padding:3px 0"><span style="font-size:7px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;color:'+c.label+'">Tempat</span><span>Masjid Al-Hidayah</span></div>' +
+      '</div>' +
+      '<div style="padding:14px;background:'+c.bg+';color:'+c.text+';text-align:center">' +
+        '<div style="padding:10px;background:linear-gradient(135deg,#25D366,#1da852);color:#fff;border-radius:3px;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase">&#10003; Sahkan via WhatsApp</div>' +
+      '</div>' +
+      '<div style="padding:14px;text-align:center;background:linear-gradient(180deg,'+c.bg.split(',')[0].replace('linear-gradient(180deg','').replace('linear-gradient(135deg','')+',#05081a);color:'+c.text+'">' +
+        '<div style="font-family:Georgia,serif;font-style:italic;font-size:12px;color:'+c.accent+'">Farah &amp; Adam</div>' +
+        '<div style="font-size:7px;opacity:.3;margin-top:2px">Terima kasih</div>' +
+      '</div>' +
+    '</div>';
+
+  // Details panel
+  document.getElementById('modalDetails').innerHTML =
+    '<div class="modal-tpl-name">'+t.name+'</div>' +
+    '<div style="display:flex;gap:6px;margin-bottom:12px"><span class="tag '+planTag+'">'+t.plan+'</span>'+(t.isNew?'<span class="tag tag-new">Baru</span>':'')+'<span class="tag" style="background:var(--bg);color:var(--text3)">'+t.category.charAt(0).toUpperCase()+t.category.slice(1)+'</span></div>' +
+    '<div class="modal-tpl-desc">'+t.desc+'</div>' +
+    '<div class="modal-section"><div class="modal-section-title">Termasuk dalam pelan '+t.plan+'</div>' +
+      t.features.map(function(f){return '<div class="modal-feat"><span class="modal-feat-icon">&#10003;</span><span>'+f+'</span></div>'}).join('') +
+    '</div>' +
+    '<div class="modal-section"><div class="modal-section-title">Palet Warna</div><div style="display:flex;gap:4px;margin-top:4px">' +
+      [c.bg.match(/#[a-f0-9]{6}/i),c.accent,c.text].flat().filter(Boolean).slice(0,4).map(function(col){
+        return '<div style="width:28px;height:28px;border-radius:4px;background:'+col+';border:1px solid rgba(0,0,0,.08)"></div>';
+      }).join('') +
+    '</div></div>' +
+    '<div class="modal-actions">' +
+      '<button class="modal-btn modal-btn-outline" onclick="closePreview()">Tutup</button>' +
+      '<button class="modal-btn modal-btn-primary" onclick="state.selected=\''+t.id+'\';closePreview();useTpl()">Guna Templat Ini &#10022;</button>' +
+    '</div>';
+
+  document.getElementById('modalBg').classList.add('open');
+}
+
+function closePreview() {
+  document.getElementById('modalBg').classList.remove('open');
+}
+
+// ===== INIT =====
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>e-motion.my Prototype</title>
+<style>
+:root{
+  --brand:#1a2040;--brand2:#2a3460;--maroon:#6b1d2e;--maroon-dk:#4a1020;
+  --gold:#c9a24e;--gold-lt:#e8c775;--gold-dk:#8a6d2a;
+  --ivory:#f8f0de;--cream:#faf4e3;
+  --bg:#fafaf9;--bg2:#f5f5f4;--white:#fff;--border:#e7e5e4;
+  --text:#1c1917;--text2:#57534e;--text3:#a8a29e;
+  --green:#16a34a;--green-bg:#f0fdf4;--red:#dc2626;--red-bg:#fef2f2;
+  --blue:#2563eb;--orange:#ea580c;
+  --r:6px;--shadow:0 1px 3px rgba(0,0,0,.06);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;color:var(--text);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased;background:var(--bg)}
+
+/* FLOW NAV — persistent top bar showing which flow step you're on */
+.flow-bar{position:fixed;top:0;left:0;right:0;height:36px;background:var(--brand);z-index:900;display:flex;align-items:center;padding:0 16px;gap:12px}
+.flow-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);font-weight:600}
+.flow-steps{display:flex;gap:4px;flex:1}
+.flow-step{font-size:10px;color:rgba(255,255,255,.35);padding:2px 8px;border-radius:10px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.flow-step.active{background:var(--gold);color:var(--brand);font-weight:600}
+.flow-step.done{color:rgba(255,255,255,.7)}
+.flow-step:hover{color:#fff}
+.flow-switch{display:flex;gap:2px;background:rgba(255,255,255,.1);padding:2px;border-radius:4px}
+.flow-sw-btn{font-size:10px;padding:3px 10px;background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;border-radius:3px;font-family:inherit;transition:all .15s}
+.flow-sw-btn.active{background:var(--gold);color:var(--brand);font-weight:600}
+
+/* SCREEN CONTAINER */
+.screen{position:fixed;top:36px;left:0;right:0;bottom:0;display:none;overflow-y:auto;overflow-x:hidden}
+.screen.active{display:block}
+
+/* ===== SHARED COMPONENTS ===== */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;font-size:12px;font-weight:600;border:none;cursor:pointer;font-family:inherit;transition:all .2s;border-radius:var(--r)}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:var(--brand);letter-spacing:.08em;text-transform:uppercase}
+.btn-gold:hover{box-shadow:0 4px 16px rgba(201,162,78,.3);transform:translateY(-1px)}
+.btn-brand{background:var(--brand);color:#fff}
+.btn-brand:hover{background:var(--brand2)}
+.btn-outline{background:none;border:1px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:var(--text3)}
+.btn-green{background:var(--green);color:#fff}
+.btn-green:hover{opacity:.9}
+.btn-sm{padding:6px 12px;font-size:11px}
+.tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600}
+.tag-green{background:var(--green-bg);color:var(--green)}
+.tag-red{background:var(--red-bg);color:var(--red)}
+.tag-gold{background:rgba(201,162,78,.15);color:var(--gold-dk)}
+.input{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--r);font-size:13px;font-family:inherit;color:var(--text);outline:none;background:var(--white);transition:border-color .2s}
+.input:focus{border-color:var(--gold)}
+.input::placeholder{color:var(--text3)}
+.label{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);font-weight:600;margin-bottom:4px}
+.fg{margin-bottom:14px}
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+
+/* ===== SCREEN 1: HOMEPAGE (mini) ===== */
+.s-home{background:linear-gradient(180deg,var(--brand) 0%,var(--maroon-dk) 100%);color:var(--ivory);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px;min-height:100%}
+.s-home-eyebrow{font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.s-home-title{font-family:Georgia,serif;font-style:italic;font-size:clamp(28px,5vw,48px);font-weight:400;color:var(--ivory);margin-bottom:8px;line-height:1.1}
+.s-home-big{font-family:Georgia,serif;font-size:clamp(40px,8vw,72px);font-weight:400;color:var(--gold-lt);margin-bottom:20px;line-height:.95;letter-spacing:-.02em}
+.s-home-desc{font-family:Georgia,serif;font-style:italic;font-size:16px;color:rgba(248,240,222,.6);max-width:460px;margin:0 auto 32px;line-height:1.6}
+.s-home-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.s-home-stats{display:flex;gap:32px;margin-top:48px}
+.s-home-stat{text-align:center}
+.s-home-stat-num{font-family:Georgia,serif;font-size:28px;color:var(--gold-lt)}
+.s-home-stat-label{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:rgba(248,240,222,.4);margin-top:2px}
+
+/* ===== SCREEN 2: BUILDER ===== */
+.s-builder{background:var(--cream);padding:0;display:flex;min-height:100%}
+.builder-form{flex:1;padding:32px;overflow-y:auto;max-height:calc(100vh - 36px)}
+.builder-preview{width:340px;background:var(--bg2);border-left:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:24px 20px;position:sticky;top:0;overflow-y:auto;max-height:calc(100vh - 36px)}
+.builder-head{margin-bottom:24px}
+.builder-head-title{font-family:Georgia,serif;font-size:22px;font-weight:400;color:var(--text);margin-bottom:4px}
+.builder-head-sub{font-size:12px;color:var(--text3)}
+.builder-section{margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.builder-section:last-child{border-bottom:none}
+.builder-sec-title{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--maroon);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.preview-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text3);font-weight:600;margin-bottom:12px;text-align:center}
+
+/* PHONE MOCKUP */
+.phone{width:260px;background:var(--brand);border-radius:32px;padding:7px;box-shadow:0 0 0 1px rgba(201,162,78,.4),0 20px 60px rgba(0,0,0,.2)}
+.phone-notch{width:90px;height:20px;background:var(--brand);border-radius:0 0 12px 12px;margin:0 auto 2px}
+.phone-screen{height:460px;background:var(--cream);border-radius:26px;overflow:hidden;overflow-y:auto;scrollbar-width:none}
+.phone-screen::-webkit-scrollbar{display:none}
+/* invitation sections inside phone */
+.ph-hero{min-height:240px;background:linear-gradient(180deg,var(--brand),var(--brand2),var(--maroon-dk));color:var(--ivory);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 16px 24px;position:relative}
+.ph-hero-pattern{position:absolute;inset:0;opacity:.12;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Cg fill='none' stroke='%23e8c775' stroke-width='.5'%3E%3Cpath d='M30 5L34 18L47 20L36 28L40 42L30 35L20 42L24 28L13 20L26 18Z'/%3E%3C/g%3E%3C/svg%3E")}
+.ph-bismillah{font-family:Georgia,serif;font-size:14px;color:var(--gold-lt);margin-bottom:4px;position:relative;z-index:1}
+.ph-label{font-size:7px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;position:relative;z-index:1}
+.ph-name{font-family:Georgia,serif;font-style:italic;font-size:30px;color:var(--ivory);line-height:1;position:relative;z-index:1}
+.ph-amp{font-family:Georgia,serif;font-size:12px;color:var(--gold);display:block;margin:3px 0;position:relative;z-index:1}
+.ph-divider{display:flex;align-items:center;gap:6px;margin:12px 0;position:relative;z-index:1}
+.ph-divider .l{width:28px;height:1px;background:var(--gold)}
+.ph-divider .d{width:4px;height:4px;background:var(--gold);transform:rotate(45deg)}
+.ph-intro{font-family:Georgia,serif;font-style:italic;font-size:10px;color:rgba(248,240,222,.65);max-width:200px;line-height:1.5;position:relative;z-index:1}
+.ph-section{padding:16px 14px}
+.ph-section.cream{background:var(--cream);color:var(--text)}
+.ph-section.dark{background:linear-gradient(180deg,var(--brand),var(--brand) 50%);color:var(--ivory)}
+.ph-section.wine{background:linear-gradient(135deg,var(--maroon),var(--maroon-dk));color:var(--ivory)}
+.ph-sec-num{font-size:7px;letter-spacing:.15em;color:var(--gold);font-weight:600;margin-bottom:3px}
+.ph-sec-title{font-family:Georgia,serif;font-style:italic;font-size:14px;margin-bottom:10px}
+.ph-ev-box{border:1px solid var(--border);border-radius:3px;padding:10px;margin-bottom:6px;background:var(--white)}
+.ph-ev-name{font-family:Georgia,serif;font-style:italic;font-size:12px;color:var(--maroon);text-align:center;margin-bottom:6px}
+.ph-ev-row{display:flex;justify-content:space-between;font-size:9px;padding:2px 0;border-bottom:1px dashed rgba(0,0,0,.06)}
+.ph-ev-row:last-child{border-bottom:none}
+.ph-ev-lbl{font-weight:600;color:var(--gold-dk);font-size:7px;text-transform:uppercase;letter-spacing:.06em}
+.ph-ev-val{font-family:Georgia,serif;font-size:10px}
+.ph-rsvp-btn{width:100%;padding:8px;background:linear-gradient(135deg,#25D366,#1da852);color:#fff;border:none;border-radius:3px;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;margin-top:8px}
+.ph-footer{padding:16px;text-align:center;background:linear-gradient(180deg,var(--brand),#05081a);color:var(--ivory)}
+.ph-footer-brand{font-family:Georgia,serif;font-style:italic;font-size:12px;color:var(--gold-lt)}
+.ph-footer-tag{font-size:8px;color:rgba(248,240,222,.3);margin-top:2px}
+
+/* ===== SCREEN 3: AUTH MODAL ===== */
+.s-auth{background:rgba(13,18,40,.85);display:flex;align-items:center;justify-content:center;min-height:100%}
+.auth-box{background:var(--white);border-radius:8px;width:400px;max-width:90%;padding:40px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.auth-logo{font-family:Georgia,serif;font-style:italic;font-size:20px;color:var(--brand);margin-bottom:4px}
+.auth-logo span{color:var(--gold)}
+.auth-sub{font-size:12px;color:var(--text3);margin-bottom:24px}
+.auth-divider{display:flex;align-items:center;gap:10px;margin:16px 0;font-size:10px;color:var(--text3)}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* ===== SCREEN 4: CHECKOUT ===== */
+.s-checkout{background:var(--bg);display:flex;align-items:flex-start;justify-content:center;padding:40px 24px;min-height:100%;gap:32px}
+.checkout-plans{display:flex;gap:16px}
+.checkout-plan{width:260px;background:var(--white);border:2px solid var(--border);border-radius:8px;padding:28px 24px;cursor:pointer;transition:all .2s;position:relative}
+.checkout-plan:hover{border-color:var(--gold)}
+.checkout-plan.selected{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.checkout-plan.selected::after{content:'\2713';position:absolute;top:12px;right:12px;width:22px;height:22px;background:var(--gold);color:var(--brand);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.plan-name{font-family:Georgia,serif;font-size:20px;font-weight:400;margin-bottom:4px}
+.plan-price{font-size:36px;font-weight:700;letter-spacing:-.02em;margin-bottom:4px}
+.plan-price sup{font-size:14px;font-weight:400}
+.plan-desc{font-size:11px;color:var(--text3);margin-bottom:16px}
+.plan-feat{font-size:12px;padding:4px 0;display:flex;gap:6px;align-items:center}
+.plan-feat-check{color:var(--green);font-weight:700}
+.checkout-summary{width:300px}
+.checkout-receipt{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:24px}
+.receipt-row{display:flex;justify-content:space-between;padding:6px 0;font-size:12px;border-bottom:1px solid var(--border)}
+.receipt-row:last-child{border-bottom:none}
+.receipt-total{font-weight:700;font-size:14px}
+
+/* ===== SCREEN 5: COUPLE DASHBOARD ===== */
+.s-dash{background:var(--bg);padding:24px;min-height:100%}
+.dash-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.dash-title{font-size:18px;font-weight:700}
+.dash-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.dash-stat{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
+.dash-stat-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);font-weight:600}
+.dash-stat-val{font-size:24px;font-weight:700;margin-top:2px}
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.wish-item{padding:10px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.wish-item:last-child{border-bottom:none}
+.wish-text{font-style:italic;font-size:12px;color:var(--text2);flex:1}
+.wish-meta{font-size:10px;color:var(--text3);margin-top:3px;font-style:normal}
+
+/* ===== SCREEN 6: GUEST CARD VIEW ===== */
+.s-guest{background:var(--cream);display:flex;align-items:flex-start;justify-content:center;padding:24px;min-height:100%}
+.guest-phone{width:360px}
+.guest-phone .phone{width:100%}
+.guest-phone .phone-screen{height:calc(100vh - 84px)}
+.guest-phone .ph-name{font-size:38px}
+.guest-phone .ph-hero{min-height:320px;padding:60px 20px 28px}
+.guest-phone .ph-intro{font-size:12px;max-width:260px}
+.guest-phone .ph-sec-title{font-size:16px}
+
+/* RSVP FORM IN GUEST VIEW */
+.rsvp-form{background:rgba(248,240,222,.08);border:1px solid rgba(201,162,78,.2);border-radius:4px;padding:14px}
+.rsvp-form .input{background:rgba(248,240,222,.1);border-color:rgba(201,162,78,.2);color:var(--ivory);font-size:12px}
+.rsvp-form .input::placeholder{color:rgba(248,240,222,.3)}
+.rsvp-form .input:focus{border-color:var(--gold)}
+.rsvp-form .label{color:var(--gold);font-size:8px}
+.rsvp-radio{display:flex;gap:6px;margin-bottom:10px}
+.rsvp-radio label{flex:1;text-align:center;padding:8px;border:1px solid rgba(201,162,78,.2);border-radius:3px;font-size:10px;color:rgba(248,240,222,.6);cursor:pointer;transition:all .2s}
+.rsvp-radio input{display:none}
+.rsvp-radio input:checked+label{background:var(--gold);color:var(--brand);border-color:var(--gold);font-weight:600}
+
+/* TOAST */
+.toast{position:fixed;bottom:60px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--brand);color:#fff;padding:10px 20px;border-radius:var(--r);font-size:12px;font-weight:500;opacity:0;transition:all .3s;z-index:999;pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:700px){
+  .s-builder{flex-direction:column}
+  .builder-preview{width:100%;border-left:none;border-top:1px solid var(--border);position:relative;max-height:none}
+  .builder-form{max-height:none}
+  .phone{width:220px}
+  .phone-screen{height:380px}
+  .s-checkout{flex-direction:column;align-items:center}
+  .checkout-plans{flex-direction:column}
+  .checkout-plan{width:100%;max-width:300px}
+  .checkout-summary{width:100%;max-width:300px}
+  .dash-stats{grid-template-columns:1fr 1fr}
+  .dash-grid{grid-template-columns:1fr}
+  .guest-phone{width:100%;max-width:400px}
+  .s-home-stats{flex-wrap:wrap;gap:20px}
+}
+
+@media print{
+  .flow-bar,.toast{display:none!important}
+  .screen{position:relative!important;top:0!important;display:block!important;page-break-after:always;overflow:visible!important}
+}
+</style>
+</head>
+<body>
+
+<!-- FLOW BAR -->
+<div class="flow-bar">
+  <div class="flow-label" id="flowLabel">Flow A</div>
+  <div class="flow-steps" id="flowSteps"></div>
+  <div class="flow-switch">
+    <button class="flow-sw-btn active" onclick="switchFlow('A')">A: Couple</button>
+    <button class="flow-sw-btn" onclick="switchFlow('B')">B: Guest</button>
+    <button class="flow-sw-btn" onclick="switchFlow('C')">C: Dashboard</button>
+  </div>
+</div>
+
+<!-- ALL SCREENS -->
+<div class="screen" id="screen-home"></div>
+<div class="screen" id="screen-builder"></div>
+<div class="screen" id="screen-auth"></div>
+<div class="screen" id="screen-checkout"></div>
+<div class="screen" id="screen-dashboard"></div>
+<div class="screen" id="screen-guest"></div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== STATE =====
+var S = {
+  flow: 'A',
+  step: 0,
+  card: {
+    bride:'Farah', groom:'Adam',
+    intro:'Dengan penuh rasa syukur, kami menjemput anda hadir ke majlis perkahwinan kami.',
+    akadDate:'25 Mei 2026', akadTime:'9:00 Pagi', akadVenue:'Masjid Al-Hidayah',
+    resDate:'25 Mei 2026', resTime:'11:00 Pagi', resVenue:'Dewan Seri Warisan',
+    template:'Songket Biru', plan:null, status:'draft',
+    rsvps:[], wishes:[], slug:'farah-adam-2026'
+  },
+  user: null
+};
+
+// Try restore from localStorage
+try { var saved = localStorage.getItem('emotion_proto'); if(saved) { var p = JSON.parse(saved); if(p.card) S.card = p.card; if(p.user) S.user = p.user; }} catch(e){}
+
+function save() {
+  try { localStorage.setItem('emotion_proto', JSON.stringify({card:S.card,user:S.user})); } catch(e){}
+}
+
+var FLOWS = {
+  A: [{id:'home',label:'Homepage'},{id:'builder',label:'Builder'},{id:'auth',label:'Daftar'},{id:'checkout',label:'Checkout'},{id:'dashboard',label:'Dashboard'}],
+  B: [{id:'guest',label:'Buka Pautan'},{id:'guest',label:'Lihat Kad'},{id:'guest',label:'RSVP'},{id:'guest',label:'Ucapan'}],
+  C: [{id:'dashboard',label:'Log Masuk'},{id:'dashboard',label:'Lihat RSVP'},{id:'dashboard',label:'Urus Ucapan'},{id:'dashboard',label:'Eksport'}]
+};
+
+// ===== NAVIGATION =====
+function switchFlow(f) {
+  S.flow = f; S.step = 0;
+  document.querySelectorAll('.flow-sw-btn').forEach(function(b,i){b.classList.toggle('active',['A','B','C'][i]===f)});
+  renderFlowBar();
+  goStep(0);
+}
+
+function goStep(idx) {
+  S.step = idx;
+  renderFlowBar();
+  var steps = FLOWS[S.flow];
+  var screenId = steps[Math.min(idx, steps.length-1)].id;
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});
+  var el = document.getElementById('screen-'+screenId);
+  if(el){el.classList.add('active'); renderScreen(screenId);}
+}
+
+function nextStep() { goStep(S.step + 1); }
+
+function renderFlowBar() {
+  var steps = FLOWS[S.flow];
+  document.getElementById('flowLabel').textContent = 'Flow '+S.flow;
+  document.getElementById('flowSteps').innerHTML = steps.map(function(s,i){
+    var cls = i===S.step?'active':i<S.step?'done':'';
+    return '<div class="flow-step '+cls+'" onclick="goStep('+i+')">'+(i+1)+'. '+s.label+'</div>';
+  }).join('');
+}
+
+// ===== RENDER SCREENS =====
+function renderScreen(id) {
+  var el = document.getElementById('screen-'+id);
+  if(id==='home') renderHome(el);
+  else if(id==='builder') renderBuilder(el);
+  else if(id==='auth') renderAuth(el);
+  else if(id==='checkout') renderCheckout(el);
+  else if(id==='dashboard') renderDashboard(el);
+  else if(id==='guest') renderGuest(el);
+}
+
+// ===== SCREEN: HOME =====
+function renderHome(el) {
+  el.innerHTML =
+    '<div class="s-home">' +
+      '<div class="s-home-eyebrow">Warisan &middot; Eleganza &middot; Emosi</div>' +
+      '<div class="s-home-title">Kad jemputan dengan jiwa</div>' +
+      '<div class="s-home-big">Warisan Melayu.</div>' +
+      '<div class="s-home-desc">Dari songket ke sentuhan digital. Ciptakan kad jemputan perkahwinan yang mengalunkan estetika warisan.</div>' +
+      '<div class="s-home-actions">' +
+        '<button class="btn btn-gold" onclick="nextStep()">Bina Kad Percuma &#10022;</button>' +
+        '<button class="btn" style="background:transparent;border:1px solid rgba(248,240,222,.2);color:var(--ivory)" onclick="nextStep()">Lihat Templat &rarr;</button>' +
+      '</div>' +
+      '<div class="s-home-stats">' +
+        '<div class="s-home-stat"><div class="s-home-stat-num">200+</div><div class="s-home-stat-label">Templat</div></div>' +
+        '<div class="s-home-stat"><div class="s-home-stat-num">8</div><div class="s-home-stat-label">Animasi</div></div>' +
+        '<div class="s-home-stat"><div class="s-home-stat-num">5min</div><div class="s-home-stat-label">Siap</div></div>' +
+        '<div class="s-home-stat"><div class="s-home-stat-num">4</div><div class="s-home-stat-label">Bahasa</div></div>' +
+      '</div>' +
+    '</div>';
+}
+
+// ===== SCREEN: BUILDER =====
+function renderBuilder(el) {
+  el.innerHTML =
+    '<div class="s-builder">' +
+      '<div class="builder-form" id="builderForm">' +
+        '<div class="builder-head"><div class="builder-head-title">Bina Kad Anda</div><div class="builder-head-sub">Isi butiran &mdash; pratonton dikemas kini serta-merta</div></div>' +
+        '<div class="builder-section"><div class="builder-sec-title">&#10022; Pengantin</div>' +
+          '<div class="row2"><div class="fg"><div class="label">Pengantin Perempuan</div><input class="input" id="b-bride" value="'+S.card.bride+'" oninput="updateCard()"></div>' +
+          '<div class="fg"><div class="label">Pengantin Lelaki</div><input class="input" id="b-groom" value="'+S.card.groom+'" oninput="updateCard()"></div></div>' +
+          '<div class="fg"><div class="label">Ucapan dari Hati</div><textarea class="input" id="b-intro" rows="2" oninput="updateCard()">'+S.card.intro+'</textarea></div>' +
+        '</div>' +
+        '<div class="builder-section"><div class="builder-sec-title">&#10022; Akad Nikah</div>' +
+          '<div class="row2"><div class="fg"><div class="label">Tarikh</div><input class="input" id="b-akadDate" value="'+S.card.akadDate+'" oninput="updateCard()"></div>' +
+          '<div class="fg"><div class="label">Masa</div><input class="input" id="b-akadTime" value="'+S.card.akadTime+'" oninput="updateCard()"></div></div>' +
+          '<div class="fg"><div class="label">Tempat</div><input class="input" id="b-akadVenue" value="'+S.card.akadVenue+'" oninput="updateCard()"></div>' +
+        '</div>' +
+        '<div class="builder-section"><div class="builder-sec-title">&#10022; Majlis Resepsi</div>' +
+          '<div class="row2"><div class="fg"><div class="label">Tarikh</div><input class="input" id="b-resDate" value="'+S.card.resDate+'" oninput="updateCard()"></div>' +
+          '<div class="fg"><div class="label">Masa</div><input class="input" id="b-resTime" value="'+S.card.resTime+'" oninput="updateCard()"></div></div>' +
+          '<div class="fg"><div class="label">Tempat</div><input class="input" id="b-resVenue" value="'+S.card.resVenue+'" oninput="updateCard()"></div>' +
+        '</div>' +
+        '<button class="btn btn-gold" style="width:100%;justify-content:center;padding:14px" onclick="nextStep()">&#10022; Terbitkan Kad Saya</button>' +
+      '</div>' +
+      '<div class="builder-preview"><div class="preview-label">Pratonton Langsung</div><div class="phone"><div class="phone-notch"></div><div class="phone-screen" id="builderPhone"></div></div></div>' +
+    '</div>';
+  renderPhone('builderPhone');
+}
+
+function updateCard() {
+  var fields = ['bride','groom','intro','akadDate','akadTime','akadVenue','resDate','resTime','resVenue'];
+  fields.forEach(function(f){
+    var el = document.getElementById('b-'+f);
+    if(el) S.card[f] = el.value;
+  });
+  S.card.slug = (S.card.bride+'-'+S.card.groom+'-2026').toLowerCase().replace(/\s+/g,'-');
+  save();
+  renderPhone('builderPhone');
+}
+
+function renderPhone(targetId) {
+  var c = S.card;
+  var el = document.getElementById(targetId);
+  if(!el) return;
+  el.innerHTML =
+    '<div class="ph-hero"><div class="ph-hero-pattern"></div>' +
+      '<div class="ph-bismillah">&#xFDFD;</div>' +
+      '<div class="ph-label">Dengan Rasa Syukur</div>' +
+      '<div class="ph-name">'+c.bride+'</div><div class="ph-amp">&amp;</div><div class="ph-name">'+c.groom+'</div>' +
+      '<div class="ph-divider"><div class="l"></div><div class="d"></div><div class="l"></div></div>' +
+      '<div class="ph-intro">'+c.intro+'</div>' +
+    '</div>' +
+    '<div class="ph-section cream"><div class="ph-sec-num">/ 01</div><div class="ph-sec-title" style="color:var(--text)">Aturcara Majlis</div>' +
+      '<div class="ph-ev-box"><div class="ph-ev-name">Akad Nikah</div>' +
+        '<div class="ph-ev-row"><span class="ph-ev-lbl">Tarikh</span><span class="ph-ev-val">'+(c.akadDate||'—')+'</span></div>' +
+        '<div class="ph-ev-row"><span class="ph-ev-lbl">Masa</span><span class="ph-ev-val">'+(c.akadTime||'—')+'</span></div>' +
+        '<div class="ph-ev-row"><span class="ph-ev-lbl">Tempat</span><span class="ph-ev-val">'+(c.akadVenue||'—')+'</span></div>' +
+      '</div>' +
+      '<div class="ph-ev-box"><div class="ph-ev-name">Resepsi</div>' +
+        '<div class="ph-ev-row"><span class="ph-ev-lbl">Tarikh</span><span class="ph-ev-val">'+(c.resDate||'—')+'</span></div>' +
+        '<div class="ph-ev-row"><span class="ph-ev-lbl">Masa</span><span class="ph-ev-val">'+(c.resTime||'—')+'</span></div>' +
+        '<div class="ph-ev-row"><span class="ph-ev-lbl">Tempat</span><span class="ph-ev-val">'+(c.resVenue||'—')+'</span></div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="ph-section dark"><div class="ph-sec-num">/ 02</div><div class="ph-sec-title">Sahkan Kehadiran</div>' +
+      '<button class="ph-rsvp-btn">&#10003; Sahkan via WhatsApp</button>' +
+    '</div>' +
+    '<div class="ph-footer"><div class="ph-footer-brand">'+c.bride+' &amp; '+c.groom+'</div><div class="ph-footer-tag">Terima kasih atas doa &amp; restu</div></div>';
+}
+
+// ===== SCREEN: AUTH =====
+function renderAuth(el) {
+  el.innerHTML =
+    '<div class="s-auth">' +
+      '<div class="auth-box">' +
+        '<div class="auth-logo">e<span>&middot;</span>motion<span style="font-size:11px;color:var(--gold);margin-left:4px">.MY</span></div>' +
+        '<div class="auth-sub">Daftar untuk simpan dan terbitkan kad anda</div>' +
+        '<div class="fg"><input class="input" id="authEmail" placeholder="Alamat e-mel" value="farah@email.com"></div>' +
+        '<div class="fg"><input class="input" type="password" id="authPass" placeholder="Kata laluan" value="password123"></div>' +
+        '<button class="btn btn-brand" style="width:100%;justify-content:center;padding:12px" onclick="doSignup()">Daftar &amp; Simpan Kad</button>' +
+        '<div class="auth-divider">atau</div>' +
+        '<button class="btn btn-outline" style="width:100%;justify-content:center" onclick="doSignup()">Teruskan dengan Google</button>' +
+        '<div style="margin-top:16px;font-size:11px;color:var(--text3)">Sudah ada akaun? <span style="color:var(--blue);cursor:pointer" onclick="doSignup()">Log masuk</span></div>' +
+      '</div>' +
+    '</div>';
+}
+
+function doSignup() {
+  var email = document.getElementById('authEmail').value;
+  S.user = {email: email, name: S.card.bride+' & '+S.card.groom};
+  S.card.status = 'draft';
+  save();
+  showToast('Akaun dicipta! Kad disimpan sebagai draf.');
+  setTimeout(nextStep, 800);
+}
+
+// ===== SCREEN: CHECKOUT =====
+function renderCheckout(el) {
+  el.innerHTML =
+    '<div class="s-checkout">' +
+      '<div><div style="font-size:18px;font-weight:700;margin-bottom:4px">Naik Taraf Kad Anda</div><div style="font-size:12px;color:var(--text3);margin-bottom:24px">Pilih pelan untuk menerbitkan kad langsung</div>' +
+      '<div class="checkout-plans">' +
+        '<div class="checkout-plan'+(S.card.plan==='Motion'?' selected':'')+'" onclick="selectPlan(\'Motion\',29)">' +
+          '<div class="plan-name">Motion</div><div class="plan-price"><sup>RM</sup>29</div><div class="plan-desc">Bayar sekali &middot; aktif 1 tahun</div>' +
+          '<div class="plan-feat"><span class="plan-feat-check">&#10003;</span> Semua templat Warisan</div>' +
+          '<div class="plan-feat"><span class="plan-feat-check">&#10003;</span> Kesan CSS penuh</div>' +
+          '<div class="plan-feat"><span class="plan-feat-check">&#10003;</span> Sistem RSVP</div>' +
+          '<div class="plan-feat"><span class="plan-feat-check">&#10003;</span> Galeri 6 foto</div>' +
+          '<div class="plan-feat"><span class="plan-feat-check">&#10003;</span> Muzik latar</div>' +
+        '</div>' +
+        '<div class="checkout-plan'+(S.card.plan==='Cinematic'?' selected':'')+'" onclick="selectPlan(\'Cinematic\',59)">' +
+          '<div class="plan-name">Cinematic</div><div class="plan-price"><sup>RM</sup>59</div><div class="plan-desc">Bayar sekali &middot; aktif 2 tahun</div>' +
+          '<div class="plan-feat"><span class="plan-feat-check">&#10003;</span> Semua + eksklusif</div>' +
+          '<div class="plan-feat"><span class="plan-feat-check">&#10003;</span> Kesan GSAP penuh</div>' +
+          '<div class="plan-feat"><span class="plan-feat-check">&#10003;</span> Video MP4</div>' +
+          '<div class="plan-feat"><span class="plan-feat-check">&#10003;</span> Dwibahasa</div>' +
+          '<div class="plan-feat"><span class="plan-feat-check">&#10003;</span> Tanpa branding</div>' +
+          '<div class="plan-feat"><span class="plan-feat-check">&#10003;</span> Digital Angpau</div>' +
+        '</div>' +
+      '</div></div>' +
+      '<div class="checkout-summary"><div class="checkout-receipt">' +
+        '<div style="font-size:14px;font-weight:700;margin-bottom:16px">Ringkasan</div>' +
+        '<div class="receipt-row"><span>Kad</span><span>'+S.card.bride+' & '+S.card.groom+'</span></div>' +
+        '<div class="receipt-row"><span>Templat</span><span>'+S.card.template+'</span></div>' +
+        '<div class="receipt-row" id="receiptPlan"><span>Pelan</span><span>'+(S.card.plan||'Pilih pelan')+'</span></div>' +
+        '<div class="receipt-row receipt-total" id="receiptTotal"><span>Jumlah</span><span id="receiptAmt">'+(S.card.plan==='Motion'?'RM 29':S.card.plan==='Cinematic'?'RM 59':'—')+'</span></div>' +
+        '<button class="btn btn-gold" style="width:100%;justify-content:center;margin-top:16px;padding:14px" id="payBtn" onclick="doPay()" '+(S.card.plan?'':'disabled')+'>Bayar via Billplz</button>' +
+        '<div style="text-align:center;margin-top:8px;font-size:10px;color:var(--text3)">Pembayaran selamat via Billplz</div>' +
+      '</div></div>' +
+    '</div>';
+}
+
+var selectedPrice = 0;
+function selectPlan(plan, price) {
+  S.card.plan = plan;
+  selectedPrice = price;
+  save();
+  document.querySelectorAll('.checkout-plan').forEach(function(p){p.classList.remove('selected')});
+  event.currentTarget.classList.add('selected');
+  document.getElementById('receiptPlan').innerHTML = '<span>Pelan</span><span>'+plan+'</span>';
+  document.getElementById('receiptAmt').textContent = 'RM '+price;
+  document.getElementById('payBtn').disabled = false;
+}
+
+function doPay() {
+  S.card.status = 'active';
+  save();
+  showToast('Pembayaran berjaya! Kad anda kini aktif di e-motion.my/'+S.card.slug);
+  setTimeout(nextStep, 1000);
+}
+
+// ===== SCREEN: DASHBOARD =====
+function renderDashboard(el) {
+  var c = S.card;
+  var attending = c.rsvps.filter(function(r){return r.status==='attending'});
+  var totalPax = attending.reduce(function(s,r){return s+r.pax},0);
+  var pendingWishes = c.wishes.filter(function(w){return !w.approved});
+
+  el.innerHTML =
+    '<div class="s-dash">' +
+      '<div class="dash-head"><div><div class="dash-title">Kad '+c.bride+' &amp; '+c.groom+'</div><div style="font-size:12px;color:var(--text3)">e-motion.my/'+c.slug+'</div></div><div style="display:flex;gap:8px"><button class="btn btn-sm btn-outline" onclick="exportCSV()">Eksport CSV</button><button class="btn btn-sm btn-brand" onclick="switchFlow(\'B\')">Lihat Kad &nearr;</button></div></div>' +
+      '<div class="dash-stats">' +
+        '<div class="dash-stat"><div class="dash-stat-label">Status</div><div class="dash-stat-val" style="color:var(--green)">'+(c.status==='active'?'Aktif':'Draf')+'</div></div>' +
+        '<div class="dash-stat"><div class="dash-stat-label">RSVP Hadir</div><div class="dash-stat-val">'+attending.length+' <span style="font-size:12px;font-weight:400;color:var(--text3)">/ '+c.rsvps.length+'</span></div></div>' +
+        '<div class="dash-stat"><div class="dash-stat-label">Jumlah Tetamu</div><div class="dash-stat-val">'+totalPax+'</div></div>' +
+        '<div class="dash-stat"><div class="dash-stat-label">Ucapan</div><div class="dash-stat-val">'+c.wishes.length+(pendingWishes.length?' <span class="tag tag-gold">'+pendingWishes.length+' pending</span>':'')+'</div></div>' +
+      '</div>' +
+      '<div class="dash-grid">' +
+        '<div class="card"><div style="padding:16px"><div style="font-size:13px;font-weight:600;margin-bottom:12px">Senarai RSVP</div>' +
+          (c.rsvps.length===0?'<div style="color:var(--text3);font-size:12px;padding:20px 0;text-align:center">Belum ada RSVP lagi. Kongsi pautan kad anda!</div>':
+          '<table style="width:100%;border-collapse:collapse"><thead><tr><th style="text-align:left;padding:6px 8px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border)">Nama</th><th style="text-align:left;padding:6px 8px;font-size:10px;color:var(--text3);border-bottom:1px solid var(--border)">Status</th><th style="text-align:left;padding:6px 8px;font-size:10px;color:var(--text3);border-bottom:1px solid var(--border)">Pax</th></tr></thead><tbody>' +
+          c.rsvps.map(function(r){
+            return '<tr><td style="padding:6px 8px;font-size:12px;border-bottom:1px solid var(--border)">'+r.name+'</td><td style="padding:6px 8px;border-bottom:1px solid var(--border)"><span class="tag '+(r.status==='attending'?'tag-green':'tag-red')+'">'+(r.status==='attending'?'Hadir':'Tidak')+'</span></td><td style="padding:6px 8px;font-size:12px;border-bottom:1px solid var(--border)">'+r.pax+'</td></tr>';
+          }).join('') + '</tbody></table>') +
+        '</div></div>' +
+        '<div class="card"><div style="padding:16px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><div style="font-size:13px;font-weight:600">Ucapan &amp; Doa</div></div>' +
+          (c.wishes.length===0?'<div style="color:var(--text3);font-size:12px;padding:20px 0;text-align:center">Belum ada ucapan.</div>':
+          c.wishes.map(function(w,i){
+            return '<div class="wish-item"><div><div class="wish-text">&ldquo;'+w.text+'&rdquo;</div><div class="wish-meta">'+w.author+'</div></div>'+(w.approved?'<span class="tag tag-green" style="flex-shrink:0">Lulus</span>':'<button class="btn btn-sm btn-green" onclick="approveWish('+i+')">Lulus</button>')+'</div>';
+          }).join('')) +
+        '</div></div>' +
+      '</div>' +
+    '</div>';
+}
+
+function approveWish(idx) {
+  S.card.wishes[idx].approved = true;
+  save();
+  renderDashboard(document.getElementById('screen-dashboard'));
+  showToast('Ucapan diluluskan dan kini ditunjukkan pada kad awam.');
+}
+
+function exportCSV() {
+  var rows = [['Nama','Status','Pax']];
+  S.card.rsvps.forEach(function(r){ rows.push([r.name,r.status,r.pax]); });
+  var csv = rows.map(function(r){return r.join(',')}).join('\n');
+  showToast('CSV dengan '+S.card.rsvps.length+' baris disalin! (Demo — dalam produksi akan memuat turun fail)');
+}
+
+// ===== SCREEN: GUEST =====
+function renderGuest(el) {
+  var c = S.card;
+  el.innerHTML =
+    '<div class="s-guest"><div class="guest-phone"><div class="phone"><div class="phone-notch"></div><div class="phone-screen">' +
+      '<div class="ph-hero"><div class="ph-hero-pattern"></div>' +
+        '<div class="ph-bismillah">&#xFDFD;</div>' +
+        '<div class="ph-label">Dengan Rasa Syukur</div>' +
+        '<div class="ph-name">'+c.bride+'</div><div class="ph-amp">&amp;</div><div class="ph-name">'+c.groom+'</div>' +
+        '<div class="ph-divider"><div class="l"></div><div class="d"></div><div class="l"></div></div>' +
+        '<div class="ph-intro">'+c.intro+'</div>' +
+      '</div>' +
+      '<div class="ph-section cream"><div class="ph-sec-num">/ 01</div><div class="ph-sec-title" style="color:var(--text)">Aturcara Majlis</div>' +
+        '<div class="ph-ev-box"><div class="ph-ev-name">Akad Nikah</div>' +
+          '<div class="ph-ev-row"><span class="ph-ev-lbl">Tarikh</span><span class="ph-ev-val">'+c.akadDate+'</span></div>' +
+          '<div class="ph-ev-row"><span class="ph-ev-lbl">Masa</span><span class="ph-ev-val">'+c.akadTime+'</span></div>' +
+          '<div class="ph-ev-row"><span class="ph-ev-lbl">Tempat</span><span class="ph-ev-val">'+c.akadVenue+'</span></div>' +
+        '</div>' +
+        '<div class="ph-ev-box"><div class="ph-ev-name">Resepsi</div>' +
+          '<div class="ph-ev-row"><span class="ph-ev-lbl">Tarikh</span><span class="ph-ev-val">'+c.resDate+'</span></div>' +
+          '<div class="ph-ev-row"><span class="ph-ev-lbl">Masa</span><span class="ph-ev-val">'+c.resTime+'</span></div>' +
+          '<div class="ph-ev-row"><span class="ph-ev-lbl">Tempat</span><span class="ph-ev-val">'+c.resVenue+'</span></div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="ph-section dark"><div class="ph-sec-num">/ 02</div><div class="ph-sec-title">Sahkan Kehadiran</div>' +
+        '<div class="rsvp-form">' +
+          '<div class="fg"><div class="label">Nama Anda</div><input class="input" id="g-rsvp-name" placeholder="Nama penuh"></div>' +
+          '<div class="label">Status Kehadiran</div>' +
+          '<div class="rsvp-radio"><input type="radio" name="rsvp" id="rsvp-y" value="attending" checked><label for="rsvp-y">&#10003; Hadir</label><input type="radio" name="rsvp" id="rsvp-n" value="declined"><label for="rsvp-n">&#10007; Tidak</label></div>' +
+          '<div class="fg"><div class="label">Bilangan Tetamu</div><input class="input" id="g-rsvp-pax" type="number" value="2" min="1" max="10"></div>' +
+          '<button class="ph-rsvp-btn" onclick="submitRSVP()" style="font-size:11px;padding:10px">Sahkan Kehadiran</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="ph-section cream"><div class="ph-sec-num">/ 03</div><div class="ph-sec-title" style="color:var(--text)">Ucapan &amp; Doa</div>' +
+        '<div class="fg"><textarea class="input" id="g-wish" rows="2" placeholder="Tulis ucapan anda..."></textarea></div>' +
+        '<div class="fg"><input class="input" id="g-wish-name" placeholder="Nama anda"></div>' +
+        '<button class="btn btn-brand btn-sm" style="width:100%;justify-content:center" onclick="submitWish()">Hantar Ucapan &#10022;</button>' +
+        (c.wishes.filter(function(w){return w.approved}).length>0?
+          '<div style="margin-top:16px;border-top:1px solid var(--border);padding-top:12px">' +
+          c.wishes.filter(function(w){return w.approved}).map(function(w){
+            return '<div style="margin-bottom:8px;font-size:11px"><div style="font-style:italic;color:var(--text2)">&ldquo;'+w.text+'&rdquo;</div><div style="color:var(--text3);font-size:10px;margin-top:2px">'+w.author+'</div></div>';
+          }).join('') + '</div>' : '') +
+      '</div>' +
+      '<div class="ph-section wine"><div class="ph-sec-num">/ 04</div><div class="ph-sec-title">Hadiah Digital</div>' +
+        '<div style="background:rgba(248,240,222,.08);border:1px solid rgba(201,162,78,.2);border-radius:4px;padding:10px;text-align:center">' +
+          '<div style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:4px">Maybank</div>' +
+          '<div style="font-size:12px;color:var(--ivory)">Farah Binti Ahmad</div>' +
+          '<div style="font-size:14px;font-weight:600;color:var(--gold-lt);margin-top:2px;letter-spacing:.05em">1234567890</div>' +
+          '<button class="btn btn-sm" style="margin-top:8px;background:rgba(201,162,78,.15);border:1px solid var(--gold);color:var(--gold-lt);font-size:9px" onclick="showToast(\'Nombor akaun disalin!\')">Salin Nombor</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="ph-footer"><div class="ph-footer-brand">'+c.bride+' &amp; '+c.groom+'</div><div class="ph-footer-tag">Terima kasih atas doa &amp; restu</div></div>' +
+    '</div></div></div></div>';
+}
+
+function submitRSVP() {
+  var name = document.getElementById('g-rsvp-name').value;
+  if(!name) { showToast('Sila masukkan nama anda.'); return; }
+  var status = document.querySelector('input[name="rsvp"]:checked').value;
+  var pax = parseInt(document.getElementById('g-rsvp-pax').value) || 1;
+  S.card.rsvps.push({name:name, status:status, pax:status==='attending'?pax:0});
+  save();
+  showToast('RSVP dihantar! '+(status==='attending'?'Terima kasih, kami tunggu kehadiran anda.':'Terima kasih atas maklum balas.'));
+  document.getElementById('g-rsvp-name').value = '';
+}
+
+function submitWish() {
+  var text = document.getElementById('g-wish').value;
+  var author = document.getElementById('g-wish-name').value;
+  if(!text||!author) { showToast('Sila isi ucapan dan nama anda.'); return; }
+  S.card.wishes.push({text:text, author:author, approved:false});
+  save();
+  showToast('Ucapan dihantar! Menunggu kelulusan pasangan.');
+  document.getElementById('g-wish').value = '';
+  document.getElementById('g-wish-name').value = '';
+}
+
+// ===== TOAST =====
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show')},2500);
+}
+
+// ===== INIT =====
+renderFlowBar();
+goStep(0);
+</script>
+</body>
+</html>

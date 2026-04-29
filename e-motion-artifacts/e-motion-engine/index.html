@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>e-motion.my Card Rendering Engine</title>
+<style>
+:root{
+  --bg:#1e1e2e;--bg2:#2a2a3e;--bg3:#313145;--border:#3e3e56;
+  --text:#cdd6f4;--text2:#a6adc8;--text3:#6c7086;
+  --gold:#c9a24e;--gold-lt:#e8c775;--green:#a6e3a1;--red:#f38ba8;--blue:#89b4fa;--mauve:#cba6f7;
+  --r:6px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Menlo','Monaco','Courier New',monospace;background:var(--bg);color:var(--text);font-size:12px;-webkit-font-smoothing:antialiased}
+
+.app{display:flex;height:100vh}
+
+/* LEFT: JSON EDITOR */
+.editor-panel{width:50%;display:flex;flex-direction:column;border-right:1px solid var(--border)}
+.panel-head{height:40px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 12px;gap:8px;flex-shrink:0}
+.panel-title{font-size:11px;color:var(--text2);font-weight:600;flex:1}
+.panel-dot{width:10px;height:10px;border-radius:50%}
+.panel-tabs{display:flex;gap:0;background:var(--bg);border-bottom:1px solid var(--border);flex-shrink:0}
+.panel-tab{padding:8px 14px;font-size:10px;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all .12s;font-family:inherit;background:none;border-top:none;border-left:none;border-right:none}
+.panel-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.panel-tab:hover{color:var(--text2)}
+.editor-area{flex:1;position:relative;overflow:hidden}
+.editor-area textarea{width:100%;height:100%;background:var(--bg);color:var(--text);border:none;outline:none;padding:12px;font-family:inherit;font-size:11px;line-height:1.7;resize:none;tab-size:2}
+.editor-area textarea::selection{background:rgba(201,162,78,.25)}
+.editor-status{height:28px;background:var(--bg2);border-top:1px solid var(--border);display:flex;align-items:center;padding:0 12px;gap:12px;flex-shrink:0}
+.status-item{font-size:9px;color:var(--text3)}
+.status-dot{width:6px;height:6px;border-radius:50%;display:inline-block;margin-right:3px}
+.status-ok{background:var(--green)}
+.status-err{background:var(--red)}
+
+/* TOOLBAR */
+.toolbar{display:flex;gap:4px;align-items:center}
+.tool-btn{padding:3px 8px;font-size:9px;font-weight:600;border:1px solid var(--border);border-radius:3px;background:var(--bg3);color:var(--text2);cursor:pointer;font-family:inherit;transition:all .12s;letter-spacing:.03em}
+.tool-btn:hover{border-color:var(--gold);color:var(--gold)}
+.tool-btn.active{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+.tool-sep{width:1px;height:14px;background:var(--border);margin:0 4px}
+
+/* RIGHT: PREVIEW */
+.preview-panel{width:50%;display:flex;flex-direction:column;background:#e5ddd5}
+.preview-head{height:40px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 12px;gap:8px;flex-shrink:0}
+.preview-toolbar{display:flex;gap:4px;margin-left:auto}
+.preview-area{flex:1;overflow:auto;display:flex;align-items:flex-start;justify-content:center;padding:20px;background:linear-gradient(135deg,#e8e0d0,#d5cfc0)}
+
+/* PHONE FRAME */
+.phone-frame{width:375px;background:#0d1228;border-radius:40px;padding:8px;box-shadow:0 0 0 2px rgba(201,162,78,.3),0 24px 60px rgba(0,0,0,.4);flex-shrink:0}
+.phone-frame.no-frame{border-radius:0;padding:0;box-shadow:none;width:100%;background:none}
+.phone-notch{width:120px;height:24px;background:#0d1228;border-radius:0 0 16px 16px;margin:0 auto 2px}
+.phone-screen{border-radius:32px;overflow:hidden;overflow-y:auto;background:#faf4e3;min-height:600px;max-height:calc(100vh - 120px);scrollbar-width:none}
+.phone-screen::-webkit-scrollbar{display:none}
+.phone-frame.no-frame .phone-notch{display:none}
+.phone-frame.no-frame .phone-screen{border-radius:0;max-height:calc(100vh - 80px)}
+
+/* RENDERED CARD STYLES */
+.card-hero{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px 36px;position:relative;min-height:400px}
+.card-hero-pattern{position:absolute;inset:0;pointer-events:none}
+.card-hero-corner{position:absolute;width:48px;height:48px;opacity:.3}
+.card-hero-corner svg{width:100%;height:100%}
+.card-bism{font-family:Georgia,serif;font-size:18px;margin-bottom:6px;position:relative;z-index:1}
+.card-label{font-family:-apple-system,system-ui,sans-serif;font-size:8px;letter-spacing:.3em;text-transform:uppercase;margin-bottom:20px;display:inline-flex;align-items:center;gap:10px;position:relative;z-index:1}
+.card-label::before,.card-label::after{content:'';width:20px;height:1px}
+.card-name{font-family:Georgia,serif;font-style:italic;font-size:48px;line-height:.95;position:relative;z-index:1}
+.card-amp{font-size:16px;display:block;margin:4px 0;position:relative;z-index:1}
+.card-divider{display:flex;align-items:center;gap:8px;margin:16px 0;position:relative;z-index:1}
+.card-divider .l{width:36px;height:1px}
+.card-divider .d{width:5px;height:5px;transform:rotate(45deg)}
+.card-intro{font-family:Georgia,serif;font-style:italic;font-size:13px;max-width:300px;line-height:1.6;opacity:.7;position:relative;z-index:1}
+.card-date-badge{font-family:-apple-system,system-ui,sans-serif;font-size:10px;letter-spacing:.15em;text-transform:uppercase;margin-top:24px;padding:6px 16px;border-width:1px;border-style:solid;position:relative;z-index:1}
+
+.card-section{padding:28px 24px}
+.card-sec-num{font-family:-apple-system,system-ui,sans-serif;font-size:8px;letter-spacing:.15em;text-transform:uppercase;font-weight:600;margin-bottom:3px}
+.card-sec-title{font-family:Georgia,serif;font-style:italic;font-size:22px;margin-bottom:14px}
+.card-event{border-width:1px;border-style:solid;border-radius:6px;padding:16px;margin-bottom:10px;position:relative}
+.card-ev-corner-tr{position:absolute;top:6px;right:6px;width:12px;height:12px;border-top-width:1px;border-right-width:1px;border-top-style:solid;border-right-style:solid}
+.card-ev-corner-bl{position:absolute;bottom:6px;left:6px;width:12px;height:12px;border-bottom-width:1px;border-left-width:1px;border-bottom-style:solid;border-left-style:solid}
+.card-ev-name{font-family:Georgia,serif;font-style:italic;font-size:18px;text-align:center;margin-bottom:10px}
+.card-ev-row{display:flex;justify-content:space-between;font-size:12px;padding:4px 0;border-bottom:1px dashed rgba(128,128,128,.15)}
+.card-ev-row:last-child{border-bottom:none}
+.card-ev-lbl{font-family:-apple-system,system-ui,sans-serif;font-size:8px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;padding-top:2px}
+.card-ev-val{font-family:Georgia,serif;font-size:13px;text-align:right}
+.card-countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.card-cd-box{padding:12px 6px;text-align:center;border-width:1px;border-style:solid;border-radius:4px}
+.card-cd-val{font-family:Georgia,serif;font-size:28px;line-height:1}
+.card-cd-lbl{font-family:-apple-system,system-ui,sans-serif;font-size:7px;letter-spacing:.12em;text-transform:uppercase;margin-top:3px;opacity:.5}
+.card-rsvp-btn{width:100%;padding:12px;background:linear-gradient(135deg,#25D366,#1da852);color:#fff;border:none;border-radius:4px;font-family:-apple-system,system-ui,sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;margin-top:12px}
+.card-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.card-gallery-slot{aspect-ratio:1;border-width:1px;border-style:solid;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:16px;opacity:.3}
+.card-footer{padding:32px 24px;text-align:center}
+.card-footer-names{font-family:Georgia,serif;font-style:italic;font-size:20px;margin-bottom:4px}
+.card-footer-tag{font-family:Georgia,serif;font-style:italic;font-size:10px;opacity:.35}
+.card-footer-brand{font-family:-apple-system,system-ui,sans-serif;font-size:8px;letter-spacing:.12em;text-transform:uppercase;opacity:.15;margin-top:20px;padding-bottom:52px}
+
+/* ERROR OVERLAY */
+.error-overlay{position:absolute;inset:0;background:rgba(30,30,46,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;z-index:10}
+.error-icon{font-size:28px;margin-bottom:8px}
+.error-text{font-size:12px;color:var(--red);max-width:300px;line-height:1.6}
+
+/* PRESETS DROPDOWN */
+.preset-menu{position:relative;display:inline-block}
+.preset-dropdown{display:none;position:absolute;top:100%;left:0;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:4px;min-width:180px;z-index:20;margin-top:4px;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.preset-menu.open .preset-dropdown{display:block}
+.preset-item{display:block;width:100%;padding:6px 10px;font-size:10px;color:var(--text2);cursor:pointer;border:none;background:none;text-align:left;font-family:inherit;border-radius:3px;transition:all .1s}
+.preset-item:hover{background:var(--bg3);color:var(--gold)}
+
+@media(max-width:800px){
+  .app{flex-direction:column}
+  .editor-panel,.preview-panel{width:100%;height:50%}
+  .phone-frame{width:100%;border-radius:0;padding:0}
+  .phone-notch{display:none}
+  .phone-screen{border-radius:0}
+}
+@media print{
+  .editor-panel{display:none!important}
+  .preview-panel{width:100%}
+  .preview-head{display:none}
+  .phone-frame{box-shadow:none;border-radius:0;padding:0}
+  .phone-notch{display:none}
+  .phone-screen{border-radius:0;max-height:none;overflow:visible}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- EDITOR -->
+  <div class="editor-panel">
+    <div class="panel-head">
+      <div class="panel-dot" style="background:#f38ba8"></div>
+      <div class="panel-dot" style="background:#e8c775"></div>
+      <div class="panel-dot" style="background:#a6e3a1"></div>
+      <div class="panel-title">card-config.json</div>
+      <div class="toolbar">
+        <div class="preset-menu" id="presetMenu">
+          <button class="tool-btn" onclick="document.getElementById('presetMenu').classList.toggle('open')">Presets &#9662;</button>
+          <div class="preset-dropdown" id="presetDropdown"></div>
+        </div>
+        <div class="tool-sep"></div>
+        <button class="tool-btn" onclick="formatJSON()">Format</button>
+        <button class="tool-btn" onclick="resetJSON()">Reset</button>
+        <button class="tool-btn" onclick="copyJSON()">Copy</button>
+      </div>
+    </div>
+    <div class="panel-tabs">
+      <button class="panel-tab active" onclick="switchTab('config',this)">Config</button>
+      <button class="panel-tab" onclick="switchTab('schema',this)">Schema</button>
+      <button class="panel-tab" onclick="switchTab('output',this)">Output HTML</button>
+    </div>
+    <div class="editor-area">
+      <textarea id="jsonEditor" spellcheck="false" oninput="renderCard()"></textarea>
+      <textarea id="schemaView" spellcheck="false" readonly style="display:none;color:var(--text3)"></textarea>
+      <textarea id="outputView" spellcheck="false" readonly style="display:none;color:var(--mauve)"></textarea>
+    </div>
+    <div class="editor-status">
+      <span class="status-item"><span class="status-dot status-ok" id="statusDot"></span><span id="statusText">Valid JSON</span></span>
+      <span class="status-item" id="statusSize">0 bytes</span>
+      <span class="status-item" style="margin-left:auto">e-motion.my rendering engine v1.0</span>
+    </div>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="preview-panel">
+    <div class="panel-head">
+      <div class="panel-title" style="font-family:-apple-system,system-ui,sans-serif;color:var(--text)">Preview</div>
+      <div class="preview-toolbar">
+        <button class="tool-btn active" id="btnPhone" onclick="setDevice('phone')">Phone</button>
+        <button class="tool-btn" id="btnFull" onclick="setDevice('full')">Full</button>
+      </div>
+    </div>
+    <div class="preview-area" id="previewArea">
+      <div class="phone-frame" id="phoneFrame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen" id="cardOutput"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== DEFAULT CONFIG =====
+var DEFAULT_CONFIG = {
+  template: {
+    name: "Songket Biru",
+    slug: "songket-biru",
+    colors: {
+      bgGradient: ["#1a2040", "#2a3460", "#4a1020"],
+      text: "#f8f0de",
+      accent: "#e8c775",
+      label: "#c9a24e",
+      sectionBg: "#faf4e3",
+      sectionText: "#1a2040",
+      sectionAccent: "#6b1d2e",
+      footerBg: ["#0d1228", "#05081a"]
+    },
+    pattern: {
+      enabled: true,
+      svg: "M30 5L34 18L47 20L36 28L40 42L30 35L20 42L24 28L13 20L26 18Z",
+      viewBox: "0 0 60 60",
+      opacity: 0.1
+    },
+    features: {
+      frame: false,
+      stripes: false,
+      corners: true,
+      envelope: true
+    }
+  },
+  card: {
+    bride: "Farah",
+    groom: "Adam",
+    intro: "Dengan penuh rasa syukur, kami menjemput anda hadir ke majlis perkahwinan kami.",
+    label: "Dengan Rasa Syukur"
+  },
+  events: [
+    {
+      name: "Akad Nikah",
+      date: "25 Mei 2026",
+      time: "9:00 Pagi",
+      venue: "Masjid Al-Hidayah",
+      dresscode: "Warna Pastel"
+    },
+    {
+      name: "Majlis Resepsi",
+      date: "25 Mei 2026",
+      time: "11:00 Pagi",
+      venue: "Dewan Seri Warisan",
+      dresscode: null
+    }
+  ],
+  sections: {
+    countdown: { enabled: true, targetDate: "2026-05-25T09:00:00+08:00" },
+    gallery: { enabled: true, slots: 6 },
+    rsvp: { enabled: true, whatsapp: "+60123456789", contactName: "Kak Siti" },
+    wishes: { enabled: true },
+    angpau: {
+      enabled: true,
+      bank: "Maybank",
+      accountName: "Farah Binti Ahmad",
+      accountNo: "1234567890"
+    },
+    music: { enabled: false, title: "Bunga di Taman", url: null }
+  }
+};
+
+// ===== PRESETS =====
+var PRESETS = {
+  'Songket Biru': DEFAULT_CONFIG,
+  'Batik Kayangan': modPreset({name:'Batik Kayangan',slug:'batik-kayangan',bgGradient:['#6b1d2e','#8a2838'],sectionAccent:'#6b1d2e'}),
+  'Warisan Emas': modPreset({name:'Warisan Emas',slug:'warisan-emas',bgGradient:['#f8f0de','#f2e6c8'],text:'#6b1d2e',accent:'#8a6d2a',label:'#8a6d2a',sectionBg:'#1a2040',sectionText:'#f8f0de',sectionAccent:'#c9a24e',footerBg:['#4a1020','#2a0a10']}),
+  'Kerawang Ungu': modPreset({name:'Kerawang Ungu',slug:'kerawang-ungu',bgGradient:['#3a2150','#5a3570'],sectionAccent:'#3a2150'}),
+  'Tropika Segar': modPreset({name:'Tropika Segar',slug:'tropika-segar',bgGradient:['#2d5a3f','#4a7856'],sectionAccent:'#2d5a3f',pattern:false}),
+  'Mewah Klasik': modPreset({name:'Mewah Klasik',slug:'mewah-klasik',bgGradient:['#0d1228','#1a2040'],accent:'#c9a24e',frame:true}),
+  'Minimalis Jawi': modPreset({name:'Minimalis Jawi',slug:'minimalis-jawi',bgGradient:['#faf4e3','#f0e6d0'],text:'#1a2040',accent:'#c9a24e',label:'#8a6d2a',stripes:true,pattern:false,sectionBg:'#1a2040',sectionText:'#f8f0de',sectionAccent:'#c9a24e',footerBg:['#1a2040','#0d1228']}),
+};
+
+function modPreset(o){
+  var c = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+  c.template.name=o.name;c.template.slug=o.slug;
+  if(o.bgGradient) c.template.colors.bgGradient=o.bgGradient;
+  if(o.text) c.template.colors.text=o.text;
+  if(o.accent) c.template.colors.accent=o.accent;
+  if(o.label) c.template.colors.label=o.label;
+  if(o.sectionBg) c.template.colors.sectionBg=o.sectionBg;
+  if(o.sectionText) c.template.colors.sectionText=o.sectionText;
+  if(o.sectionAccent) c.template.colors.sectionAccent=o.sectionAccent;
+  if(o.footerBg) c.template.colors.footerBg=o.footerBg;
+  if(o.frame) c.template.features.frame=true;
+  if(o.stripes) c.template.features.stripes=true;
+  if(o.pattern===false) c.template.pattern.enabled=false;
+  return c;
+}
+
+// ===== INIT =====
+var editor = document.getElementById('jsonEditor');
+editor.value = JSON.stringify(DEFAULT_CONFIG, null, 2);
+
+// Build preset menu
+document.getElementById('presetDropdown').innerHTML = Object.keys(PRESETS).map(function(k){
+  return '<button class="preset-item" onclick="loadPreset(\''+k+'\')">'+k+'</button>';
+}).join('');
+
+// Schema
+document.getElementById('schemaView').value =
+'// Card Config JSON Schema\n// All fields are required unless marked (optional)\n\n'+
+'{\n'+
+'  template: {\n'+
+'    name: string,          // Display name\n'+
+'    slug: string,          // URL-safe identifier\n'+
+'    colors: {\n'+
+'      bgGradient: string[],  // 2-3 hex colors for gradient\n'+
+'      text: string,          // Main text color\n'+
+'      accent: string,        // Gold/accent color\n'+
+'      label: string,         // Label/tag color\n'+
+'      sectionBg: string,     // Alt section background\n'+
+'      sectionText: string,   // Alt section text\n'+
+'      sectionAccent: string, // Alt section accent\n'+
+'      footerBg: string[]     // Footer gradient\n'+
+'    },\n'+
+'    pattern: {\n'+
+'      enabled: boolean,\n'+
+'      svg: string,           // SVG path data\n'+
+'      viewBox: string,       // SVG viewBox\n'+
+'      opacity: number        // 0-1\n'+
+'    },\n'+
+'    features: {\n'+
+'      frame: boolean,        // Double border frame\n'+
+'      stripes: boolean,      // Horizontal gold stripes\n'+
+'      corners: boolean,      // Corner ornaments\n'+
+'      envelope: boolean      // Opening envelope screen\n'+
+'    }\n'+
+'  },\n'+
+'  card: {\n'+
+'    bride: string,\n'+
+'    groom: string,\n'+
+'    intro: string,          // Heartfelt message\n'+
+'    label: string           // e.g. "Dengan Rasa Syukur"\n'+
+'  },\n'+
+'  events: [{\n'+
+'    name: string,\n'+
+'    date: string,\n'+
+'    time: string,\n'+
+'    venue: string,\n'+
+'    dresscode: string|null  // (optional)\n'+
+'  }],\n'+
+'  sections: {\n'+
+'    countdown: { enabled, targetDate },\n'+
+'    gallery: { enabled, slots },\n'+
+'    rsvp: { enabled, whatsapp, contactName },\n'+
+'    wishes: { enabled },\n'+
+'    angpau: { enabled, bank, accountName, accountNo },\n'+
+'    music: { enabled, title, url }\n'+
+'  }\n'+
+'}';
+
+// ===== RENDERING ENGINE =====
+function renderCard(){
+  var raw = editor.value;
+  document.getElementById('statusSize').textContent = raw.length + ' bytes';
+
+  var config;
+  try {
+    config = JSON.parse(raw);
+    document.getElementById('statusDot').className = 'status-dot status-ok';
+    document.getElementById('statusText').textContent = 'Valid JSON';
+  } catch(e) {
+    document.getElementById('statusDot').className = 'status-dot status-err';
+    document.getElementById('statusText').textContent = 'Error: ' + e.message.substring(0,40);
+    document.getElementById('cardOutput').innerHTML = '<div class="error-overlay"><div class="error-icon">&#9888;</div><div class="error-text">JSON Parse Error<br><br>'+e.message+'</div></div>';
+    return;
+  }
+
+  var html = buildCard(config);
+  document.getElementById('cardOutput').innerHTML = html;
+  document.getElementById('outputView').value = '<!-- Generated by e-motion.my rendering engine -->\n<!-- Template: '+(config.template?config.template.name:'unknown')+' -->\n\n' + html;
+
+  // Start countdown if enabled
+  if(config.sections && config.sections.countdown && config.sections.countdown.enabled){
+    startCountdown(config.sections.countdown.targetDate);
+  }
+}
+
+function buildCard(cfg){
+  var t = cfg.template || {};
+  var c = t.colors || {};
+  var card = cfg.card || {};
+  var events = cfg.events || [];
+  var sec = cfg.sections || {};
+  var feat = t.features || {};
+  var pat = t.pattern || {};
+
+  var bgGrad = (c.bgGradient||['#1a2040','#2a3460']).join(',');
+  var footerGrad = (c.footerBg||['#0d1228','#05081a']).join(',');
+
+  var html = '';
+
+  // HERO
+  html += '<div class="card-hero" style="background:linear-gradient(180deg,'+bgGrad+');color:'+c.text+'">';
+
+  // Pattern
+  if(pat.enabled && pat.svg){
+    var svgUrl = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='"+(pat.viewBox||'0 0 60 60')+"'%3E%3Cg fill='none' stroke='"+encodeURIComponent(c.accent||'#e8c775')+"' stroke-width='0.5'%3E%3Cpath d='"+encodeURIComponent(pat.svg)+"'/%3E%3C/g%3E%3C/svg%3E";
+    html += '<div class="card-hero-pattern" style="opacity:'+(pat.opacity||0.1)+';background-image:url(&quot;'+svgUrl+'&quot;)"></div>';
+  }
+
+  // Frame
+  if(feat.frame){
+    html += '<div style="position:absolute;inset:16px;border:1px solid '+c.accent+';opacity:.4;z-index:0"></div>';
+    html += '<div style="position:absolute;inset:24px;border:1px solid '+c.accent+';opacity:.2;z-index:0"></div>';
+  }
+
+  // Stripes
+  if(feat.stripes){
+    html += '<div style="position:absolute;left:0;right:0;top:28px;height:5px;background:linear-gradient(90deg,'+c.accent+','+c.label+','+c.accent+');z-index:0"></div>';
+    html += '<div style="position:absolute;left:0;right:0;bottom:28px;height:5px;background:linear-gradient(90deg,'+c.accent+','+c.label+','+c.accent+');z-index:0"></div>';
+  }
+
+  // Corners
+  if(feat.corners){
+    var cornerSvg = '<svg viewBox="0 0 48 48"><g fill="none" stroke="'+(c.accent||'#e8c775')+'" stroke-width="1"><path d="M4 4L4 20M4 4L20 4"/><circle cx="10" cy="10" r="3" opacity=".4"/></g></svg>';
+    html += '<div class="card-hero-corner" style="top:12px;left:12px">'+cornerSvg+'</div>';
+    html += '<div class="card-hero-corner" style="top:12px;right:12px;transform:scaleX(-1)">'+cornerSvg+'</div>';
+    html += '<div class="card-hero-corner" style="bottom:12px;left:12px;transform:scaleY(-1)">'+cornerSvg+'</div>';
+    html += '<div class="card-hero-corner" style="bottom:12px;right:12px;transform:scale(-1,-1)">'+cornerSvg+'</div>';
+  }
+
+  // Content
+  html += '<div class="card-bism" style="color:'+c.accent+'">&#xFDFD;</div>';
+  html += '<div class="card-label" style="color:'+c.label+'"><span>'+(card.label||'')+'</span></div>';
+  html += '<div class="card-name" style="color:'+c.text+'">'+(card.bride||'')+'</div>';
+  html += '<div class="card-amp" style="color:'+c.accent+'">&amp;</div>';
+  html += '<div class="card-name" style="color:'+c.text+'">'+(card.groom||'')+'</div>';
+  html += '<div class="card-divider"><div class="l" style="background:'+c.accent+'"></div><div class="d" style="background:'+c.accent+'"></div><div class="l" style="background:'+c.accent+'"></div></div>';
+  html += '<div class="card-intro" style="color:'+c.text+'">'+(card.intro||'')+'</div>';
+
+  if(events[0]){
+    html += '<div class="card-date-badge" style="color:'+c.accent+';border-color:rgba('+hexToRgb(c.accent)+',.3)">'+events[0].date+'</div>';
+  }
+  html += '</div>';
+
+  // COUNTDOWN
+  if(sec.countdown && sec.countdown.enabled){
+    html += '<div class="card-section" style="background:linear-gradient(135deg,'+(c.bgGradient?c.bgGradient[c.bgGradient.length-1]||c.bgGradient[0]:'#4a1020')+','+(c.bgGradient?c.bgGradient[0]:'#1a2040')+');color:'+c.text+'">';
+    html += '<div class="card-sec-num" style="color:'+c.accent+'">/ 01</div><div class="card-sec-title" style="color:'+c.text+'">Kiraan Detik</div>';
+    html += '<div class="card-countdown">';
+    ['Hari','Jam','Min','Saat'].forEach(function(l,i){
+      html += '<div class="card-cd-box" style="background:rgba('+hexToRgb(c.accent)+',.08);border-color:rgba('+hexToRgb(c.accent)+',.2)"><div class="card-cd-val" style="color:'+c.accent+'" id="cd'+i+'">--</div><div class="card-cd-lbl" style="color:'+c.text+'">'+l+'</div></div>';
+    });
+    html += '</div></div>';
+  }
+
+  // EVENTS
+  if(events.length){
+    html += '<div class="card-section" style="background:'+c.sectionBg+';color:'+c.sectionText+'">';
+    var secIdx = sec.countdown&&sec.countdown.enabled ? 2 : 1;
+    html += '<div class="card-sec-num" style="color:'+c.sectionAccent+'">/ 0'+secIdx+'</div><div class="card-sec-title" style="color:'+c.sectionText+'">Aturcara Majlis</div>';
+    events.forEach(function(ev){
+      html += '<div class="card-event" style="border-color:rgba('+hexToRgb(c.sectionAccent)+',.12);background:rgba('+hexToRgb(c.sectionBg)+',.5)">';
+      html += '<div class="card-ev-corner-tr" style="border-color:'+c.accent+'"></div><div class="card-ev-corner-bl" style="border-color:'+c.accent+'"></div>';
+      html += '<div class="card-ev-name" style="color:'+c.sectionAccent+'">'+ev.name+'</div>';
+      [['Tarikh',ev.date],['Masa',ev.time],['Tempat',ev.venue]].forEach(function(r){
+        if(r[1]) html += '<div class="card-ev-row"><span class="card-ev-lbl" style="color:'+c.label+'">'+r[0]+'</span><span class="card-ev-val" style="color:'+c.sectionText+'">'+r[1]+'</span></div>';
+      });
+      if(ev.dresscode) html += '<div style="text-align:center;margin-top:8px"><span style="display:inline-block;padding:3px 10px;background:rgba('+hexToRgb(c.accent)+',.1);border:1px solid rgba('+hexToRgb(c.accent)+',.25);border-radius:16px;font-family:-apple-system,system-ui,sans-serif;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:'+c.label+';font-weight:600">'+ev.dresscode+'</span></div>';
+      html += '</div>';
+    });
+    html += '</div>';
+  }
+
+  // GALLERY
+  if(sec.gallery && sec.gallery.enabled){
+    secIdx++;
+    html += '<div class="card-section" style="background:linear-gradient(180deg,'+bgGrad+');color:'+c.text+'">';
+    html += '<div class="card-sec-num" style="color:'+c.accent+'">/ 0'+secIdx+'</div><div class="card-sec-title">Galeri Kenangan</div>';
+    html += '<div class="card-gallery">';
+    for(var g=0;g<(sec.gallery.slots||6);g++) html += '<div class="card-gallery-slot" style="border-color:rgba('+hexToRgb(c.accent)+',.12);background:rgba('+hexToRgb(c.accent)+',.04)">&#128247;</div>';
+    html += '</div></div>';
+  }
+
+  // RSVP
+  if(sec.rsvp && sec.rsvp.enabled){
+    secIdx++;
+    html += '<div class="card-section" style="background:'+c.sectionBg+';color:'+c.sectionText+'"><div class="card-sec-num" style="color:'+c.sectionAccent+'">/ 0'+secIdx+'</div><div class="card-sec-title" style="color:'+c.sectionText+'">Sahkan Kehadiran</div>';
+    if(sec.rsvp.contactName) html += '<div style="text-align:center;font-size:13px;font-weight:500;margin-bottom:2px">'+sec.rsvp.contactName+'</div>';
+    if(sec.rsvp.whatsapp) html += '<div style="text-align:center;font-family:-apple-system,system-ui,sans-serif;font-size:11px;color:'+c.sectionAccent+';margin-bottom:10px">'+sec.rsvp.whatsapp+'</div>';
+    html += '<button class="card-rsvp-btn">&#10003; Sahkan via WhatsApp</button></div>';
+  }
+
+  // ANGPAU
+  if(sec.angpau && sec.angpau.enabled){
+    secIdx++;
+    html += '<div class="card-section" style="background:linear-gradient(135deg,'+(c.bgGradient?c.bgGradient[0]:'#1a2040')+','+(c.bgGradient?c.bgGradient[1]||c.bgGradient[0]:'#2a3460')+');color:'+c.text+'">';
+    html += '<div class="card-sec-num" style="color:'+c.accent+'">/ 0'+secIdx+'</div><div class="card-sec-title">Hadiah Digital</div>';
+    html += '<div style="background:rgba('+hexToRgb(c.accent)+',.06);border:1px solid rgba('+hexToRgb(c.accent)+',.15);border-radius:6px;padding:16px;text-align:center">';
+    html += '<div style="font-family:-apple-system,system-ui,sans-serif;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:'+c.accent+';font-weight:600;margin-bottom:4px">'+sec.angpau.bank+'</div>';
+    html += '<div style="font-size:14px;margin-bottom:2px">'+sec.angpau.accountName+'</div>';
+    html += '<div style="font-size:18px;letter-spacing:.04em;color:'+c.accent+';margin-bottom:10px">'+sec.angpau.accountNo+'</div>';
+    html += '<div style="display:inline-block;padding:5px 12px;background:rgba('+hexToRgb(c.accent)+',.12);border:1px solid '+c.accent+';border-radius:3px;font-family:-apple-system,system-ui,sans-serif;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:'+c.accent+';font-weight:600;cursor:pointer">Salin Nombor</div>';
+    html += '</div></div>';
+  }
+
+  // FOOTER
+  html += '<div class="card-footer" style="background:linear-gradient(180deg,'+footerGrad+');color:'+c.text+'">';
+  html += '<div class="card-footer-names" style="color:'+c.accent+'">'+(card.bride||'')+' &amp; '+(card.groom||'')+'</div>';
+  html += '<div class="card-footer-tag" style="color:'+c.text+'">Terima kasih atas doa &amp; restu anda</div>';
+  html += '<div class="card-footer-brand" style="color:'+c.text+'">Dibina dengan e-motion.my</div>';
+  html += '</div>';
+
+  return html;
+}
+
+// ===== UTILITIES =====
+function hexToRgb(hex){
+  if(!hex) return '200,200,200';
+  hex = hex.replace('#','');
+  if(hex.length===3) hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+  var r=parseInt(hex.substring(0,2),16),g=parseInt(hex.substring(2,4),16),b=parseInt(hex.substring(4,6),16);
+  return r+','+g+','+b;
+}
+
+function startCountdown(target){
+  if(!target) return;
+  var t = new Date(target).getTime();
+  function tick(){
+    var diff=Math.max(0,t-Date.now());
+    var vals=[Math.floor(diff/864e5),Math.floor(diff%864e5/36e5),Math.floor(diff%36e5/6e4),Math.floor(diff%6e4/1e3)];
+    vals.forEach(function(v,i){
+      var el=document.getElementById('cd'+i);
+      if(el) el.textContent=v<10?'0'+v:v;
+    });
+  }
+  tick(); setInterval(tick,1000);
+}
+
+// ===== CONTROLS =====
+function loadPreset(name){
+  var p = PRESETS[name];
+  if(!p) return;
+  editor.value = JSON.stringify(p, null, 2);
+  document.getElementById('presetMenu').classList.remove('open');
+  renderCard();
+}
+
+function formatJSON(){
+  try{
+    var obj=JSON.parse(editor.value);
+    editor.value=JSON.stringify(obj,null,2);
+  }catch(e){}
+}
+
+function resetJSON(){
+  editor.value=JSON.stringify(DEFAULT_CONFIG,null,2);
+  renderCard();
+}
+
+function copyJSON(){
+  editor.select();
+  document.execCommand('copy');
+}
+
+function switchTab(id,btn){
+  document.querySelectorAll('.panel-tab').forEach(function(t){t.classList.remove('active')});
+  btn.classList.add('active');
+  document.getElementById('jsonEditor').style.display=id==='config'?'':'none';
+  document.getElementById('schemaView').style.display=id==='schema'?'':'none';
+  document.getElementById('outputView').style.display=id==='output'?'':'none';
+}
+
+function setDevice(mode){
+  var frame=document.getElementById('phoneFrame');
+  document.getElementById('btnPhone').classList.toggle('active',mode==='phone');
+  document.getElementById('btnFull').classList.toggle('active',mode==='full');
+  frame.classList.toggle('no-frame',mode==='full');
+}
+
+// Close preset menu on outside click
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.preset-menu')) document.getElementById('presetMenu').classList.remove('open');
+});
+
+// INIT
+renderCard();
+</script>
+</body>
+</html>

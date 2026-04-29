@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>e-motion.my Deployment Guide</title>
+<style>
+:root{
+  --brand:#1a2040;--gold:#c9a24e;--gold-lt:#e8c775;--gold-dk:#8a6d2a;
+  --maroon:#6b1d2e;--cream:#faf4e3;--ivory:#f8f0de;
+  --bg:#fafaf9;--white:#fff;--border:#e7e5e4;
+  --text:#1c1917;--text2:#57534e;--text3:#a8a29e;
+  --green:#16a34a;--green-bg:#f0fdf4;--blue:#2563eb;--orange:#ea580c;
+  --r:6px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--cream);color:var(--text);font-size:13px;-webkit-font-smoothing:antialiased}
+
+.wrap{max-width:720px;margin:0 auto;padding:32px 24px 100px}
+
+/* HEADER */
+.hdr{text-align:center;margin-bottom:40px;padding-bottom:28px;border-bottom:1px solid var(--border)}
+.hdr-logo{font-family:Georgia,serif;font-style:italic;font-size:20px;color:var(--brand);margin-bottom:4px}
+.hdr-logo span{color:var(--gold)}
+.hdr-title{font-size:22px;font-weight:700;color:var(--brand);margin-bottom:4px}
+.hdr-sub{font-size:13px;color:var(--text2)}
+
+/* PROGRESS */
+.progress-bar{margin-bottom:32px;background:var(--white);border:1px solid var(--border);border-radius:8px;padding:14px 18px}
+.progress-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.progress-label{font-size:12px;font-weight:600}
+.progress-count{font-size:11px;color:var(--text3)}
+.progress-track{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-lt));border-radius:3px;transition:width .4s ease}
+
+/* PHASE */
+.phase{margin-bottom:32px}
+.phase-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;cursor:pointer}
+.phase-num{width:28px;height:28px;border-radius:50%;background:var(--brand);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.phase-num.done{background:var(--green);color:#fff}
+.phase-title{font-size:16px;font-weight:700}
+.phase-time{margin-left:auto;font-size:10px;color:var(--text3);background:var(--bg);padding:3px 8px;border-radius:10px}
+
+/* STEP */
+.step{background:var(--white);border:1px solid var(--border);border-radius:var(--r);margin-bottom:8px;overflow:hidden;transition:border-color .2s}
+.step.done{border-color:rgba(22,163,74,.2)}
+.step-head{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;cursor:pointer}
+.step-check{width:20px;height:20px;border:2px solid var(--border);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;transition:all .2s;margin-top:1px;color:transparent}
+.step-check:hover{border-color:var(--gold)}
+.step.done .step-check{background:var(--green);border-color:var(--green);color:#fff}
+.step-info{flex:1;min-width:0}
+.step-title{font-size:13px;font-weight:600;margin-bottom:2px}
+.step.done .step-title{color:var(--text3);text-decoration:line-through}
+.step-desc{font-size:11px;color:var(--text3);line-height:1.5}
+.step-tag{font-size:9px;font-weight:600;padding:2px 6px;border-radius:8px;margin-left:auto;flex-shrink:0;margin-top:2px}
+.step-tag.cli{background:#eff6ff;color:var(--blue)}
+.step-tag.web{background:rgba(201,162,78,.1);color:var(--gold-dk)}
+.step-tag.code{background:rgba(124,58,237,.08);color:#7c3aed}
+.step-tag.config{background:var(--green-bg);color:var(--green)}
+
+/* DETAIL */
+.step-detail{display:none;padding:0 14px 14px 44px;font-size:12px;color:var(--text2);line-height:1.7}
+.step.open .step-detail{display:block}
+.cmd{background:var(--brand);color:var(--gold-lt);padding:8px 12px;border-radius:var(--r);font-family:'Menlo','Monaco',monospace;font-size:11px;margin:8px 0;overflow-x:auto;white-space:pre;position:relative;line-height:1.6}
+.cmd-copy{position:absolute;top:4px;right:4px;padding:2px 6px;background:rgba(255,255,255,.1);border:none;border-radius:3px;color:var(--gold);font-family:inherit;font-size:9px;cursor:pointer}
+.cmd-copy:hover{background:rgba(255,255,255,.2)}
+.url{color:var(--blue);text-decoration:none;word-break:break-all}
+.url:hover{text-decoration:underline}
+.note{background:rgba(201,162,78,.06);border-left:3px solid var(--gold);padding:8px 12px;margin:8px 0;font-size:11px;line-height:1.6;color:var(--text2)}
+.warn{background:rgba(234,88,12,.06);border-left:3px solid var(--orange);padding:8px 12px;margin:8px 0;font-size:11px;color:var(--text2)}
+.file{font-family:'Menlo',monospace;font-size:11px;background:var(--bg);padding:1px 4px;border-radius:2px;color:var(--maroon)}
+.img-placeholder{background:var(--bg);border:1px dashed var(--border);border-radius:var(--r);padding:16px;text-align:center;margin:8px 0;font-size:11px;color:var(--text3)}
+
+/* COST TABLE */
+.cost-table{width:100%;border-collapse:collapse;margin:8px 0;font-size:11px}
+.cost-table th{text-align:left;padding:6px 8px;border-bottom:1px solid var(--border);color:var(--text3);font-weight:600;font-size:9px;text-transform:uppercase;letter-spacing:.06em}
+.cost-table td{padding:6px 8px;border-bottom:1px solid var(--border)}
+.cost-table tr:last-child td{border-bottom:none;font-weight:600}
+
+/* FOOTER */
+.footer{text-align:center;padding-top:24px;border-top:1px solid var(--border);margin-top:32px}
+.footer-text{font-size:11px;color:var(--text3)}
+
+@media(max-width:600px){
+  .wrap{padding:20px 16px 80px}
+  .step-detail{padding-left:14px}
+}
+@media print{
+  .step-check,.cmd-copy,.progress-bar{display:none!important}
+  .step-detail{display:block!important}
+  .step{page-break-inside:avoid}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hdr">
+  <div class="hdr-logo">e<span>&middot;</span>motion<span style="font-size:11px;color:var(--gold);margin-left:3px">.MY</span></div>
+  <div class="hdr-title">Deployment Guide</div>
+  <div class="hdr-sub">23 langkah dari sifar hingga live. Ikut satu per satu.</div>
+</div>
+
+<div class="progress-bar">
+  <div class="progress-top">
+    <div class="progress-label">Kemajuan Deployment</div>
+    <div class="progress-count" id="progressCount">0 / 23 selesai</div>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+</div>
+
+<div id="phases"></div>
+
+<div class="footer">
+  <div class="footer-text">Setelah semua langkah selesai, e-motion.my anda akan hidup di internet.</div>
+</div>
+
+</div>
+
+<script>
+var PHASES = [
+  {title:'Prerequisites', time:'15 min', steps:[
+    {title:'Install Node.js 20+',desc:'Muat turun dan pasang Node.js.',tag:'cli',
+     detail:'Pastikan anda mempunyai Node.js versi 20 atau lebih tinggi.<div class="cmd">node --version<div class="cmd-copy" onclick="copyCmd(this)">Copy</div></div>Jika belum ada, muat turun dari <a class="url" href="https://nodejs.org" target="_blank">nodejs.org</a>'},
+    {title:'Install Supabase CLI',desc:'CLI untuk menguruskan pangkalan data.',tag:'cli',
+     detail:'<div class="cmd">npm install -g supabase<div class="cmd-copy" onclick="copyCmd(this)">Copy</div></div>Sahkan pemasangan:<div class="cmd">supabase --version<div class="cmd-copy" onclick="copyCmd(this)">Copy</div></div>'},
+    {title:'Install Vercel CLI',desc:'CLI untuk deploy ke Vercel.',tag:'cli',
+     detail:'<div class="cmd">npm install -g vercel<div class="cmd-copy" onclick="copyCmd(this)">Copy</div></div>Log masuk:<div class="cmd">vercel login<div class="cmd-copy" onclick="copyCmd(this)">Copy</div></div>'},
+  ]},
+  {title:'Create Next.js Project', time:'10 min', steps:[
+    {title:'Scaffold Next.js app',desc:'Cipta projek baru dengan TypeScript dan App Router.',tag:'cli',
+     detail:'<div class="cmd">npx create-next-app@latest e-motion-my \\\n  --typescript --app --tailwind \\\n  --src-dir --import-alias "@/*"<div class="cmd-copy" onclick="copyCmd(this)">Copy</div></div><div class="cmd">cd e-motion-my<div class="cmd-copy" onclick="copyCmd(this)">Copy</div></div>'},
+    {title:'Install dependencies',desc:'Pasang semua pakej yang diperlukan.',tag:'cli',
+     detail:'<div class="cmd">npm install @supabase/supabase-js @supabase/ssr \\\n  gsap zod resend<div class="cmd-copy" onclick="copyCmd(this)">Copy</div></div><div class="note"><strong>Nota:</strong> Pakej <span class="file">billplz</span> mungkin perlu dipasang secara manual atau gunakan wrapper API sendiri.</div>'},
+    {title:'Copy production files',desc:'Salin 37 fail dari Code Explorer ke projek.',tag:'code',
+     detail:'Buka <strong>e-motion-production</strong> artifact. Untuk setiap fail:<ol style="margin:8px 0;padding-left:20px;line-height:2"><li>Klik fail dalam tree</li><li>Klik <strong>Copy</strong></li><li>Cipta fail yang sama dalam projek anda</li><li>Paste kandungan</li></ol><div class="warn"><strong>Penting:</strong> Pastikan struktur folder tepat. Contoh: <span class="file">src/lib/supabase/client.ts</span> mesti berada dalam folder <span class="file">src/lib/supabase/</span></div>'},
+    {title:'Verify project structure',desc:'Pastikan semua fail di tempat yang betul.',tag:'cli',
+     detail:'Jalankan dev server untuk semak:<div class="cmd">npm run dev<div class="cmd-copy" onclick="copyCmd(this)">Copy</div></div>Buka <a class="url" href="http://localhost:3000">http://localhost:3000</a>. Anda akan lihat error Supabase — itu normal, kita akan setup seterusnya.'},
+  ]},
+  {title:'Setup Supabase', time:'20 min', steps:[
+    {title:'Create Supabase project',desc:'Cipta projek baru di supabase.com.',tag:'web',
+     detail:'<ol style="margin:8px 0;padding-left:20px;line-height:2"><li>Pergi ke <a class="url" href="https://supabase.com/dashboard" target="_blank">supabase.com/dashboard</a></li><li>Klik <strong>New Project</strong></li><li>Nama: <strong>e-motion-my</strong></li><li>Region: <strong>Southeast Asia (Singapore)</strong></li><li>Pilih kata laluan DB yang kuat</li><li>Klik <strong>Create new project</strong></li><li>Tunggu ~2 minit sehingga siap</li></ol>'},
+    {title:'Run database schema',desc:'Cipta 6 jadual dengan RLS policies.',tag:'web',
+     detail:'<ol style="margin:8px 0;padding-left:20px;line-height:2"><li>Dalam Supabase Dashboard, pergi ke <strong>SQL Editor</strong></li><li>Klik <strong>New Query</strong></li><li>Buka fail <span class="file">supabase/schema.sql</span> dari Code Explorer</li><li>Salin seluruh kandungan</li><li>Paste dalam SQL Editor</li><li>Klik <strong>Run</strong></li></ol><div class="note">Anda sepatutnya nampak 6 jadual baru dalam <strong>Table Editor</strong>: profiles, invitations, rsvp_responses, wishes, payments, media</div>'},
+    {title:'Get API keys',desc:'Salin kunci API dari Supabase.',tag:'web',
+     detail:'<ol style="margin:8px 0;padding-left:20px;line-height:2"><li>Pergi ke <strong>Settings → API</strong></li><li>Salin <strong>Project URL</strong> → ini adalah <span class="file">NEXT_PUBLIC_SUPABASE_URL</span></li><li>Salin <strong>anon public</strong> key → ini adalah <span class="file">NEXT_PUBLIC_SUPABASE_ANON_KEY</span></li><li>Salin <strong>service_role</strong> key → ini adalah <span class="file">SUPABASE_SERVICE_ROLE_KEY</span></li></ol><div class="warn"><strong>Amaran:</strong> JANGAN dedahkan <span class="file">service_role</span> key di client-side. Ia hanya untuk API routes.</div>'},
+    {title:'Enable Google Auth (optional)',desc:'Untuk login dengan Google.',tag:'web',
+     detail:'<ol style="margin:8px 0;padding-left:20px;line-height:2"><li>Dalam Supabase: <strong>Authentication → Providers → Google</strong></li><li>Toggle <strong>Enable</strong></li><li>Masukkan Google OAuth Client ID dan Secret</li><li>Set redirect URL: <span class="file">https://your-project.supabase.co/auth/v1/callback</span></li></ol><div class="note">Anda boleh langkau langkah ini dan gunakan email/password sahaja dahulu.</div>'},
+    {title:'Create Storage bucket',desc:'Untuk menyimpan foto, muzik, dan video.',tag:'web',
+     detail:'<ol style="margin:8px 0;padding-left:20px;line-height:2"><li>Pergi ke <strong>Storage</strong></li><li>Klik <strong>New Bucket</strong></li><li>Nama: <strong>media</strong></li><li>Toggle <strong>Public bucket</strong> → ON</li><li>Klik <strong>Create bucket</strong></li></ol>'},
+  ]},
+  {title:'Setup Billplz', time:'15 min', steps:[
+    {title:'Register Billplz sandbox',desc:'Cipta akaun ujian di Billplz.',tag:'web',
+     detail:'<ol style="margin:8px 0;padding-left:20px;line-height:2"><li>Pergi ke <a class="url" href="https://www.billplz-sandbox.com" target="_blank">billplz-sandbox.com</a></li><li>Klik <strong>Sign Up</strong></li><li>Isi butiran syarikat (boleh guna nama ujian)</li><li>Sahkan e-mel</li></ol>'},
+    {title:'Create collection & get keys',desc:'Sediakan collection untuk pembayaran.',tag:'web',
+     detail:'<ol style="margin:8px 0;padding-left:20px;line-height:2"><li>Log masuk ke Billplz Dashboard</li><li>Pergi ke <strong>Billing → Collections</strong></li><li>Cipta collection baru: <strong>e-motion Payments</strong></li><li>Salin <strong>Collection ID</strong></li><li>Pergi ke <strong>Settings → Keys</strong></li><li>Salin <strong>Secret Key</strong> → ini adalah <span class="file">BILLPLZ_API_KEY</span></li><li>Salin <strong>X-Signature Key</strong> → ini adalah <span class="file">BILLPLZ_SIGNATURE_KEY</span></li></ol>'},
+  ]},
+  {title:'Configure Environment', time:'5 min', steps:[
+    {title:'Fill .env.local',desc:'Masukkan semua kunci API.',tag:'config',
+     detail:'Buka <span class="file">.env.local</span> dan isi semua nilai:<div class="cmd"># Supabase\nNEXT_PUBLIC_SUPABASE_URL=https://abcdef.supabase.co\nNEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbG...\nSUPABASE_SERVICE_ROLE_KEY=eyJhbG...\n\n# Billplz\nBILLPLZ_API_KEY=your-key\nBILLPLZ_COLLECTION_ID=your-id\nBILLPLZ_SIGNATURE_KEY=your-sig\nBILLPLZ_SANDBOX=true\n\n# App\nNEXT_PUBLIC_APP_URL=http://localhost:3000<div class="cmd-copy" onclick="copyCmd(this)">Copy</div></div>'},
+    {title:'Test locally',desc:'Jalankan dan uji semua flow.',tag:'cli',
+     detail:'<div class="cmd">npm run dev<div class="cmd-copy" onclick="copyCmd(this)">Copy</div></div>Uji setiap flow:<ol style="margin:8px 0;padding-left:20px;line-height:2"><li>Buka <a class="url" href="http://localhost:3000">localhost:3000</a> — homepage</li><li>Pergi ke <span class="file">/auth/login</span> — daftar akaun</li><li>Semak <span class="file">/dashboard</span> — papan pemuka</li><li>Cipta kad ujian, dapatkan slug</li><li>Buka <span class="file">/[slug]</span> — kad tetamu</li><li>Hantar RSVP ujian</li><li>Semak RSVP muncul di dashboard</li></ol>'},
+  ]},
+  {title:'Deploy to Vercel', time:'10 min', steps:[
+    {title:'Push to GitHub',desc:'Muat naik kod ke repository.',tag:'cli',
+     detail:'<div class="cmd">git init\ngit add .\ngit commit -m "Initial commit: e-motion.my"\ngit remote add origin https://github.com/YOUR_USER/e-motion-my.git\ngit push -u origin main<div class="cmd-copy" onclick="copyCmd(this)">Copy</div></div>'},
+    {title:'Deploy via Vercel',desc:'Sambung GitHub repo ke Vercel.',tag:'web',
+     detail:'<ol style="margin:8px 0;padding-left:20px;line-height:2"><li>Pergi ke <a class="url" href="https://vercel.com/new" target="_blank">vercel.com/new</a></li><li>Import GitHub repository <strong>e-motion-my</strong></li><li>Framework: <strong>Next.js</strong> (auto-detected)</li><li>Buka <strong>Environment Variables</strong></li><li>Tambah SEMUA variables dari <span class="file">.env.local</span></li><li>Tukar <span class="file">NEXT_PUBLIC_APP_URL</span> ke URL Vercel anda</li><li>Tukar <span class="file">BILLPLZ_SANDBOX</span> ke <strong>false</strong> untuk produksi</li><li>Klik <strong>Deploy</strong></li></ol><div class="note">Deploy pertama mengambil ~2 minit. Vercel akan beri URL seperti <span class="file">e-motion-my.vercel.app</span></div>'},
+    {title:'Setup custom domain',desc:'Sambung domain e-motion.my.',tag:'web',
+     detail:'<ol style="margin:8px 0;padding-left:20px;line-height:2"><li>Dalam Vercel: <strong>Settings → Domains</strong></li><li>Tambah <strong>e-motion.my</strong></li><li>Di DNS provider anda, tambah:<div class="cmd">Type: CNAME\nName: @\nValue: cname.vercel-dns.com<div class="cmd-copy" onclick="copyCmd(this)">Copy</div></div></li><li>Tunggu DNS propagation (~5 minit hingga 48 jam)</li><li>Vercel akan auto-provision SSL</li></ol>'},
+    {title:'Update webhook URLs',desc:'Kemaskini Billplz callback ke domain live.',tag:'web',
+     detail:'Dalam Billplz Dashboard, kemaskini callback URL:<div class="cmd">Callback URL: https://e-motion.my/api/webhooks/billplz\nRedirect URL: https://e-motion.my/dashboard?payment=success<div class="cmd-copy" onclick="copyCmd(this)">Copy</div></div>Juga kemaskini <span class="file">NEXT_PUBLIC_APP_URL</span> dalam Vercel Environment Variables ke <span class="file">https://e-motion.my</span>'},
+  ]},
+  {title:'Post-Launch', time:'30 min', steps:[
+    {title:'Test production flows',desc:'Uji semua flow pada domain live.',tag:'web',
+     detail:'Senarai semak akhir:<ol style="margin:8px 0;padding-left:20px;line-height:2"><li>&#9744; Signup baru berfungsi</li><li>&#9744; Cipta kad → simpan draf</li><li>&#9744; Checkout Billplz → kad jadi aktif</li><li>&#9744; Buka kad via slug → animasi berfungsi</li><li>&#9744; RSVP dari kad → muncul di dashboard</li><li>&#9744; Ucapan → moderation berfungsi</li><li>&#9744; WhatsApp share link berfungsi</li><li>&#9744; Mobile responsive OK</li></ol>'},
+    {title:'Setup Resend for emails',desc:'Aktifkan notifikasi e-mel.',tag:'web',
+     detail:'<ol style="margin:8px 0;padding-left:20px;line-height:2"><li>Daftar di <a class="url" href="https://resend.com" target="_blank">resend.com</a></li><li>Verify domain <strong>e-motion.my</strong></li><li>Salin API key → tambah sebagai <span class="file">RESEND_API_KEY</span> dalam Vercel</li><li>Set <span class="file">EMAIL_FROM=noreply@e-motion.my</span></li></ol>'},
+    {title:'Go live!',desc:'Hantar kad ujian pertama anda.',tag:'web',
+     detail:'<div style="text-align:center;padding:20px"><div style="font-size:32px;margin-bottom:8px">&#127881;</div><div style="font-size:16px;font-weight:700;color:var(--green);margin-bottom:4px">e-motion.my is LIVE!</div><div style="font-size:12px;color:var(--text3)">Bina kad pertama anda dan kongsi via WhatsApp.</div></div><div class="note"><strong>Kos bulanan anggaran:</strong></div><table class="cost-table"><thead><tr><th>Perkhidmatan</th><th>Pelan</th><th>Kos/bulan</th></tr></thead><tbody><tr><td>Vercel</td><td>Hobby (free)</td><td>RM 0</td></tr><tr><td>Supabase</td><td>Free tier</td><td>RM 0</td></tr><tr><td>Billplz</td><td>Per transaksi</td><td>1.5% + RM 1</td></tr><tr><td>Resend</td><td>Free (3k/month)</td><td>RM 0</td></tr><tr><td>Domain</td><td>.my domain</td><td>~RM 8</td></tr><tr><td colspan="2"><strong>Jumlah (sebelum pendapatan)</strong></td><td><strong>~RM 8/bulan</strong></td></tr></tbody></table>'},
+  ]},
+];
+
+// ===== RENDER =====
+var completedSteps = {};
+try { completedSteps = JSON.parse(localStorage.getItem('deploy_progress') || '{}'); } catch(e){}
+
+function render(){
+  var total = 0, done = 0;
+  var html = '';
+
+  PHASES.forEach(function(phase, pi){
+    var phaseDone = true;
+    var stepsHtml = '';
+
+    phase.steps.forEach(function(step, si){
+      total++;
+      var key = pi + '-' + si;
+      var isDone = !!completedSteps[key];
+      if(isDone) done++; else phaseDone = false;
+
+      var tagClass = {cli:'cli',web:'web',code:'code',config:'config'}[step.tag] || 'cli';
+      var tagLabel = {cli:'Terminal',web:'Browser',code:'Code',config:'Config'}[step.tag] || step.tag;
+
+      stepsHtml +=
+        '<div class="step'+(isDone?' done':'')+'" id="step-'+key+'">' +
+          '<div class="step-head" onclick="toggleStep(\''+key+'\')">' +
+            '<div class="step-check" onclick="event.stopPropagation();toggleDone(\''+key+'\')">&#10003;</div>' +
+            '<div class="step-info"><div class="step-title">'+step.title+'</div><div class="step-desc">'+step.desc+'</div></div>' +
+            '<div class="step-tag '+tagClass+'">'+tagLabel+'</div>' +
+          '</div>' +
+          '<div class="step-detail">'+step.detail+'</div>' +
+        '</div>';
+    });
+
+    html +=
+      '<div class="phase">' +
+        '<div class="phase-head">' +
+          '<div class="phase-num'+(phaseDone?' done':'')+'">'+('0'+(pi+1)).slice(-2)+'</div>' +
+          '<div class="phase-title">'+phase.title+'</div>' +
+          '<div class="phase-time">~'+phase.time+'</div>' +
+        '</div>' +
+        stepsHtml +
+      '</div>';
+  });
+
+  document.getElementById('phases').innerHTML = html;
+  document.getElementById('progressCount').textContent = done + ' / ' + total + ' selesai';
+  document.getElementById('progressFill').style.width = (total ? (done/total*100) : 0) + '%';
+}
+
+function toggleStep(key){
+  var el = document.getElementById('step-'+key);
+  if(el) el.classList.toggle('open');
+}
+
+function toggleDone(key){
+  completedSteps[key] = !completedSteps[key];
+  if(!completedSteps[key]) delete completedSteps[key];
+  try { localStorage.setItem('deploy_progress', JSON.stringify(completedSteps)); } catch(e){}
+  render();
+}
+
+function copyCmd(btn){
+  var cmd = btn.parentElement;
+  var text = cmd.textContent.replace('Copy','').trim();
+  if(navigator.clipboard) navigator.clipboard.writeText(text);
+  btn.textContent = 'Copied!';
+  setTimeout(function(){ btn.textContent = 'Copy'; }, 1500);
+}
+
+render();
+</script>
+</body>
+</html>
