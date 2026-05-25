@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ms"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>e-motion.my - Kisah Kasih</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&amp;family=Inter:wght@400;500;600&amp;family=EB+Garamond:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "emerald-forest": "#2d5a3f",
+                    "primary-fixed-dim": "#c1c5e3",
+                    "outline": "#909097",
+                    "on-error-container": "#ffdad6",
+                    "rose-whisper": "#d4949a",
+                    "primary-container": "#0d1228",
+                    "background": "#161309",
+                    "emerald-deep": "#1a3525",
+                    "on-tertiary-fixed": "#400012",
+                    "surface-container": "#231f14",
+                    "surface-container-highest": "#383528",
+                    "surface-variant": "#383528",
+                    "surface-container-low": "#1e1b11",
+                    "tertiary-container": "#31000c",
+                    "on-surface": "#eae2d0",
+                    "on-primary-fixed-variant": "#41455e",
+                    "tertiary-fixed-dim": "#ffb2bb",
+                    "on-primary-container": "#787d98",
+                    "gold-shadow": "#8a6d2a",
+                    "indigo-twilight": "#1a2040",
+                    "on-tertiary-container": "#c16070",
+                    "surface-dim": "#161309",
+                    "secondary-fixed-dim": "#ebc169",
+                    "maroon-velvet": "#4a1020",
+                    "champagne-gold": "#e8c775",
+                    "primary": "#c1c5e3",
+                    "surface": "#161309",
+                    "cream": "#faf4e3",
+                    "outline-variant": "#46464d",
+                    "on-secondary-container": "#f6cb73",
+                    "on-secondary-fixed": "#261a00",
+                    "inverse-on-surface": "#343024",
+                    "error": "#ffb4ab",
+                    "royal-maroon": "#6b1d2e",
+                    "warm-ivory": "#f8f0de",
+                    "indigo-night": "#0d1228",
+                    "surface-bright": "#3d392d",
+                    "on-background": "#eae2d0",
+                    "on-tertiary": "#5e1325",
+                    "surface-tint": "#c1c5e3",
+                    "surface-container-high": "#2d2a1e",
+                    "on-surface-variant": "#c7c5ce",
+                    "surface-container-lowest": "#110e05",
+                    "on-primary-fixed": "#151a31",
+                    "secondary": "#ebc169",
+                    "on-primary": "#2a2f47",
+                    "primary-fixed": "#dde1ff",
+                    "inverse-surface": "#eae2d0",
+                    "on-error": "#690005",
+                    "songket-gold": "#c9a24e",
+                    "inverse-primary": "#585d77",
+                    "error-container": "#93000a",
+                    "tertiary": "#ffb2bb",
+                    "on-secondary": "#402d00",
+                    "indigo-mist": "#2a3460",
+                    "secondary-container": "#735501",
+                    "on-secondary-fixed-variant": "#5c4300",
+                    "ivory-warm": "#f2e6c8",
+                    "secondary-fixed": "#ffdea0",
+                    "tertiary-fixed": "#ffd9dd",
+                    "pale-gold": "#f0d68c",
+                    "on-tertiary-fixed-variant": "#7c2a3a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sub-mb": "48px",
+                    "section-v-mobile": "80px",
+                    "section-v-desktop": "140px",
+                    "label-mb": "20px",
+                    "grid-gap-form": "32px",
+                    "gutter-desktop": "32px",
+                    "grid-gap-dense": "18px",
+                    "title-mb": "24px",
+                    "gutter-mobile": "16px",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "body-main": ["Inter"],
+                    "section-title": ["Playfair Display"],
+                    "hero-title": ["Playfair Display"],
+                    "eyebrow-label": ["Inter"],
+                    "tier-badge": ["Inter"],
+                    "helper-text": ["EB Garamond"],
+                    "section-sub": ["EB Garamond"]
+            },
+            "fontSize": {
+                    "body-main": ["17px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "section-title": ["clamp(40px, 5.5vw, 72px)", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                    "hero-title": ["clamp(56px, 7vw, 96px)", {"lineHeight": "1.05", "letterSpacing": "-0.03em", "fontWeight": "400"}],
+                    "eyebrow-label": ["11px", {"letterSpacing": "0.35em", "fontWeight": "500"}],
+                    "tier-badge": ["10px", {"letterSpacing": "0.18em", "fontWeight": "600"}],
+                    "helper-text": ["14px", {"fontWeight": "400"}],
+                    "section-sub": ["19px", {"lineHeight": "1.6", "fontWeight": "300"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .reveal-3d {
+            opacity: 1; /* Simulating revealed state for static output */
+            transform: translateZ(0);
+        }
+
+        .gold-dust {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: radial-gradient(circle, rgba(201,162,78,0.15) 1px, transparent 1px);
+            background-size: 80px 80px;
+            animation: drift 20s linear infinite;
+        }
+
+        @keyframes drift {
+            from { background-position: 0 0; }
+            to { background-position: 80px 80px; }
+        }
+
+        .pucuk-rebung {
+            width: 40px;
+            height: 40px;
+            fill: #c9a24e;
+        }
+
+        .drop-cap {
+            float: left;
+            font-size: 44px;
+            line-height: 1;
+            padding-top: 4px;
+            padding-right: 8px;
+            background: linear-gradient(135deg, #e8c775 0%, #c9a24e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 20%;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, rgba(201,162,78,0.2), transparent);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-songket-gold/30">
+<!-- Top Navigation Anchor -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl dark:bg-surface/80 border-b border-songket-gold/30 shadow-[0_4px_30px_rgba(201,162,78,0.1)] flex justify-between items-center px-gutter-mobile py-4">
+<div class="font-hero-title text-champagne-gold italic text-2xl tracking-tight">e-motion.my</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-songket-gold dark:text-pale-gold active:scale-95 transition-transform" data-icon="menu">menu</span>
+<span class="material-symbols-outlined text-songket-gold dark:text-pale-gold active:scale-95 transition-transform" data-icon="account_circle">account_circle</span>
+</div>
+</header>
+<main class="min-h-screen relative overflow-hidden pt-20">
+<!-- Ceremonial Background -->
+<div class="absolute inset-0 bg-gradient-to-b from-indigo-night via-royal-maroon to-maroon-velvet z-0"></div>
+<div class="absolute inset-0 opacity-15 mix-blend-overlay z-10 bg-repeat bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida/ADBb0uh9uOICZVaxDZyHJq8mDtds641PI76H7px_m_40Ek9RSCTCPKGhVnZQwg8eossjS9Q6ndN0J4ceB8C5iOFwBoNJ4N7BzDafo912a86Nop7mH-8BvWHeZydWyngHDLRz9jZ9LMyjH4WUoGaHuzj2BFw_z2spXj0t7pkW6dKMqLrQIBX4VssML6D0sT6hbBCdOWTM6BLEZ6F0oYEKbOEIpGJ0bsamPzwA3RJDCuxz_hnN0dLF4heQlwIZzA');"></div>
+<div class="gold-dust z-20"></div>
+<!-- Section: Kisah Kasih -->
+<section class="relative z-30 px-gutter-mobile py-section-v-mobile md:py-section-v-desktop max-w-container-max mx-auto overflow-hidden">
+<!-- Header Group -->
+<div class="reveal-3d flex flex-col items-center text-center mb-16">
+<span class="font-eyebrow-label text-eyebrow-label text-songket-gold mb-label-mb tracking-[0.35em]">KISAH KASIH</span>
+<div class="mb-label-mb">
+<svg class="pucuk-rebung" viewbox="0 0 40 40">
+<path d="M20 0L40 20L20 40L0 20L20 0ZM20 5L35 20L20 35L5 20L20 5ZM20 10L30 20L20 30L10 20L20 10Z"></path>
+</svg>
+</div>
+<h2 class="font-section-title text-section-title italic bg-gradient-to-br from-champagne-gold via-pale-gold to-songket-gold bg-clip-text text-transparent mb-title-mb">
+                    Perjalanan Kami
+                </h2>
+</div>
+<!-- Asymmetric Timeline Container -->
+<div class="relative space-y-24">
+<!-- Decorative Timeline Wire -->
+<div class="hidden md:block timeline-line"></div>
+<!-- Story Block 2019 (Left Weighted) -->
+<div class="reveal-3d grid grid-cols-1 md:grid-cols-[120px_1fr] gap-6 items-start">
+<div class="md:text-right">
+<span class="font-section-title text-4xl italic font-bold bg-gradient-to-r from-champagne-gold to-songket-gold bg-clip-text text-transparent">2019</span>
+</div>
+<div class="glass-card bg-indigo-mist/20 backdrop-blur-md rounded-xl p-8 border border-songket-gold/20 shadow-xl max-w-lg">
+<p class="font-section-sub text-section-sub text-warm-ivory leading-relaxed italic">
+<span class="drop-cap">P</span>ertemuan pertama di kampus UKM. Mata bertaut di koridor perpustakaan, hati mula bercakap.
+                        </p>
+</div>
+</div>
+<!-- Story Block 2021 (Right Shifted) -->
+<div class="reveal-3d grid grid-cols-1 md:grid-cols-[120px_1fr] gap-6 items-start md:translate-x-24">
+<div class="md:text-right">
+<span class="font-section-title text-4xl italic font-bold bg-gradient-to-r from-champagne-gold to-songket-gold bg-clip-text text-transparent">2021</span>
+</div>
+<div class="glass-card bg-maroon-velvet/30 backdrop-blur-md rounded-xl p-8 border border-songket-gold/20 shadow-xl max-w-lg">
+<p class="font-section-sub text-section-sub text-warm-ivory leading-relaxed italic">
+<span class="drop-cap">B</span>ersama melalui musim wabak. Kasih semakin teguh bila dunia goyah.
+                        </p>
+</div>
+</div>
+<!-- Story Block 2024 (Left Weighted) -->
+<div class="reveal-3d grid grid-cols-1 md:grid-cols-[120px_1fr] gap-6 items-start">
+<div class="md:text-right">
+<span class="font-section-title text-4xl italic font-bold bg-gradient-to-r from-champagne-gold to-songket-gold bg-clip-text text-transparent">2024</span>
+</div>
+<div class="glass-card bg-royal-maroon/20 backdrop-blur-md rounded-xl p-8 border border-songket-gold/20 shadow-xl max-w-lg">
+<p class="font-section-sub text-section-sub text-warm-ivory leading-relaxed italic">
+<span class="drop-cap">H</span>ari peminangan di rumah orang tua. Sirih junjung diatur, restu diberi.
+                        </p>
+</div>
+</div>
+<!-- Story Block 2026 (Right Shifted) -->
+<div class="reveal-3d grid grid-cols-1 md:grid-cols-[120px_1fr] gap-6 items-start md:translate-x-24">
+<div class="md:text-right">
+<span class="font-section-title text-4xl italic font-bold bg-gradient-to-r from-champagne-gold to-songket-gold bg-clip-text text-transparent">2026</span>
+</div>
+<div class="glass-card bg-indigo-night/40 backdrop-blur-md rounded-xl p-8 border border-songket-gold/30 shadow-2xl max-w-lg">
+<p class="font-section-sub text-section-sub text-warm-ivory leading-relaxed italic">
+<span class="drop-cap">A</span>khirnya, hari yang dinanti tiba. Kami bersedia menjadi satu di sisi-Nya.
+                        </p>
+</div>
+</div>
+</div>
+<!-- Ritualistic Call to Action -->
+<div class="reveal-3d flex justify-center mt-32">
+<button class="bg-gradient-to-r from-champagne-gold to-songket-gold text-royal-maroon px-12 py-4 rounded-full font-bold font-body-main shadow-[0_6px_20px_rgba(201,162,78,0.4)] active:scale-95 transition-all transform hover:translate-y-[-4px]">
+                    Sertai Timeline Kami
+                </button>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-maroon-velvet/90 backdrop-blur-md dark:bg-maroon-velvet/90 border-t border-songket-gold/20 flex justify-around items-center px-2 pb-6 pt-3 shadow-[0_-10px_40px_rgba(74,16,32,0.5)]">
+<div class="flex flex-col items-center justify-center text-rose-whisper/60 hover:text-champagne-gold transition-all duration-300">
+<span class="material-symbols-outlined mb-1" data-icon="auto_awesome">auto_awesome</span>
+<span class="font-eyebrow-label text-tier-badge uppercase">Invite</span>
+</div>
+<div class="flex flex-col items-center justify-center text-champagne-gold bg-royal-maroon/50 rounded-full px-4 py-1">
+<span class="material-symbols-outlined mb-1" data-icon="schedule" style="font-variation-settings: 'FILL' 1;">schedule</span>
+<span class="font-eyebrow-label text-tier-badge uppercase">Timeline</span>
+</div>
+<div class="flex flex-col items-center justify-center text-rose-whisper/60 hover:text-champagne-gold transition-all duration-300">
+<span class="material-symbols-outlined mb-1" data-icon="location_on">location_on</span>
+<span class="font-eyebrow-label text-tier-badge uppercase">Venue</span>
+</div>
+<div class="flex flex-col items-center justify-center text-rose-whisper/60 hover:text-champagne-gold transition-all duration-300">
+<span class="material-symbols-outlined mb-1" data-icon="favorite">favorite</span>
+<span class="font-eyebrow-label text-tier-badge uppercase">RSVP</span>
+</div>
+</nav>
+<!-- Content Preloader / Reveal Stagger Simulator -->
+<style>
+        .reveal-3d:nth-child(1) { transition-delay: 100ms; }
+        .reveal-3d:nth-child(2) { transition-delay: 200ms; }
+        .reveal-3d:nth-child(3) { transition-delay: 300ms; }
+        .reveal-3d:nth-child(4) { transition-delay: 400ms; }
+        .reveal-3d:nth-child(5) { transition-delay: 500ms; }
+    </style>
+</body></html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ms"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Inter:wght@100..900&amp;family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "outline": "#909097",
+                  "maroon-velvet": "#4a1020",
+                  "error-container": "#93000a",
+                  "warm-ivory": "#f8f0de",
+                  "on-surface": "#eae2d0",
+                  "secondary": "#ebc169",
+                  "on-background": "#eae2d0",
+                  "champagne-gold": "#e8c775",
+                  "emerald-deep": "#1a3525",
+                  "cream": "#faf4e3",
+                  "royal-maroon": "#6b1d2e",
+                  "on-primary-fixed-variant": "#41455e",
+                  "on-error-container": "#ffdad6",
+                  "rose-whisper": "#d4949a",
+                  "pale-gold": "#f0d68c",
+                  "on-secondary-fixed-variant": "#5c4300",
+                  "ivory-warm": "#f2e6c8",
+                  "inverse-on-surface": "#343024",
+                  "error": "#ffb4ab",
+                  "on-surface-variant": "#c7c5ce",
+                  "on-tertiary-fixed-variant": "#7c2a3a",
+                  "secondary-fixed": "#ffdea0",
+                  "outline-variant": "#46464d",
+                  "secondary-fixed-dim": "#ebc169",
+                  "surface-tint": "#c1c5e3",
+                  "songket-gold": "#c9a24e",
+                  "primary-fixed-dim": "#c1c5e3",
+                  "tertiary": "#ffb2bb",
+                  "tertiary-fixed": "#ffd9dd",
+                  "on-primary-fixed": "#151a31",
+                  "surface-container-highest": "#383528",
+                  "on-tertiary-fixed": "#400012",
+                  "inverse-primary": "#585d77",
+                  "on-tertiary-container": "#c16070",
+                  "background": "#161309",
+                  "surface-container-low": "#1e1b11",
+                  "secondary-container": "#735501",
+                  "gold-shadow": "#8a6d2a",
+                  "surface-dim": "#161309",
+                  "indigo-night": "#0d1228",
+                  "primary": "#c1c5e3",
+                  "surface": "#161309",
+                  "on-error": "#690005",
+                  "indigo-twilight": "#1a2040",
+                  "indigo-mist": "#2a3460",
+                  "surface-container-lowest": "#110e05",
+                  "surface-bright": "#3d392d",
+                  "on-primary-container": "#787d98",
+                  "tertiary-container": "#31000c",
+                  "surface-container": "#231f14",
+                  "primary-container": "#0d1228",
+                  "surface-variant": "#383528",
+                  "inverse-surface": "#eae2d0",
+                  "tertiary-fixed-dim": "#ffb2bb",
+                  "on-secondary-container": "#f6cb73",
+                  "on-secondary": "#402d00",
+                  "surface-container-high": "#2d2a1e",
+                  "on-primary": "#2a2f47",
+                  "primary-fixed": "#dde1ff",
+                  "on-secondary-fixed": "#261a00",
+                  "emerald-forest": "#2d5a3f",
+                  "on-tertiary": "#5e1325"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.25rem",
+                  "lg": "0.5rem",
+                  "xl": "0.75rem",
+                  "full": "9999px"
+          },
+          "spacing": {
+                  "section-v-desktop": "140px",
+                  "grid-gap-form": "32px",
+                  "gutter-desktop": "32px",
+                  "sub-mb": "48px",
+                  "title-mb": "24px",
+                  "section-v-mobile": "80px",
+                  "label-mb": "20px",
+                  "grid-gap-dense": "18px",
+                  "container-max": "1280px",
+                  "gutter-mobile": "16px"
+          },
+          "fontFamily": {
+                  "helper-text": ["EB Garamond"],
+                  "hero-title": ["Playfair Display"],
+                  "body-main": ["Inter"],
+                  "section-sub": ["EB Garamond"],
+                  "section-title": ["Playfair Display"],
+                  "eyebrow-label": ["Inter"],
+                  "tier-badge": ["Inter"]
+          },
+          "fontSize": {
+                  "helper-text": ["14px", {"fontWeight": "400"}],
+                  "hero-title": ["clamp(56px, 7vw, 96px)", {"lineHeight": "1.05", "letterSpacing": "-0.03em", "fontWeight": "400"}],
+                  "body-main": ["17px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                  "section-sub": ["19px", {"lineHeight": "1.6", "fontWeight": "300"}],
+                  "section-title": ["clamp(40px, 5.5vw, 72px)", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                  "eyebrow-label": ["11px", {"letterSpacing": "0.35em", "fontWeight": "500"}],
+                  "tier-badge": ["10px", {"letterSpacing": "0.18em", "fontWeight": "600"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .reveal-3d {
+      transform-style: preserve-3d;
+      transition: transform 1.2s cubic-bezier(.19, 1, .22, 1), opacity 1.2s ease;
+    }
+    .gold-gradient-text {
+      background: linear-gradient(to bottom, #e8c775, #c9a24e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .pucuk-rebung-pattern {
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3%3Cpath d='M30 0l5 15h-10l5-15zm0 60l-5-15h10l-5 15zM0 30l15-5v10L0 30zm60 0l-15 5v-10l15 5z' fill='%23c9a24e' fill-opacity='0.08' fill-rule='evenodd'/%3E%3C/svg%3E");
+    }
+    .gold-dust {
+      background: radial-gradient(circle, rgba(232,199,117,0.15) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-indigo-night text-on-surface selection:bg-maroon-velvet selection:text-champagne-gold">
+<!-- TOP APP BAR -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter-mobile py-4 backdrop-blur-md border-b border-champagne-gold/30 bg-transparent shadow-[0_4px_30px_rgba(201,162,78,0.2)]">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-champagne-gold">menu</span>
+</div>
+<h1 class="font-hero-title text-champagne-gold tracking-tighter text-2xl">Royal Nuptials</h1>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-champagne-gold">settings</span>
+</div>
+</header>
+<!-- MAIN CANVAS -->
+<main class="relative min-h-screen pt-24 pb-32 overflow-hidden flex flex-col justify-center bg-indigo-twilight pucuk-rebung-pattern">
+<!-- Drifting Gold Dust Layer -->
+<div class="absolute inset-0 gold-dust opacity-40 pointer-events-none"></div>
+<!-- Section: Undang-Countdown -->
+<section class="relative z-10 px-gutter-mobile flex flex-col items-center">
+<!-- Top Eyebrow Section -->
+<div class="w-full flex justify-end mb-label-mb reveal-3d stagger-100">
+<div class="flex flex-col items-center translate-x-[-10%]">
+<span class="font-eyebrow-label text-champagne-gold tracking-[0.32em] uppercase">MENUJU HARI BAHAGIA</span>
+<div class="w-24 h-[1px] bg-champagne-gold/30 mt-2 relative">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-indigo-twilight px-1">
+<span class="material-symbols-outlined text-[10px] text-songket-gold" style="font-variation-settings: 'FILL' 1;">filter_vintage</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Countdown Grid (2x2) -->
+<div class="grid grid-cols-2 gap-grid-gap-dense w-full max-w-[400px]">
+<!-- Days Tile -->
+<div class="relative group aspect-square backdrop-blur-[18px] bg-surface-container/20 border border-songket-gold/40 rounded-xl flex flex-col items-center justify-center shadow-[0_8px_40px_rgba(201,162,78,0.15)] reveal-3d stagger-200">
+<!-- Pucuk Rebung Corners -->
+<span class="absolute top-1 left-1 material-symbols-outlined text-songket-gold/40 text-sm rotate-0">change_history</span>
+<span class="absolute top-1 right-1 material-symbols-outlined text-songket-gold/40 text-sm rotate-90">change_history</span>
+<span class="absolute bottom-1 left-1 material-symbols-outlined text-songket-gold/40 text-sm -rotate-90">change_history</span>
+<span class="absolute bottom-1 right-1 material-symbols-outlined text-songket-gold/40 text-sm rotate-180">change_history</span>
+<span class="font-hero-title italic gold-gradient-text text-5xl md:text-6xl">127</span>
+<span class="font-eyebrow-label text-champagne-gold tracking-[0.28em] text-[10px] mt-2">HARI</span>
+</div>
+<!-- Hours Tile -->
+<div class="relative group aspect-square backdrop-blur-[18px] bg-surface-container/20 border border-songket-gold/40 rounded-xl flex flex-col items-center justify-center shadow-[0_8px_40px_rgba(201,162,78,0.15)] reveal-3d stagger-300">
+<span class="absolute top-1 left-1 material-symbols-outlined text-songket-gold/40 text-sm rotate-0">change_history</span>
+<span class="absolute top-1 right-1 material-symbols-outlined text-songket-gold/40 text-sm rotate-90">change_history</span>
+<span class="absolute bottom-1 left-1 material-symbols-outlined text-songket-gold/40 text-sm -rotate-90">change_history</span>
+<span class="absolute bottom-1 right-1 material-symbols-outlined text-songket-gold/40 text-sm rotate-180">change_history</span>
+<span class="font-hero-title italic gold-gradient-text text-5xl md:text-6xl">08</span>
+<span class="font-eyebrow-label text-champagne-gold tracking-[0.28em] text-[10px] mt-2">JAM</span>
+</div>
+<!-- Minutes Tile -->
+<div class="relative group aspect-square backdrop-blur-[18px] bg-surface-container/20 border border-songket-gold/40 rounded-xl flex flex-col items-center justify-center shadow-[0_8px_40px_rgba(201,162,78,0.15)] reveal-3d stagger-400">
+<span class="absolute top-1 left-1 material-symbols-outlined text-songket-gold/40 text-sm rotate-0">change_history</span>
+<span class="absolute top-1 right-1 material-symbols-outlined text-songket-gold/40 text-sm rotate-90">change_history</span>
+<span class="absolute bottom-1 left-1 material-symbols-outlined text-songket-gold/40 text-sm -rotate-90">change_history</span>
+<span class="absolute bottom-1 right-1 material-symbols-outlined text-songket-gold/40 text-sm rotate-180">change_history</span>
+<span class="font-hero-title italic gold-gradient-text text-5xl md:text-6xl">42</span>
+<span class="font-eyebrow-label text-champagne-gold tracking-[0.28em] text-[10px] mt-2">MINIT</span>
+</div>
+<!-- Seconds Tile -->
+<div class="relative group aspect-square backdrop-blur-[18px] bg-surface-container/20 border border-songket-gold/40 rounded-xl flex flex-col items-center justify-center shadow-[0_8px_40px_rgba(201,162,78,0.15)] reveal-3d stagger-500">
+<span class="absolute top-1 left-1 material-symbols-outlined text-songket-gold/40 text-sm rotate-0">change_history</span>
+<span class="absolute top-1 right-1 material-symbols-outlined text-songket-gold/40 text-sm rotate-90">change_history</span>
+<span class="absolute bottom-1 left-1 material-symbols-outlined text-songket-gold/40 text-sm -rotate-90">change_history</span>
+<span class="absolute bottom-1 right-1 material-symbols-outlined text-songket-gold/40 text-sm rotate-180">change_history</span>
+<span class="font-hero-title italic gold-gradient-text text-5xl md:text-6xl">19</span>
+<span class="font-eyebrow-label text-champagne-gold tracking-[0.28em] text-[10px] mt-2">SAAT</span>
+</div>
+</div>
+<!-- Bottom Subtitle Section -->
+<div class="w-full mt-title-mb reveal-3d stagger-600">
+<div class="flex flex-col items-start translate-x-[5%] max-w-[280px]">
+<p class="font-section-sub italic text-warm-ivory text-xl leading-relaxed">
+            Sabtu, <span class="relative inline-block">14 Disember 2026<span class="absolute bottom-0 left-0 w-full h-[1px] bg-songket-gold/50"></span></span> · 10.00 pagi
+          </p>
+<div class="mt-4 flex gap-4">
+<button class="bg-gradient-to-r from-champagne-gold to-songket-gold text-maroon-velvet px-6 py-2 rounded-full font-eyebrow-label shadow-[0_6px_12px_rgba(201,162,78,0.3)] hover:scale-105 transition-transform active:scale-95 uppercase">Simpan Tarikh</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Decorative Illustration Background -->
+<div class="absolute bottom-0 left-0 w-full h-[353px] opacity-20 pointer-events-none">
+<img class="w-full h-full object-cover mix-blend-screen" data-alt="A macro close-up of intricate hand-woven gold songket fabric with traditional pucuk rebung patterns. The textile glows under soft, twilight indigo and amber lighting, highlighting the metallic gold threads against a deep navy silk background. The atmosphere is regal and ceremonial, evoking the richness of a Malaysian royal court during an evening ceremony. Soft bokeh light particles drift across the frame." src="https://lh3.googleusercontent.com/aida-public/AB6AXuColjws4kUdPRVJmxJaLL79zCIB_7X4vA4O25EdUMbtrRCOTVyHW2ehlrgJC4bULeCJnxIwQVoMXu9GyIhhR-nrFaVKPN4bZ5jScZFKH0gbgZcKi9o1lAIUoXABl9bHvhYfL1e2_IkifNKVXePlayPaokpKgHYeSmIslhFTAwyq-HAhu1vN4ZJciUeb_6y3_QwjeeVxM4BK7lkk0qqFaQEIXlH8KeJe119KqhE5I-cyK2bn4fzyykCxjgFE8x_IHcD2rd9DsmooFcw"/>
+</div>
+</main>
+<!-- BOTTOM NAV BAR -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 backdrop-blur-[18px] border-t border-champagne-gold/20 bg-surface-container/60 shadow-[0_-8px_40px_rgba(201,162,78,0.15)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-champagne-gold bg-maroon-velvet/40 rounded-full px-4 py-1 border border-songket-gold/50 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="font-eyebrow-label text-[10px]">Intro</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:translate-y-[-4px] hover:text-champagne-gold transition-all duration-300" href="#">
+<span class="material-symbols-outlined">temple_buddhist</span>
+<span class="font-eyebrow-label text-[10px]">Ceremony</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:translate-y-[-4px] hover:text-champagne-gold transition-all duration-300" href="#">
+<span class="material-symbols-outlined">card_giftcard</span>
+<span class="font-eyebrow-label text-[10px]">Gift</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:translate-y-[-4px] hover:text-champagne-gold transition-all duration-300" href="#">
+<span class="material-symbols-outlined">edit_calendar</span>
+<span class="font-eyebrow-label text-[10px]">RSVP</span>
+</a>
+</nav>
+</body></html>

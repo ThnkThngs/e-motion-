@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Yasmin &amp; Hakim - Walimatul Urus</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;family=Inter:wght@100..900&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-fixed": "#261a00",
+                      "inverse-primary": "#585d77",
+                      "primary-container": "#0d1228",
+                      "secondary-container": "#735501",
+                      "on-primary": "#2a2f47",
+                      "maroon-velvet": "#4a1020",
+                      "outline": "#909097",
+                      "secondary-fixed": "#ffdea0",
+                      "on-tertiary": "#5e1325",
+                      "emerald-forest": "#2d5a3f",
+                      "pale-gold": "#f0d68c",
+                      "on-primary-fixed-variant": "#41455e",
+                      "on-primary-fixed": "#151a31",
+                      "cream": "#faf4e3",
+                      "surface-tint": "#c1c5e3",
+                      "primary-fixed-dim": "#c1c5e3",
+                      "champagne-gold": "#e8c775",
+                      "tertiary-container": "#31000c",
+                      "surface-container-highest": "#383528",
+                      "background": "#161309",
+                      "on-secondary": "#402d00",
+                      "tertiary": "#ffb2bb",
+                      "emerald-deep": "#1a3525",
+                      "secondary": "#ebc169",
+                      "on-tertiary-fixed": "#400012",
+                      "indigo-night": "#0d1228",
+                      "on-background": "#eae2d0",
+                      "surface-container": "#231f14",
+                      "ivory-warm": "#f2e6c8",
+                      "surface-container-low": "#1e1b11",
+                      "primary-fixed": "#dde1ff",
+                      "on-error-container": "#ffdad6",
+                      "error-container": "#93000a",
+                      "surface-variant": "#383528",
+                      "on-surface": "#eae2d0",
+                      "on-surface-variant": "#c7c5ce",
+                      "primary": "#c1c5e3",
+                      "rose-whisper": "#d4949a",
+                      "tertiary-fixed": "#ffd9dd",
+                      "surface": "#161309",
+                      "on-secondary-container": "#f6cb73",
+                      "on-secondary-fixed-variant": "#5c4300",
+                      "surface-container-lowest": "#110e05",
+                      "royal-maroon": "#6b1d2e",
+                      "secondary-fixed-dim": "#ebc169",
+                      "surface-container-high": "#2d2a1e",
+                      "surface-dim": "#161309",
+                      "indigo-twilight": "#1a2040",
+                      "indigo-mist": "#2a3460",
+                      "tertiary-fixed-dim": "#ffb2bb",
+                      "surface-bright": "#3d392d",
+                      "inverse-on-surface": "#343024",
+                      "outline-variant": "#46464d",
+                      "on-primary-container": "#787d98",
+                      "on-tertiary-fixed-variant": "#7c2a3a",
+                      "on-tertiary-container": "#c16070",
+                      "warm-ivory": "#f8f0de",
+                      "inverse-surface": "#eae2d0",
+                      "songket-gold": "#c9a24e",
+                      "error": "#ffb4ab",
+                      "on-error": "#690005",
+                      "gold-shadow": "#8a6d2a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter-desktop": "32px",
+                      "sub-mb": "48px",
+                      "gutter-mobile": "16px",
+                      "container-max": "1280px",
+                      "grid-gap-form": "32px",
+                      "label-mb": "20px",
+                      "title-mb": "24px",
+                      "section-v-desktop": "140px",
+                      "section-v-mobile": "80px",
+                      "grid-gap-dense": "18px"
+              },
+              "fontFamily": {
+                      "helper-text": [
+                              "ebGaramond"
+                      ],
+                      "body-main": [
+                              "inter"
+                      ],
+                      "section-title": [
+                              "Playfair Display"
+                      ],
+                      "section-sub": [
+                              "ebGaramond"
+                      ],
+                      "tier-badge": [
+                              "inter"
+                      ],
+                      "hero-title": [
+                              "Playfair Display"
+                      ],
+                      "eyebrow-label": [
+                              "inter"
+                      ]
+              },
+              "fontSize": {
+                      "helper-text": [
+                              "14px",
+                              {
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-main": [
+                              "17px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "section-title": [
+                              "clamp(40px, 5.5vw, 72px)",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "section-sub": [
+                              "19px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "300"
+                              }
+                      ],
+                      "tier-badge": [
+                              "10px",
+                              {
+                                      "letterSpacing": "0.18em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "hero-title": [
+                              "clamp(56px, 7vw, 96px)",
+                              {
+                                      "lineHeight": "1.05",
+                                      "letterSpacing": "-0.03em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "eyebrow-label": [
+                              "11px",
+                              {
+                                      "letterSpacing": "0.35em",
+                                      "fontWeight": "500"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+          .bg-tessellation {
+              background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l10 17.32h20v20H40L30 60 20 42.68H0v-20h20z' fill='%23c9a24e' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+          }
+          .glass-indigo {
+              background: linear-gradient(180deg, rgba(26,32,64,0.55), rgba(13,18,40,0.65));
+              backdrop-filter: blur(18px);
+              -webkit-backdrop-filter: blur(18px);
+              border: 1px solid rgba(201,162,78,0.28);
+          }
+          .dot-grid-marker {
+            background-image: radial-gradient(#c9a24e 1.5px, transparent 1.5px);
+            background-size: 8px 8px;
+            width: 16px;
+            height: 16px;
+          }
+          .gold-gradient-text {
+              background: linear-gradient(to right, #c9a24e, #f0d68c, #e8c775);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;
+          }
+          .gold-gradient-bg {
+              background: linear-gradient(135deg, #c9a24e 0%, #e8c775 50%, #8a6d2a 100%);
+          }
+          
+          @keyframes float {
+              0%, 100% { transform: translateY(0) rotate(0deg); }
+              50% { transform: translateY(-10px) rotate(1deg); }
+          }
+          .animate-float {
+              animation: float 6s ease-in-out infinite;
+          }
+      </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-gradient-to-b from-indigo-night to-indigo-twilight text-warm-ivory min-h-screen relative overflow-x-hidden antialiased">
+<!-- Background Tessellation -->
+<div class="absolute inset-0 bg-tessellation pointer-events-none z-0"></div>
+<!-- Drifting Gold Dust Simulation (CSS static representation) -->
+<div class="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-30">
+<div class="absolute top-[10%] left-[20%] w-1 h-1 bg-songket-gold rounded-full blur-[1px] animate-float" style="animation-delay: 0s; animation-duration: 4s;"></div>
+<div class="absolute top-[30%] left-[80%] w-1.5 h-1.5 bg-pale-gold rounded-full blur-[1px] animate-float" style="animation-delay: 1s; animation-duration: 6s;"></div>
+<div class="absolute top-[60%] left-[15%] w-2 h-2 bg-champagne-gold rounded-full blur-[2px] animate-float" style="animation-delay: 2s; animation-duration: 5s;"></div>
+<div class="absolute top-[80%] left-[70%] w-1 h-1 bg-songket-gold rounded-full blur-[1px] animate-float" style="animation-delay: 0.5s; animation-duration: 7s;"></div>
+</div>
+<!-- Top AppBar (from JSON) -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl dark:bg-surface/80 border-b border-songket-gold/30 shadow-[0_4px_30px_rgba(201,162,78,0.1)] flex justify-between items-center px-gutter-mobile py-4 reveal-3d">
+<button class="text-songket-gold dark:text-pale-gold hover:text-champagne-gold transition-colors duration-300 active:scale-95 transition-transform">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<span class="font-hero-title text-champagne-gold italic text-2xl tracking-tight">e-motion.my</span>
+<button class="text-songket-gold dark:text-pale-gold hover:text-champagne-gold transition-colors duration-300 active:scale-95 transition-transform">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</nav>
+<!-- Main Content Container -->
+<main class="relative z-10 max-w-[780px] mx-auto pt-[120px] pb-[160px] px-gutter-mobile flex flex-col items-center min-h-screen">
+<!-- Top Eyebrow -->
+<div class="reveal-3d mb-title-mb flex flex-col items-center">
+<div class="dot-grid-marker mb-4 opacity-50"></div>
+<h2 class="font-eyebrow-label text-eyebrow-label text-songket-gold uppercase tracking-[0.35em]">WALIMATUL URUS</h2>
+</div>
+<!-- Hero Names (Asymmetric) -->
+<div class="w-full flex flex-col relative mb-sub-mb reveal-3d">
+<h1 class="font-hero-title text-hero-title italic text-pale-gold text-right pr-[10%] drop-shadow-[0_4px_12px_rgba(201,162,78,0.2)]">YASMIN</h1>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<span class="font-hero-title text-champagne-gold text-6xl italic opacity-80">&amp;</span>
+</div>
+<h1 class="font-hero-title text-hero-title italic text-pale-gold text-left pl-[10%] drop-shadow-[0_4px_12px_rgba(201,162,78,0.2)] mt-[-10px]">HAKIM</h1>
+</div>
+<!-- Dua Paragraph -->
+<div class="max-w-[420px] text-center mb-sub-mb reveal-3d" style="transition-delay: 100ms;">
+<p class="font-helper-text text-[16px] italic leading-relaxed text-ivory-warm/80 font-light" style="font-family: 'Cormorant Garamond', serif;">
+                "Ya Allah, satukanlah hati kedua mempelai ini seperti Engkau satukan hati Adam dan Hawa, Yusuf dan Zulaikha, dan seperti Engkau satukan hati Muhammad S.A.W dan Khadijah Al-Kubra. Berkatilah majlis ini dan limpahkanlah rahmat ke atas kami semua."
+            </p>
+</div>
+<!-- Date & Hijri -->
+<div class="flex flex-col items-center mb-sub-mb reveal-3d" style="transition-delay: 200ms;">
+<div class="w-full flex justify-center mb-6">
+<div class="h-px w-16 bg-gradient-to-r from-transparent via-songket-gold to-transparent"></div>
+</div>
+<p class="font-section-title text-[28px] italic text-champagne-gold mb-2">SABTU 21·11·2026</p>
+<p class="font-helper-text text-[15px] italic text-songket-gold" style="font-family: 'Cormorant Garamond', serif; text-shadow: 0 2px 4px rgba(138,109,42,0.3);">11 JAMADIL AWAL 1448H</p>
+<div class="w-full flex justify-center mt-6">
+<div class="h-px w-16 bg-gradient-to-r from-transparent via-songket-gold to-transparent"></div>
+</div>
+</div>
+<!-- Event Cards -->
+<div class="w-full grid grid-cols-2 gap-4 mb-sub-mb reveal-3d" style="transition-delay: 300ms;">
+<!-- Akad Card -->
+<div class="glass-indigo rounded-xl p-6 flex flex-col items-center justify-center relative group hover:-translate-y-2 hover:shadow-[0_8px_30px_rgba(201,162,78,0.2)] transition-all duration-500">
+<div class="absolute top-2 left-2 dot-grid-marker opacity-40"></div>
+<div class="absolute top-2 right-2 dot-grid-marker opacity-40"></div>
+<div class="absolute bottom-2 left-2 dot-grid-marker opacity-40"></div>
+<div class="absolute bottom-2 right-2 dot-grid-marker opacity-40"></div>
+<span class="material-symbols-outlined text-songket-gold mb-3 text-3xl font-light">favorite</span>
+<h3 class="font-eyebrow-label text-eyebrow-label text-pale-gold uppercase mb-1">Akad</h3>
+<p class="font-section-sub text-section-sub text-warm-ivory">11:00 PAGI</p>
+</div>
+<!-- Resepsi Card -->
+<div class="glass-indigo rounded-xl p-6 flex flex-col items-center justify-center relative group hover:-translate-y-2 hover:shadow-[0_8px_30px_rgba(201,162,78,0.2)] transition-all duration-500">
+<div class="absolute top-2 left-2 dot-grid-marker opacity-40"></div>
+<div class="absolute top-2 right-2 dot-grid-marker opacity-40"></div>
+<div class="absolute bottom-2 left-2 dot-grid-marker opacity-40"></div>
+<div class="absolute bottom-2 right-2 dot-grid-marker opacity-40"></div>
+<span class="material-symbols-outlined text-songket-gold mb-3 text-3xl font-light">celebration</span>
+<h3 class="font-eyebrow-label text-eyebrow-label text-pale-gold uppercase mb-1">Resepsi</h3>
+<p class="font-section-sub text-section-sub text-warm-ivory">7:30 MALAM</p>
+</div>
+</div>
+<!-- Countdown -->
+<div class="w-full flex flex-col items-center mb-12 reveal-3d" style="transition-delay: 400ms;">
+<div class="dot-grid-marker mb-6 opacity-50"></div>
+<div class="font-hero-title text-[42px] md:text-[56px] italic gold-gradient-text tracking-wider leading-none mb-4">
+                303 <span class="text-songket-gold/40 text-3xl">/</span> 9 <span class="text-songket-gold/40 text-3xl">/</span> 28 <span class="text-songket-gold/40 text-3xl">/</span> 41
+            </div>
+<div class="flex gap-4 md:gap-8 justify-center w-full max-w-[400px]">
+<span class="font-eyebrow-label text-[10px] text-songket-gold tracking-[0.28em]">HARI</span>
+<span class="font-eyebrow-label text-[10px] text-songket-gold tracking-[0.28em]">JAM</span>
+<span class="font-eyebrow-label text-[10px] text-songket-gold tracking-[0.28em]">MINIT</span>
+<span class="font-eyebrow-label text-[10px] text-songket-gold tracking-[0.28em]">SAAT</span>
+</div>
+</div>
+<!-- Actions -->
+<div class="w-full flex flex-col sm:flex-row gap-4 justify-center items-center reveal-3d" style="transition-delay: 500ms;">
+<button class="w-full sm:w-auto px-8 py-4 rounded-full gold-gradient-bg text-indigo-night font-eyebrow-label text-eyebrow-label uppercase tracking-widest shadow-[0_8px_20px_rgba(201,162,78,0.25)] hover:-translate-y-1 hover:shadow-[0_12px_25px_rgba(201,162,78,0.35)] transition-all duration-300 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+                SAH KEHADIRAN
+            </button>
+<button class="w-full sm:w-auto px-8 py-4 rounded-full border border-songket-gold/30 text-pale-gold font-eyebrow-label text-eyebrow-label uppercase tracking-widest hover:bg-songket-gold/10 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">map</span>
+                PETA LOKASI
+            </button>
+</div>
+</main>
+<!-- Bottom Nav Bar (from JSON) -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-maroon-velvet/90 backdrop-blur-md dark:bg-maroon-velvet/90 border-t border-songket-gold/20 shadow-[0_-10px_40px_rgba(74,16,32,0.5)] flex justify-around items-center px-2 pb-6 pt-3 md:hidden">
+<button class="flex flex-col items-center justify-center text-champagne-gold bg-royal-maroon/50 rounded-full px-4 py-1 reveal-3d active:translate-y-[-2px]">
+<span class="material-symbols-outlined mb-1">auto_awesome</span>
+<span class="font-eyebrow-label text-tier-badge uppercase">Invite</span>
+</button>
+<button class="flex flex-col items-center justify-center text-rose-whisper/60 hover:text-champagne-gold transition-all duration-300 reveal-3d active:translate-y-[-2px]">
+<span class="material-symbols-outlined mb-1">schedule</span>
+<span class="font-eyebrow-label text-tier-badge uppercase">Timeline</span>
+</button>
+<button class="flex flex-col items-center justify-center text-rose-whisper/60 hover:text-champagne-gold transition-all duration-300 reveal-3d active:translate-y-[-2px]">
+<span class="material-symbols-outlined mb-1">location_on</span>
+<span class="font-eyebrow-label text-tier-badge uppercase">Venue</span>
+</button>
+<button class="flex flex-col items-center justify-center text-rose-whisper/60 hover:text-champagne-gold transition-all duration-300 reveal-3d active:translate-y-[-2px]">
+<span class="material-symbols-outlined mb-1">favorite</span>
+<span class="font-eyebrow-label text-tier-badge uppercase">RSVP</span>
+</button>
+</nav>
+</body></html>

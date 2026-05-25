@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Warisan - Buat Kad Sinematik</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Inter:wght@300;400;500;600&amp;family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                            "primary-fixed-dim": "#c1c5e3",
+                            "surface-container": "#231f14",
+                            "primary-container": "#0d1228",
+                            "inverse-on-surface": "#343024",
+                            "on-primary": "#2a2f47",
+                            "indigo-twilight": "#1a2040",
+                            "rose-whisper": "#d4949a",
+                            "outline": "#909097",
+                            "error-container": "#93000a",
+                            "surface-container-lowest": "#110e05",
+                            "tertiary": "#ffb2bb",
+                            "on-surface": "#eae2d0",
+                            "surface-tint": "#c1c5e3",
+                            "primary-fixed": "#dde1ff",
+                            "royal-maroon": "#6b1d2e",
+                            "on-tertiary-fixed-variant": "#7c2a3a",
+                            "indigo-night": "#0d1228",
+                            "background": "#161309",
+                            "secondary-container": "#735501",
+                            "surface-container-high": "#2d2a1e",
+                            "tertiary-fixed": "#ffd9dd",
+                            "surface-container-low": "#1e1b11",
+                            "on-secondary-fixed-variant": "#5c4300",
+                            "emerald-forest": "#2d5a3f",
+                            "on-secondary-fixed": "#261a00",
+                            "warm-ivory": "#f8f0de",
+                            "on-tertiary": "#5e1325",
+                            "on-tertiary-container": "#c16070",
+                            "inverse-surface": "#eae2d0",
+                            "on-surface-variant": "#c7c5ce",
+                            "secondary-fixed": "#ffdea0",
+                            "inverse-primary": "#585d77",
+                            "surface-bright": "#3d392d",
+                            "pale-gold": "#f0d68c",
+                            "indigo-mist": "#2a3460",
+                            "primary": "#c1c5e3",
+                            "secondary": "#ebc169",
+                            "on-background": "#eae2d0",
+                            "champagne-gold": "#e8c775",
+                            "cream": "#faf4e3",
+                            "surface-container-highest": "#383528",
+                            "surface": "#161309",
+                            "on-primary-fixed": "#151a31",
+                            "tertiary-fixed-dim": "#ffb2bb",
+                            "surface-variant": "#383528",
+                            "on-secondary": "#402d00",
+                            "on-error-container": "#ffdad6",
+                            "emerald-deep": "#1a3525",
+                            "on-tertiary-fixed": "#400012",
+                            "ivory-warm": "#f2e6c8",
+                            "surface-dim": "#161309",
+                            "songket-gold": "#c9a24e",
+                            "secondary-fixed-dim": "#ebc169",
+                            "error": "#ffb4ab",
+                            "on-primary-fixed-variant": "#41455e",
+                            "on-error": "#690005",
+                            "outline-variant": "#46464d",
+                            "on-primary-container": "#787d98",
+                            "maroon-velvet": "#4a1020",
+                            "tertiary-container": "#31000c",
+                            "on-secondary-container": "#f6cb73",
+                            "gold-shadow": "#8a6d2a"
+                    },
+                    "borderRadius": {
+                            "DEFAULT": "0.25rem",
+                            "lg": "0.5rem",
+                            "xl": "0.75rem",
+                            "full": "9999px"
+                    },
+                    "spacing": {
+                            "container-max": "1280px",
+                            "sub-mb": "48px",
+                            "section-v-mobile": "80px",
+                            "section-v-desktop": "140px",
+                            "title-mb": "24px",
+                            "label-mb": "20px",
+                            "gutter-mobile": "16px",
+                            "gutter-desktop": "32px",
+                            "grid-gap-form": "32px",
+                            "grid-gap-dense": "18px"
+                    },
+                    "fontFamily": {
+                            "section-sub": ["ebGaramond"],
+                            "body-main": ["inter"],
+                            "hero-title": ["Playfair Display"],
+                            "eyebrow-label": ["inter"],
+                            "tier-badge": ["inter"],
+                            "helper-text": ["ebGaramond"],
+                            "section-title": ["Playfair Display"]
+                    },
+                    "fontSize": {
+                            "section-sub": ["19px", { "lineHeight": "1.6", "fontWeight": "300" }],
+                            "body-main": ["17px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                            "hero-title": ["clamp(56px, 7vw, 96px)", { "lineHeight": "1.05", "letterSpacing": "-0.03em", "fontWeight": "400" }],
+                            "eyebrow-label": ["11px", { "letterSpacing": "0.35em", "fontWeight": "500" }],
+                            "tier-badge": ["10px", { "letterSpacing": "0.18em", "fontWeight": "600" }],
+                            "helper-text": ["14px", { "fontWeight": "400" }],
+                            "section-title": ["clamp(40px, 5.5vw, 72px)", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: linear-gradient(135deg, rgba(26, 32, 64, 0.4) 0%, rgba(13, 18, 40, 0.6) 100%);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(201, 162, 78, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(201, 162, 78, 0.1);
+        }
+        
+        .pucuk-rebung-corner {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none"><path d="M0 0 L40 0 L0 40 Z" fill="rgba(201,162,78,0.15)"/></svg>');
+            background-size: cover;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+        
+        .glass-panel:hover .pucuk-rebung-corner {
+            opacity: 1;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(to right, #e8c775, #c9a24e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-gradient-bg {
+            background: linear-gradient(to right, #c9a24e, #8a6d2a);
+        }
+        
+        .bg-songket-pattern {
+            background-color: #0d1228;
+            background-image: radial-gradient(circle at center, rgba(26, 32, 64, 0.8) 0%, rgba(13, 18, 40, 1) 100%);
+        }
+
+        .gold-dust {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: radial-gradient(circle at 20% 30%, rgba(201, 162, 78, 0.1) 1px, transparent 1px),
+                              radial-gradient(circle at 70% 60%, rgba(201, 162, 78, 0.1) 1px, transparent 1px),
+                              radial-gradient(circle at 40% 80%, rgba(201, 162, 78, 0.1) 1px, transparent 1px);
+            background-size: 100px 100px;
+            z-index: 0;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(13, 18, 40, 0.2);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(201, 162, 78, 0.3);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-songket-pattern text-on-surface font-body-main text-body-main antialiased min-h-screen flex flex-col relative overflow-hidden">
+<div class="gold-dust"></div>
+<!-- Top Bar -->
+<header class="glass-panel fixed top-0 w-full z-50 h-20 px-gutter-desktop flex items-center justify-between reveal-3d">
+<div class="flex items-center gap-4">
+<h1 class="font-section-sub text-section-sub italic text-songket-gold tracking-wider">LANDING / BUAT KAD SINEMATIK</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="border border-songket-gold/30 text-songket-gold px-6 py-2 rounded-full font-tier-badge text-tier-badge uppercase hover:bg-songket-gold/10 transition-all duration-300">
+                Simpan Draf
+            </button>
+<button class="gold-gradient-bg text-surface-container-lowest px-6 py-2 rounded-full font-tier-badge text-tier-badge uppercase flex items-center gap-2 shadow-[0_6px_12px_rgba(201,162,78,0.3)] hover:-translate-y-1 transition-all duration-300">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                TERBITKAN VIDEO
+            </button>
+</div>
+</header>
+<!-- Main Content Layout -->
+<main class="flex-grow pt-28 pb-section-v-desktop px-gutter-desktop max-w-container-max mx-auto w-full grid grid-cols-1 lg:grid-cols-[260px_1fr_480px] gap-8 relative z-10 h-screen overflow-hidden">
+<!-- Left Column: Templates -->
+<aside class="glass-panel rounded-xl flex flex-col h-full overflow-hidden relative group reveal-3d" style="animation-delay: 100ms;">
+<div class="pucuk-rebung-corner top-0 left-0" style="transform: rotate(0deg);"></div>
+<div class="pucuk-rebung-corner top-0 right-0" style="transform: rotate(90deg);"></div>
+<div class="pucuk-rebung-corner bottom-0 right-0" style="transform: rotate(180deg);"></div>
+<div class="pucuk-rebung-corner bottom-0 left-0" style="transform: rotate(270deg);"></div>
+<div class="p-6 border-b border-songket-gold/20">
+<h2 class="font-eyebrow-label text-eyebrow-label text-songket-gold uppercase">TEMPLAT REMOTION</h2>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar p-4 space-y-4">
+<!-- Selected Template -->
+<div class="relative rounded-lg overflow-hidden border-2 border-songket-gold p-2 cursor-pointer bg-indigo-twilight/50 group/card transition-all hover:-translate-y-1">
+<div class="absolute top-2 right-2 bg-songket-gold text-surface-container-lowest font-tier-badge text-[8px] px-2 py-1 rounded-full z-10 flex items-center gap-1">
+<span class="material-symbols-outlined text-[10px]">check</span> AKTIF
+                    </div>
+<div class="aspect-video bg-surface-container-lowest rounded overflow-hidden relative">
+<img alt="Songket pattern" class="w-full h-full object-cover opacity-60" data-alt="A macro shot of intricate gold and indigo woven fabric, mimicking a traditional Malay Songket pattern. The lighting is cinematic, deep, and moody, creating a rich atmosphere suitable for a premium digital heritage interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjaIA-hAHNcSkIrzemqGgWff71lV22a7r8YhLr5_vBs_K2RASJ3SlT2DLzfHxDXh2E2cj_LSvas9b1dRtWTXXZBTZVNT-nss-u3al1Q0BY2LLKI6lXAFsF3c5gvmpHdYAUjve5ZcniXuZQSv9c0rhkzdEMDQxEUeqKT8_5oRLyzCyyvZ5c0HSowmMsEY3u0UTYqvLR0UFRiAvIAC1z4Of3utQv9eQMaeqrx8gxW8HKrr_bHZuVzHglLyJry6ga8-4Ly3HVp6PHNf8"/>
+<span class="material-symbols-outlined absolute inset-0 m-auto w-8 h-8 flex items-center justify-center text-songket-gold drop-shadow-md">motion_photos_on</span>
+</div>
+<div class="mt-2 text-center">
+<span class="font-section-sub text-[15px] italic text-cream">Songket Cinematic</span>
+</div>
+</div>
+<!-- Unselected Template 1 -->
+<div class="relative rounded-lg overflow-hidden border border-songket-gold/30 p-2 cursor-pointer hover:bg-indigo-twilight/30 transition-all hover:-translate-y-1">
+<div class="aspect-video bg-surface-container-lowest rounded overflow-hidden relative">
+<img alt="Batik pattern" class="w-full h-full object-cover opacity-40 grayscale group-hover/card:grayscale-0 transition-all" data-alt="A detailed view of a traditional Batik fabric pattern in sepia and dark tones. The lighting is dim and atmospheric, emphasizing the cultural texture and deep heritage aesthetic required for a premium UI presentation." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDY-31hUlTvqXBIHleNkjTORTDCbGE-FH1GS8qPly3QMUmyRml8sPuo1laWhj7-Xuz9X3xE3hfwpmqUpdRdcmkkjJMfDkjOnOxxV-sia01Fn7VJGOWsendiM0ZsSaw19V-tJBmN2IhXZ17FIYHAvAtc7C4c3TAN17qD__pzRJahw6IWdCsdLHkunuv2ytlAn5LvHXm4z8rGYkwwU3-7Inb0GLvYGLoIkmHG4n6piw7s8ujg_O2pzGgwvq_yxUK_2JzHSnIDSHxZ8q8"/>
+<span class="material-symbols-outlined absolute inset-0 m-auto w-8 h-8 flex items-center justify-center text-on-surface-variant opacity-50">animation</span>
+</div>
+<div class="mt-2 text-center">
+<span class="font-section-sub text-[15px] italic text-on-surface-variant">Batik Animation</span>
+</div>
+</div>
+<!-- Unselected Template 2 -->
+<div class="relative rounded-lg overflow-hidden border border-songket-gold/30 p-2 cursor-pointer hover:bg-indigo-twilight/30 transition-all hover:-translate-y-1">
+<div class="aspect-video bg-surface-container-lowest rounded overflow-hidden relative">
+<img alt="Tenun pattern" class="w-full h-full object-cover opacity-40 grayscale group-hover/card:grayscale-0 transition-all" data-alt="A close-up photograph of woven Tenun fabric threads, featuring subtle light reflecting off metallic strands. The dark, cinematic lighting highlights the artisanal craft and tactile quality, fitting for a heritage-themed digital design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsGCe6dAUhpW5FywmxhIfjQgPaiYIGwk7JqpXsaMYXihrcKy8qezfHoJR-nkJBStwZgOWDT_Giu8-D08f6_cgjBQ7sUcSG09EqeoA1lgxmcE6WkhA2x5tD687xpggGpxHEq6BkrNTNqQyuwKaBZNsvmN4-1fLMderEzaBX8gLFg6e1Z4qMEfGGoa5bWSGod5g4upebWfvQ5fpmQKtZceZELzSayo5Qfkmgnww58VbhfamV-t-FswfhQ7oedT11ASL7_nU5rxviKIc"/>
+<span class="material-symbols-outlined absolute inset-0 m-auto w-8 h-8 flex items-center justify-center text-on-surface-variant opacity-50">blur_on</span>
+</div>
+<div class="mt-2 text-center">
+<span class="font-section-sub text-[15px] italic text-on-surface-variant">Tenun Fade</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Center Column: Details Form -->
+<section class="glass-panel rounded-xl flex flex-col h-full overflow-hidden relative group reveal-3d" style="animation-delay: 200ms;">
+<div class="pucuk-rebung-corner top-0 left-0" style="transform: rotate(0deg);"></div>
+<div class="pucuk-rebung-corner top-0 right-0" style="transform: rotate(90deg);"></div>
+<div class="pucuk-rebung-corner bottom-0 right-0" style="transform: rotate(180deg);"></div>
+<div class="pucuk-rebung-corner bottom-0 left-0" style="transform: rotate(270deg);"></div>
+<div class="p-6 border-b border-songket-gold/20">
+<h2 class="font-eyebrow-label text-eyebrow-label text-songket-gold uppercase">BUTIRAN VIDEO</h2>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar p-8 space-y-8">
+<!-- Section 1: Maklumat Pengantin -->
+<div>
+<h3 class="font-section-sub text-[18px] text-cream mb-4 border-b border-songket-gold/10 pb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-songket-gold">favorite</span>
+                        Maklumat Pengantin
+                    </h3>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block font-helper-text text-helper-text text-on-surface-variant mb-1">Nama Pihak Lelaki</label>
+<input class="w-full bg-surface-container-lowest/50 border border-songket-gold/40 rounded px-4 py-2 text-cream focus:outline-none focus:ring-2 focus:ring-songket-gold focus:ring-offset-2 focus:ring-offset-background transition-all" type="text" value="Adam"/>
+</div>
+<div>
+<label class="block font-helper-text text-helper-text text-on-surface-variant mb-1">Nama Pihak Perempuan</label>
+<input class="w-full bg-surface-container-lowest/50 border border-songket-gold/40 rounded px-4 py-2 text-cream focus:outline-none focus:ring-2 focus:ring-songket-gold focus:ring-offset-2 focus:ring-offset-background transition-all" type="text" value="Aisyah"/>
+</div>
+</div>
+</div>
+<!-- Section 2: Tarikh & Masa -->
+<div>
+<h3 class="font-section-sub text-[18px] text-cream mb-4 border-b border-songket-gold/10 pb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-songket-gold">event</span>
+                        Tarikh &amp; Masa
+                    </h3>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<input class="w-full bg-surface-container-lowest/50 border border-songket-gold/40 rounded px-4 py-2 text-cream focus:outline-none focus:ring-2 focus:ring-songket-gold focus:ring-offset-2 focus:ring-offset-background transition-all" type="date"/>
+</div>
+<div>
+<input class="w-full bg-surface-container-lowest/50 border border-songket-gold/40 rounded px-4 py-2 text-cream focus:outline-none focus:ring-2 focus:ring-songket-gold focus:ring-offset-2 focus:ring-offset-background transition-all" type="time"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Column: Preview -->
+<aside class="glass-panel rounded-xl flex flex-col h-full overflow-hidden relative group reveal-3d" style="animation-delay: 300ms;">
+<div class="p-6 border-b border-songket-gold/20 flex justify-between items-center">
+<h2 class="font-eyebrow-label text-eyebrow-label text-champagne-gold uppercase">PRATAYANG SINEMATIK</h2>
+</div>
+<div class="flex-1 p-6 flex flex-col items-center justify-center relative">
+<!-- Video Player Container (9:16 aspect ratio) -->
+<div class="w-full max-w-[280px] aspect-[9/16] rounded-[14px] overflow-hidden border border-songket-gold/30 shadow-[0_0_30px_rgba(201,162,78,0.2)] relative group/player cursor-pointer">
+<img alt="Cinematic Wedding Still" class="w-full h-full object-cover" data-alt="A highly cinematic vertical still of a royal Malay wedding concept. The frame features intricate gold filigree overlaying a moody, dark background. The lighting is soft and dramatic, evoking intimacy and deep cultural heritage, ideal for a premium digital invitation background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDn690zziXlBZEKQ4FqIi_KbAvoLpAnw1zdgalJDZFPn_nrkH-3PWxo2DdApBVMwjNZuL33eGm-Adbn0dR3iJ6Bii3S27zxrmoAODLXJ2bYK2IvbVzpYkeFFrWJSW3D0X17gE1zlVigXEgGC1ecRD7CDCgkOgvMLDjqLewS3lYTGMFYQD2iVBrAzk8mz44JYGA8UFuX5VE-k9ALT9eppz4yL-TwcmtvbHGEE6N1yaxqCyJWU-Qn-ZRvUbzM6JMJepbqXhYlumSwjZM"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent"></div>
+<div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover/player:opacity-100 transition-opacity bg-background/40">
+<button class="w-16 h-16 rounded-full gold-gradient-bg flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-surface-container-lowest text-3xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div class="absolute bottom-6 left-0 w-full text-center">
+<h4 class="font-hero-title text-[24px] text-cream mb-1 drop-shadow-md">Aisyah &amp; Adam</h4>
+<p class="font-section-sub text-[14px] italic text-songket-gold">Menjemput Ke Majlis Perkahwinan</p>
+</div>
+</div>
+<!-- Transport Controls -->
+<div class="w-full max-w-[280px] mt-6 flex items-center gap-4">
+<button class="text-songket-gold hover:text-champagne-gold transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</button>
+<div class="flex-1 h-1 bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-songket-gold w-[35%]"></div>
+</div>
+<span class="font-section-sub text-[14px] italic text-on-surface-variant">00:35 / 01:20</span>
+</div>
+</div>
+<div class="p-4 border-t border-songket-gold/20 flex justify-center gap-2">
+<button class="text-[10px] font-tier-badge text-songket-gold border border-songket-gold/30 px-3 py-1 rounded-full hover:bg-songket-gold/10 transition-colors">TUKAR MUZIK</button>
+<button class="text-[10px] font-tier-badge text-songket-gold border border-songket-gold/30 px-3 py-1 rounded-full hover:bg-songket-gold/10 transition-colors">TUKAR PALET</button>
+<button class="text-[10px] font-tier-badge text-champagne-gold bg-surface-container-lowest border border-songket-gold/50 px-3 py-1 rounded-full hover:bg-songket-gold/20 transition-colors">SIMPAN PRESET</button>
+</div>
+</aside>
+</main>
+</body></html>

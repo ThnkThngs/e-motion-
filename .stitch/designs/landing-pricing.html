@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Warisan Collection - Pricing</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&amp;family=EB+Garamond:ital,wght@0,400;0,600;1,400;1,600&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error": "#690005",
+                        "maroon-velvet": "#4a1020",
+                        "on-surface": "#eae2d0",
+                        "pale-gold": "#f0d68c",
+                        "on-tertiary-fixed": "#400012",
+                        "cream": "#faf4e3",
+                        "on-primary-fixed-variant": "#41455e",
+                        "emerald-forest": "#2d5a3f",
+                        "on-secondary": "#402d00",
+                        "error": "#ffb4ab",
+                        "secondary-fixed-dim": "#ebc169",
+                        "on-tertiary-container": "#c16070",
+                        "emerald-deep": "#1a3525",
+                        "outline": "#909097",
+                        "on-surface-variant": "#c7c5ce",
+                        "on-primary-fixed": "#151a31",
+                        "ivory-warm": "#f2e6c8",
+                        "tertiary-fixed": "#ffd9dd",
+                        "gold-shadow": "#8a6d2a",
+                        "surface-dim": "#161309",
+                        "primary": "#c1c5e3",
+                        "surface-container-lowest": "#110e05",
+                        "surface-variant": "#383528",
+                        "rose-whisper": "#d4949a",
+                        "indigo-night": "#0d1228",
+                        "surface-container": "#231f14",
+                        "surface-container-low": "#1e1b11",
+                        "champagne-gold": "#e8c775",
+                        "tertiary": "#ffb2bb",
+                        "on-secondary-fixed": "#261a00",
+                        "primary-fixed": "#dde1ff",
+                        "songket-gold": "#c9a24e",
+                        "on-tertiary": "#5e1325",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#ffb2bb",
+                        "surface-tint": "#c1c5e3",
+                        "primary-fixed-dim": "#c1c5e3",
+                        "surface-container-highest": "#383528",
+                        "indigo-mist": "#2a3460",
+                        "outline-variant": "#46464d",
+                        "on-primary-container": "#787d98",
+                        "on-tertiary-fixed-variant": "#7c2a3a",
+                        "warm-ivory": "#f8f0de",
+                        "on-secondary-container": "#f6cb73",
+                        "surface-bright": "#3d392d",
+                        "primary-container": "#0d1228",
+                        "inverse-surface": "#eae2d0",
+                        "secondary-fixed": "#ffdea0",
+                        "tertiary-container": "#31000c",
+                        "secondary-container": "#735501",
+                        "on-secondary-fixed-variant": "#5c4300",
+                        "background": "#161309",
+                        "on-background": "#eae2d0",
+                        "royal-maroon": "#6b1d2e",
+                        "surface": "#161309",
+                        "secondary": "#ebc169",
+                        "indigo-twilight": "#1a2040",
+                        "inverse-on-surface": "#343024",
+                        "on-primary": "#2a2f47",
+                        "inverse-primary": "#585d77",
+                        "error-container": "#93000a",
+                        "surface-container-high": "#2d2a1e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "grid-gap-dense": "18px",
+                        "section-v-mobile": "80px",
+                        "title-mb": "24px",
+                        "container-max": "1280px",
+                        "sub-mb": "48px",
+                        "gutter-mobile": "16px",
+                        "gutter-desktop": "32px",
+                        "grid-gap-form": "32px",
+                        "section-v-desktop": "140px",
+                        "label-mb": "20px"
+                    },
+                    "fontFamily": {
+                        "section-title": ["Playfair Display"],
+                        "helper-text": ["EB Garamond"],
+                        "section-sub": ["EB Garamond"],
+                        "hero-title": ["Playfair Display"],
+                        "body-main": ["Inter"],
+                        "tier-badge": ["Inter"],
+                        "eyebrow-label": ["Inter"]
+                    },
+                    "fontSize": {
+                        "section-title": ["clamp(40px, 5.5vw, 72px)", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+                        "helper-text": ["14px", { "fontWeight": "400" }],
+                        "section-sub": ["19px", { "lineHeight": "1.6", "fontWeight": "300" }],
+                        "hero-title": ["clamp(56px, 7vw, 96px)", { "lineHeight": "1.05", "letterSpacing": "-0.03em", "fontWeight": "400" }],
+                        "body-main": ["17px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "tier-badge": ["10px", { "letterSpacing": "0.18em", "fontWeight": "600" }],
+                        "eyebrow-label": ["11px", { "letterSpacing": "0.35em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-spec {
+            background: linear-gradient(135deg, rgba(26, 32, 64, 0.4) 0%, rgba(13, 18, 40, 0.8) 100%);
+            backdrop-filter: blur(18px) saturate(140%);
+            -webkit-backdrop-filter: blur(18px) saturate(140%);
+            border: 1px solid rgba(201, 162, 78, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(201, 162, 78, 0.1);
+        }
+        .reveal-3d {
+            opacity: 0;
+            transform: translateY(20px) rotateX(5deg);
+            animation: revealAnimation 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+        }
+        @keyframes revealAnimation {
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+        .stagger-1 { animation-delay: 100ms; }
+        .stagger-2 { animation-delay: 200ms; }
+        .stagger-3 { animation-delay: 300ms; }
+        
+        /* Pucuk Rebung Ornament Base */
+        .corner-ornament {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            opacity: 0.3;
+            transition: opacity 0.3s ease;
+        }
+        .glass-spec:hover .corner-ornament {
+            opacity: 0.6;
+        }
+        .tl { top: -4px; left: -4px; transform: rotate(0deg); }
+        .tr { top: -4px; right: -4px; transform: rotate(90deg); }
+        .br { bottom: -4px; right: -4px; transform: rotate(180deg); }
+        .bl { bottom: -4px; left: -4px; transform: rotate(270deg); }
+    </style>
+</head>
+<body class="bg-indigo-night text-on-surface overflow-x-hidden relative min-h-screen">
+<!-- Nav Shell -->
+<nav class="fixed top-0 w-full z-50 bg-indigo-night/80 backdrop-blur-xl border-b border-songket-gold/30 shadow-[0_8px_32px_0_rgba(201,162,78,0.2)] reveal-3d opacity-0 animate-fade-in hidden md:block">
+<div class="flex justify-between items-center h-24 px-gutter-mobile md:px-gutter-desktop max-w-container-max mx-auto">
+<div class="font-hero-title text-hero-title text-songket-gold tracking-tighter" style="font-size: clamp(32px, 4vw, 48px);">WARISAN</div>
+<ul class="flex space-x-8">
+<li><a class="text-on-surface-variant hover:text-songket-gold transition-all duration-300 font-eyebrow-label text-eyebrow-label hover:translate-y-[-2px]" href="#">Collections</a></li>
+<li><a class="text-on-surface-variant hover:text-songket-gold transition-all duration-300 font-eyebrow-label text-eyebrow-label hover:translate-y-[-2px]" href="#">Gallery</a></li>
+<li><a class="text-on-surface-variant hover:text-songket-gold transition-all duration-300 font-eyebrow-label text-eyebrow-label hover:translate-y-[-2px]" href="#">Tradition</a></li>
+<li><a class="text-songket-gold border-b-2 border-songket-gold font-bold font-eyebrow-label text-eyebrow-label" href="#">Pricing</a></li>
+<li><a class="text-on-surface-variant hover:text-songket-gold transition-all duration-300 font-eyebrow-label text-eyebrow-label hover:translate-y-[-2px]" href="#">About</a></li>
+</ul>
+<div class="flex items-center space-x-6">
+<span class="material-symbols-outlined text-songket-gold hover:text-cream transition-colors cursor-pointer">shopping_bag</span>
+<span class="material-symbols-outlined text-songket-gold hover:text-cream transition-colors cursor-pointer">account_circle</span>
+<button class="bg-gradient-to-r from-songket-gold to-pale-gold text-indigo-night px-6 py-2 rounded-full font-eyebrow-label text-eyebrow-label shadow-[0_6px_12px_rgba(201,162,78,0.2)] hover:translate-y-[-2px] hover:shadow-[0_8px_16px_rgba(201,162,78,0.4)] transition-all">Inquiry</button>
+</div>
+</div>
+</nav>
+<!-- Background Elements -->
+<div class="fixed inset-0 z-[-1] pointer-events-none mix-blend-overlay opacity-20" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M30 0L60 30L30 60L0 30L30 0ZM30 10L10 30L30 50L50 30L30 10Z\' fill=\'%23c9a24e\' fill-rule=\'evenodd\'/%3E%3C/svg%3E');"></div>
+<div class="fixed inset-0 z-[-1] pointer-events-none opacity-40 bg-[radial-gradient(circle_at_50%_50%,rgba(201,162,78,0.1),transparent_70%)]"></div>
+<!-- Main Content -->
+<main class="pt-32 pb-section-v-mobile md:pb-section-v-desktop px-gutter-mobile md:px-gutter-desktop max-w-container-max mx-auto">
+<!-- Header -->
+<header class="mb-sub-mb max-w-3xl reveal-3d">
+<h3 class="font-eyebrow-label text-eyebrow-label text-songket-gold mb-label-mb tracking-[0.35em]">PILIH IRINGAN ANDA</h3>
+<h1 class="font-section-title text-section-title text-warm-ivory italic mb-title-mb">Tiga Tahap Untuk Setiap Cerita</h1>
+<p class="font-section-sub text-section-sub text-on-surface-variant italic">Bermula percuma. Naik taraf bila bersedia.</p>
+</header>
+<!-- Pricing Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 lg:gap-8 items-start mt-12">
+<!-- Tier 1: BEBAS -->
+<div class="glass-spec rounded-xl p-8 relative group reveal-3d stagger-1 hover:translate-y-[-8px] transition-all duration-500">
+<!-- Ornaments -->
+<svg class="corner-ornament tl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0 0h12v2H2v10H0z"></path></svg>
+<svg class="corner-ornament tr text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M24 0h-12v2h10v10h2z"></path></svg>
+<svg class="corner-ornament bl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0 24h12v-2H2V12H0z"></path></svg>
+<svg class="corner-ornament br text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M24 24h-12v-2h10V12h2z"></path></svg>
+<h4 class="font-eyebrow-label text-eyebrow-label text-warm-ivory mb-6">TAHAP BEBAS</h4>
+<div class="mb-8 border-b border-songket-gold/20 pb-6">
+<span class="font-section-title text-[40px] italic text-pale-gold">RM0</span>
+<span class="font-section-sub text-section-sub text-on-surface-variant italic block mt-1">selamanya</span>
+</div>
+<ul class="space-y-4 mb-10">
+<li class="flex items-center text-on-surface font-section-sub italic text-lg">
+<span class="material-symbols-outlined text-songket-gold mr-3" style="font-variation-settings: 'FILL' 1;">check_circle</span> 1 kad warisan
+                    </li>
+<li class="flex items-center text-on-surface font-section-sub italic text-lg">
+<span class="material-symbols-outlined text-songket-gold mr-3" style="font-variation-settings: 'FILL' 1;">check_circle</span> Templat Songket sahaja
+                    </li>
+<li class="flex items-center text-on-surface font-section-sub italic text-lg">
+<span class="material-symbols-outlined text-songket-gold mr-3" style="font-variation-settings: 'FILL' 1;">check_circle</span> RSVP asas
+                    </li>
+<li class="flex items-center text-on-surface font-section-sub italic text-lg">
+<span class="material-symbols-outlined text-songket-gold mr-3" style="font-variation-settings: 'FILL' 1;">check_circle</span> Galeri 6 foto
+                    </li>
+<li class="flex items-center text-on-surface font-section-sub italic text-lg">
+<span class="material-symbols-outlined text-songket-gold mr-3" style="font-variation-settings: 'FILL' 1;">check_circle</span> Lokasi tunggal
+                    </li>
+<li class="flex items-center text-on-surface font-section-sub italic text-lg">
+<span class="material-symbols-outlined text-songket-gold mr-3" style="font-variation-settings: 'FILL' 1;">check_circle</span> Tanda air e-motion
+                    </li>
+</ul>
+<button class="w-full border border-songket-gold/30 text-songket-gold hover:bg-songket-gold/10 hover:shadow-[0_0_15px_rgba(201,162,78,0.2)] rounded-full py-4 font-eyebrow-label text-eyebrow-label transition-all duration-300">MULA PERCUMA</button>
+</div>
+<!-- Tier 2: MOTION -->
+<div class="glass-spec rounded-xl p-8 relative group reveal-3d stagger-2 md:-mt-4 border-songket-gold/50 shadow-[0_12px_40px_0_rgba(201,162,78,0.2)] hover:translate-y-[-8px] transition-all duration-500 z-10">
+<!-- Popular Badge -->
+<div class="absolute -top-4 right-6 bg-gradient-to-r from-maroon-velvet to-songket-gold text-cream px-4 py-1.5 rounded-full font-tier-badge text-tier-badge shadow-lg">PILIHAN POPULAR</div>
+<!-- Ornaments -->
+<svg class="corner-ornament tl text-songket-gold opacity-50" fill="currentColor" viewbox="0 0 24 24"><path d="M0 0h12v2H2v10H0z"></path></svg>
+<svg class="corner-ornament tr text-songket-gold opacity-50" fill="currentColor" viewbox="0 0 24 24"><path d="M24 0h-12v2h10v10h2z"></path></svg>
+<svg class="corner-ornament bl text-songket-gold opacity-50" fill="currentColor" viewbox="0 0 24 24"><path d="M0 24h12v-2H2V12H0z"></path></svg>
+<svg class="corner-ornament br text-songket-gold opacity-50" fill="currentColor" viewbox="0 0 24 24"><path d="M24 24h-12v-2h10V12h2z"></path></svg>
+<h4 class="font-eyebrow-label text-eyebrow-label text-songket-gold mb-6">TAHAP MOTION</h4>
+<div class="mb-8 border-b border-songket-gold/30 pb-6">
+<span class="font-section-title text-[48px] italic text-pale-gold">RM29</span>
+<span class="font-section-sub text-section-sub text-on-surface-variant italic block mt-1">satu kad</span>
+</div>
+<ul class="space-y-4 mb-10">
+<li class="flex items-center text-on-surface font-section-sub italic text-lg">
+<span class="material-symbols-outlined text-songket-gold mr-3" style="font-variation-settings: 'FILL' 1;">check_circle</span> Semua templat warisan
+                    </li>
+<li class="flex items-center text-on-surface font-section-sub italic text-lg">
+<span class="material-symbols-outlined text-songket-gold mr-3" style="font-variation-settings: 'FILL' 1;">check_circle</span> Animasi halus (4 kesan)
+                    </li>
+<li class="flex items-center text-on-surface font-section-sub italic text-lg">
+<span class="material-symbols-outlined text-songket-gold mr-3" style="font-variation-settings: 'FILL' 1;">check_circle</span> RSVP penuh + analitik
+                    </li>
+<li class="flex items-center text-on-surface font-section-sub italic text-lg">
+<span class="material-symbols-outlined text-songket-gold mr-3" style="font-variation-settings: 'FILL' 1;">check_circle</span> Galeri tanpa had
+                    </li>
+<li class="flex items-center text-on-surface font-section-sub italic text-lg">
+<span class="material-symbols-outlined text-songket-gold mr-3" style="font-variation-settings: 'FILL' 1;">check_circle</span> Pelbagai lokasi
+                    </li>
+<li class="flex items-center text-on-surface font-section-sub italic text-lg">
+<span class="material-symbols-outlined text-songket-gold mr-3" style="font-variation-settings: 'FILL' 1;">check_circle</span> Tanpa tanda air
+                    </li>
+</ul>
+<button class="w-full bg-gradient-to-r from-songket-gold to-pale-gold text-indigo-night shadow-[0_6px_15px_rgba(201,162,78,0.3)] hover:shadow-[0_8px_20px_rgba(201,162,78,0.5)] rounded-full py-4 font-eyebrow-label text-eyebrow-label transition-all duration-300">PILIH MOTION</button>
+</div>
+<!-- Tier 3: SINEMATIK -->
+<div class="glass-spec rounded-xl p-8 relative group reveal-3d stagger-3 hover:translate-y-[-8px] transition-all duration-500">
+<!-- Ornaments -->
+<svg class="corner-ornament tl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0 0h12v2H2v10H0z"></path></svg>
+<svg class="corner-ornament tr text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M24 0h-12v2h10v10h2z"></path></svg>
+<svg class="corner-ornament bl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0 24h12v-2H2V12H0z"></path></svg>
+<svg class="corner-ornament br text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M24 24h-12v-2h10V12h2z"></path></svg>
+<h4 class="font-eyebrow-label text-eyebrow-label text-champagne-gold mb-6">TAHAP SINEMATIK</h4>
+<div class="mb-8 border-b border-songket-gold/20 pb-6">
+<span class="font-section-title text-[40px] italic text-pale-gold">RM59</span>
+<span class="font-section-sub text-section-sub text-on-surface-variant italic block mt-1">satu kad</span>
+</div>
+<ul class="space-y-4 mb-10">
+<li class="flex items-center text-on-surface font-section-sub italic text-lg">
+<span class="material-symbols-outlined text-songket-gold mr-3" style="font-variation-settings: 'FILL' 1;">check_circle</span> Termasuk Motion
+                    </li>
+<li class="flex items-center text-on-surface font-section-sub italic text-lg">
+<span class="material-symbols-outlined text-songket-gold mr-3" style="font-variation-settings: 'FILL' 1;">check_circle</span> 8 kesan sinematik
+                    </li>
+<li class="flex items-center text-on-surface font-section-sub italic text-lg">
+<span class="material-symbols-outlined text-songket-gold mr-3" style="font-variation-settings: 'FILL' 1;">check_circle</span> Video Remotion 60s
+                    </li>
+<li class="flex items-center text-on-surface font-section-sub italic text-lg">
+<span class="material-symbols-outlined text-songket-gold mr-3" style="font-variation-settings: 'FILL' 1;">check_circle</span> Latar muzik tersuai
+                    </li>
+<li class="flex items-center text-on-surface font-section-sub italic text-lg">
+<span class="material-symbols-outlined text-songket-gold mr-3" style="font-variation-settings: 'FILL' 1;">check_circle</span> Sokongan keutamaan
+                    </li>
+<li class="flex items-center text-on-surface font-section-sub italic text-lg">
+<span class="material-symbols-outlined text-songket-gold mr-3" style="font-variation-settings: 'FILL' 1;">check_circle</span> Khat Arab pilihan
+                    </li>
+</ul>
+<button class="w-full bg-gradient-to-r from-maroon-velvet to-songket-gold text-cream border border-songket-gold/50 shadow-[0_6px_15px_rgba(201,162,78,0.2)] hover:shadow-[0_8px_20px_rgba(201,162,78,0.4)] rounded-full py-4 font-eyebrow-label text-eyebrow-label transition-all duration-300">PILIH SINEMATIK</button>
+</div>
+</div>
+</main>
+<!-- Footer Shell -->
+<footer class="w-full py-section-v-mobile md:py-section-v-desktop border-t border-songket-gold/20 bg-surface-container-lowest reveal-3d hidden md:block">
+<div class="flex flex-col md:flex-row justify-between items-center px-gutter-mobile md:px-gutter-desktop max-w-container-max mx-auto gap-grid-gap-form">
+<div class="font-hero-title text-section-title text-songket-gold" style="font-size: clamp(24px, 3vw, 32px);">WARISAN</div>
+<div class="text-on-surface-variant font-body-main text-body-main text-sm text-center md:text-left">
+                © 2024 Warisan Collection. A Tribute to Malay Excellence.
+            </div>
+<ul class="flex flex-wrap justify-center md:justify-end gap-6">
+<li><a class="text-on-surface-variant hover:text-cream transition-colors font-eyebrow-label text-eyebrow-label" href="#">Terms of Craft</a></li>
+<li><a class="text-on-surface-variant hover:text-cream transition-colors font-eyebrow-label text-eyebrow-label" href="#">Privacy Policy</a></li>
+<li><a class="text-on-surface-variant hover:text-cream transition-colors font-eyebrow-label text-eyebrow-label" href="#">Heritage Guide</a></li>
+</ul>
+</div>
+</footer>
+</body></html>

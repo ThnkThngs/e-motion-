@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ms"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Inter:wght@100..900&amp;family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#0d1228",
+                        "on-surface": "#eae2d0",
+                        "tertiary": "#ffb2bb",
+                        "surface-container-lowest": "#110e05",
+                        "surface-container-highest": "#383528",
+                        "surface-container-high": "#2d2a1e",
+                        "secondary": "#ebc169",
+                        "secondary-container": "#735501",
+                        "outline": "#909097",
+                        "surface-container-low": "#1e1b11",
+                        "surface-bright": "#3d392d",
+                        "primary": "#c1c5e3",
+                        "cream": "#faf4e3",
+                        "emerald-forest": "#2d5a3f",
+                        "emerald-deep": "#1a3525",
+                        "pale-gold": "#f0d68c",
+                        "warm-ivory": "#f8f0de",
+                        "inverse-primary": "#585d77",
+                        "indigo-twilight": "#1a2040",
+                        "on-primary-fixed": "#151a31",
+                        "on-secondary-fixed-variant": "#5c4300",
+                        "error-container": "#93000a",
+                        "surface-container": "#231f14",
+                        "indigo-night": "#0d1228",
+                        "rose-whisper": "#d4949a",
+                        "inverse-on-surface": "#343024",
+                        "on-tertiary-container": "#c16070",
+                        "ivory-warm": "#f2e6c8",
+                        "secondary-fixed": "#ffdea0",
+                        "on-surface-variant": "#c7c5ce",
+                        "background": "#161309",
+                        "tertiary-container": "#31000c",
+                        "error": "#ffb4ab",
+                        "secondary-fixed-dim": "#ebc169",
+                        "on-primary-fixed-variant": "#41455e",
+                        "on-secondary": "#402d00",
+                        "indigo-mist": "#2a3460",
+                        "on-error-container": "#ffdad6",
+                        "surface-tint": "#c1c5e3",
+                        "gold-shadow": "#8a6d2a",
+                        "outline-variant": "#46464d",
+                        "surface": "#161309",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed": "#400012",
+                        "on-primary-container": "#787d98",
+                        "primary-fixed": "#dde1ff",
+                        "on-tertiary": "#5e1325",
+                        "inverse-surface": "#eae2d0",
+                        "champagne-gold": "#e8c775",
+                        "on-background": "#eae2d0",
+                        "royal-maroon": "#6b1d2e",
+                        "on-secondary-fixed": "#261a00",
+                        "tertiary-fixed": "#ffd9dd",
+                        "maroon-velvet": "#4a1020",
+                        "on-secondary-container": "#f6cb73",
+                        "tertiary-fixed-dim": "#ffb2bb",
+                        "primary-fixed-dim": "#c1c5e3",
+                        "on-tertiary-fixed-variant": "#7c2a3a",
+                        "surface-variant": "#383528",
+                        "surface-dim": "#161309",
+                        "songket-gold": "#c9a24e",
+                        "on-primary": "#2a2f47"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "grid-gap-form": "32px",
+                        "container-max": "1280px",
+                        "label-mb": "20px",
+                        "grid-gap-dense": "18px",
+                        "title-mb": "24px",
+                        "section-v-desktop": "140px",
+                        "section-v-mobile": "80px",
+                        "sub-mb": "48px",
+                        "gutter-mobile": "16px",
+                        "gutter-desktop": "32px"
+                    },
+                    "fontFamily": {
+                        "tier-badge": ["Inter"],
+                        "hero-title": ["Playfair Display"],
+                        "section-sub": ["Cormorant Garamond"],
+                        "section-title": ["Playfair Display"],
+                        "body-main": ["Inter"],
+                        "helper-text": ["Cormorant Garamond"],
+                        "eyebrow-label": ["Inter"]
+                    },
+                    "fontSize": {
+                        "tier-badge": ["10px", {"letterSpacing": "0.18em", "fontWeight": "600"}],
+                        "hero-title": ["clamp(56px, 7vw, 96px)", {"lineHeight": "1.05", "letterSpacing": "-0.03em", "fontWeight": "400"}],
+                        "section-sub": ["19px", {"lineHeight": "1.6", "fontWeight": "300"}],
+                        "section-title": ["clamp(40px, 5.5vw, 72px)", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                        "body-main": ["17px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "helper-text": ["14px", {"fontWeight": "400"}],
+                        "eyebrow-label": ["11px", {"letterSpacing": "0.35em", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .reveal-3d { opacity: 0; transform: translateY(30px) rotateX(-10deg); transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1); }
+        .reveal-visible { opacity: 1; transform: translateY(0) rotateX(0); }
+        .songket-overlay {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l5 15 15 5-15 5-5 15-5-15-15-5 15-5z' fill='%23c9a24e' fill-opacity='0.04'/%3E%3C/svg%3E");
+        }
+        .gold-text-gradient {
+            background: linear-gradient(to bottom, #e8c775, #c9a24e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .text-shadow-3d {
+            text-shadow: 0 4px 8px rgba(138, 109, 42, 0.4);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-indigo-night font-body-main text-on-surface antialiased overflow-x-hidden">
+<!-- Closing Section Canvas -->
+<main class="relative min-h-screen w-full flex flex-col items-center justify-between overflow-hidden bg-gradient-to-b from-indigo-twilight to-indigo-night py-section-v-mobile md:py-section-v-desktop px-gutter-mobile">
+<!-- Texture & Dust Layers -->
+<div class="absolute inset-0 songket-overlay pointer-events-none"></div>
+<div class="absolute inset-0 pointer-events-none opacity-40">
+<!-- Simulated Dust Particles -->
+<div class="absolute w-full h-full" style="background: radial-gradient(circle, rgba(235,193,105,0.1) 1px, transparent 1px); background-size: 40px 40px;"></div>
+</div>
+<!-- Background Halo Glow -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120vw] h-[707px] bg-[radial-gradient(circle,rgba(201,162,78,0.08)_0%,transparent_70%)] pointer-events-none"></div>
+<!-- Top Ornament -->
+<div class="relative w-full max-w-xs flex flex-col items-center mb-12 reveal-3d" style="transition-delay: 100ms;">
+<div class="w-full h-[1px] bg-gradient-to-r from-transparent via-songket-gold/40 to-transparent"></div>
+<div class="absolute -top-4 flex items-center justify-center text-songket-gold">
+<span class="material-symbols-outlined !text-4xl" data-icon="settings_input_component" style="font-variation-settings: 'FILL' 0;">settings_input_component</span>
+</div>
+<div class="absolute top-4 w-24 h-24 bg-songket-gold/10 blur-2xl rounded-full"></div>
+</div>
+<!-- Content Content -->
+<div class="relative z-10 flex flex-col items-center text-center max-w-2xl mx-auto space-y-10">
+<!-- Main Title -->
+<div class="reveal-3d" style="transition-delay: 300ms;">
+<h1 class="font-hero-title italic text-[clamp(64px,12vw,120px)] leading-none gold-text-gradient text-shadow-3d tracking-[-0.03em]">
+                    Terima Kasih
+                </h1>
+</div>
+<!-- Verse -->
+<div class="reveal-3d px-4" style="transition-delay: 500ms;">
+<p class="font-section-sub italic text-warm-ivory text-lg md:text-xl leading-relaxed opacity-90">
+                    "Atas kehadiran dan doa restu, kami ucapkan terima kasih yang tidak terhingga. Semoga ikatan ini diberkati hingga ke akhirnya."
+                </p>
+</div>
+<!-- Attribution Block -->
+<div class="flex flex-col items-center space-y-4 pt-8 reveal-3d" style="transition-delay: 700ms;">
+<span class="font-hero-title italic text-champagne-gold text-xl tracking-wide opacity-80">
+                    Daripada keluarga
+                </span>
+<h2 class="font-hero-title italic text-[42px] text-pale-gold leading-tight tracking-tight">
+                    AISYAH &amp; ADAM
+                </h2>
+<span class="font-section-sub italic text-warm-ivory/60 text-base">
+                    Bersama keluarga
+                </span>
+</div>
+</div>
+<!-- Footer / Branding Area -->
+<div class="relative z-10 mt-20 flex flex-col items-center space-y-10 w-full reveal-3d" style="transition-delay: 900ms;">
+<!-- Bottom Ornament -->
+<div class="flex items-center gap-6 text-songket-gold/50">
+<div class="w-12 h-[1px] bg-gradient-to-r from-transparent to-songket-gold/30"></div>
+<div class="flex gap-2">
+<span class="material-symbols-outlined !text-sm" data-icon="hotel_class">hotel_class</span>
+<span class="material-symbols-outlined !text-base" data-icon="hotel_class">hotel_class</span>
+<span class="material-symbols-outlined !text-sm" data-icon="hotel_class">hotel_class</span>
+</div>
+<div class="w-12 h-[1px] bg-gradient-to-l from-transparent to-songket-gold/30"></div>
+</div>
+<!-- Brand Medallion -->
+<div class="relative w-24 h-24 rounded-full border border-songket-gold/30 bg-indigo-mist/20 backdrop-blur-xl flex items-center justify-center shadow-[0_0_30px_rgba(201,162,78,0.15)] group transition-all duration-700 hover:scale-110">
+<!-- Pucuk Rebung Corners (Simulated with Icons for mobility) -->
+<span class="absolute -top-1 -left-1 material-symbols-outlined !text-xs text-songket-gold/40 rotate-45">filter_vintage</span>
+<span class="absolute -top-1 -right-1 material-symbols-outlined !text-xs text-songket-gold/40 rotate-[135deg]">filter_vintage</span>
+<span class="absolute -bottom-1 -left-1 material-symbols-outlined !text-xs text-songket-gold/40 rotate-[-45deg]">filter_vintage</span>
+<span class="absolute -bottom-1 -right-1 material-symbols-outlined !text-xs text-songket-gold/40 rotate-[-135deg]">filter_vintage</span>
+<span class="font-hero-title italic text-3xl text-champagne-gold">e·m</span>
+</div>
+<!-- Final Credits -->
+<div class="text-center space-y-2">
+<p class="font-eyebrow-label text-on-surface-variant uppercase tracking-[0.32em] text-[9px] opacity-60">
+                    DIBUAT DENGAN KASIH OLEH E-MOTION WARISAN
+                </p>
+<p class="font-section-sub italic text-warm-ivory/40 text-sm tracking-widest">
+                    e-motion.my/warisan
+                </p>
+</div>
+</div>
+</main>
+<!-- Shared Components Integration -->
+<footer class="relative w-full overflow-hidden border-t border-songket-gold/30 bg-gradient-to-b from-indigo-twilight to-indigo-night">
+<div class="flex flex-col items-center gap-12 py-section-v-desktop px-gutter-desktop max-w-container-max mx-auto reveal-3d">
+<div class="font-hero-title text-hero-title text-champagne-gold">PERSANTAPAN DIRAJA</div>
+<nav class="flex gap-8">
+<a class="font-eyebrow-label text-eyebrow-label text-on-surface-variant opacity-70 hover:text-secondary hover:tracking-[0.5em] transition-all duration-700" href="#">ATUR CARA</a>
+<a class="font-eyebrow-label text-eyebrow-label text-on-surface-variant opacity-70 hover:text-secondary hover:tracking-[0.5em] transition-all duration-700" href="#">LOKASI</a>
+<a class="font-eyebrow-label text-eyebrow-label text-on-surface-variant opacity-70 hover:text-secondary hover:tracking-[0.5em] transition-all duration-700" href="#">HUBUNGI</a>
+</nav>
+<p class="font-eyebrow-label text-eyebrow-label text-on-surface-variant opacity-70">© MMXXIV E-MOTION HERITAGE</p>
+</div>
+</footer>
+<!-- Reveal Logic Script Placeholder (Instructions mandate no JS, so we rely on standard visibility or CSS-only intersection if possible, but per rules I'll keep the classes static or triggered by page load via a hidden trigger) -->
+<script>
+        // Adding a small delay to simulate the reveal since we can't use complex scripts
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.reveal-3d');
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('reveal-visible');
+                }, 200 * index);
+            });
+        });
+    </script>
+</body></html>

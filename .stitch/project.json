@@ -1,0 +1,373 @@
+{
+  "projectId": "2969068159505124612",
+  "projectTitle": "Malay Heritage Digital Invitations",
+  "projectResource": "projects/2969068159505124612",
+  "designSystem": {
+    "assetId": "58c0bee2c5b94bb39c31e34caa60eb0f",
+    "sourceFile": ".stitch/DESIGN.md",
+    "uploadedScreenInstance": {
+      "id": "17929040924290770435",
+      "sourceScreen": "projects/2969068159505124612/screens/17929040924290770435",
+      "note": "Placeholder screen created automatically by upload_design_md. Not used for layout; only as the anchor for the design system asset."
+    },
+    "createdAt": "2026-05-14"
+  },
+  "screens": {
+    "_comment": "Phase 3 generations populate this map. Key = surface slug (e.g. 'landing-hero'), value = { id, sourceScreen, deviceType, model, generatedAt, title }",
+    "heritage-templates-variant": {
+      "id": "7e175eb90846457685a6e06f2bbfe30a",
+      "sourceScreen": "projects/2969068159505124612/screens/7e175eb90846457685a6e06f2bbfe30a",
+      "title": "Warisan Collection Showcase",
+      "deviceType": "DESKTOP",
+      "model": "GEMINI_3_1_PRO",
+      "width": 2560,
+      "height": 2764,
+      "generatedAt": "2026-05-14",
+      "phase": "3.1"
+    },
+    "card-archetype-songket": {
+      "id": "437962900c374df2b5d4334b5337fc0c",
+      "sourceScreen": "projects/2969068159505124612/screens/437962900c374df2b5d4334b5337fc0c",
+      "title": "Songket Archetype Invitation Card",
+      "deviceType": "MOBILE",
+      "model": "GEMINI_3_1_PRO",
+      "width": 780,
+      "height": 2834,
+      "generatedAt": "2026-05-14",
+      "phase": "3.2"
+    },
+    "card-archetype-batik": {
+      "id": "27a09e5c4c3149809e8b99548754deab",
+      "sourceScreen": "projects/2969068159505124612/screens/27a09e5c4c3149809e8b99548754deab",
+      "title": "Batik Archetype Invitation Card",
+      "deviceType": "MOBILE",
+      "model": "GEMINI_3_1_PRO",
+      "width": 780,
+      "height": 3340,
+      "generatedAt": "2026-05-14",
+      "phase": "3.2"
+    },
+    "card-archetype-tenun": {
+      "id": "72fabbcd825c493ba479e5a9e16957cb",
+      "sourceScreen": "projects/2969068159505124612/screens/72fabbcd825c493ba479e5a9e16957cb",
+      "title": "Invitation Card (Tenun Archetype)",
+      "deviceType": "MOBILE",
+      "model": "GEMINI_3_1_PRO",
+      "width": 780,
+      "height": 3308,
+      "generatedAt": "2026-05-14",
+      "phase": "3.2"
+    },
+    "card-archetype-ikat": {
+      "id": "be4bc7f7cf2645c188c6465bc1f63454",
+      "sourceScreen": "projects/2969068159505124612/screens/be4bc7f7cf2645c188c6465bc1f63454",
+      "title": "Invitation Card (Ikat Archetype)",
+      "deviceType": "MOBILE",
+      "model": "GEMINI_3_1_PRO",
+      "width": 780,
+      "height": 2208,
+      "generatedAt": "2026-05-14",
+      "phase": "3.2"
+    },
+    "card-archetype-pucuk-rebung": {
+      "id": "2beb839f577a44979deaf1ed2b01fed2",
+      "sourceScreen": "projects/2969068159505124612/screens/2beb839f577a44979deaf1ed2b01fed2",
+      "title": "Pucuk Rebung Invitation Card - Emerald Twilight",
+      "deviceType": "MOBILE",
+      "model": "GEMINI_3_1_PRO",
+      "width": 780,
+      "height": 3674,
+      "generatedAt": "2026-05-14",
+      "phase": "3.2"
+    },
+    "card-archetype-geometri": {
+      "id": "c443c676a0e349e5b0f20103ad82c96c",
+      "sourceScreen": "projects/2969068159505124612/screens/c443c676a0e349e5b0f20103ad82c96c",
+      "title": "Geometri Archetype Invitation - Yasmin & Hakim",
+      "deviceType": "MOBILE",
+      "model": "GEMINI_3_1_PRO",
+      "width": 780,
+      "height": 2668,
+      "generatedAt": "2026-05-14",
+      "phase": "3.2"
+    },
+    "landing-hero": {
+      "id": "fb5d57103bf746b5bd6b44394f2d1f38",
+      "sourceScreen": "projects/2969068159505124612/screens/fb5d57103bf746b5bd6b44394f2d1f38",
+      "title": "Landing Page Hero - Ceremonial Warisan",
+      "deviceType": "DESKTOP",
+      "model": "GEMINI_3_1_PRO",
+      "width": 2560,
+      "height": 2680,
+      "generatedAt": "2026-05-14",
+      "phase": "3.3"
+    },
+    "landing-stats": {
+      "id": "52c07166d6f44a90845fcf130dc6a93c",
+      "sourceScreen": "projects/2969068159505124612/screens/52c07166d6f44a90845fcf130dc6a93c",
+      "title": "Landing Page - Heritage Stats Strip",
+      "deviceType": "DESKTOP",
+      "model": "GEMINI_3_1_PRO",
+      "width": 2560,
+      "height": 2048,
+      "generatedAt": "2026-05-14",
+      "phase": "3.3"
+    },
+    "landing-effects": {
+      "id": "2f7424e7ac794035890a88311e883046",
+      "sourceScreen": "projects/2969068159505124612/screens/2f7424e7ac794035890a88311e883046",
+      "title": "Landing Page - Cinematic Effects Showcase",
+      "deviceType": "DESKTOP",
+      "model": "GEMINI_3_1_PRO",
+      "width": 2560,
+      "height": 2606,
+      "generatedAt": "2026-05-14",
+      "phase": "3.3"
+    },
+    "landing-builder-demo": {
+      "id": "5a479784b64c47faa750eac2e114ba64",
+      "sourceScreen": "projects/2969068159505124612/screens/5a479784b64c47faa750eac2e114ba64",
+      "title": "Marketing Teaser - Interactive Demo Section",
+      "deviceType": "DESKTOP",
+      "model": "GEMINI_3_1_PRO",
+      "width": 2560,
+      "height": 3340,
+      "generatedAt": "2026-05-14",
+      "phase": "3.3"
+    },
+    "landing-pricing": {
+      "id": "ad1f4326c6ea4b76873cc996cf6a3828",
+      "sourceScreen": "projects/2969068159505124612/screens/ad1f4326c6ea4b76873cc996cf6a3828",
+      "title": "Landing Page - Ceremonial Pricing Section",
+      "deviceType": "DESKTOP",
+      "model": "GEMINI_3_1_PRO",
+      "width": 2560,
+      "height": 2948,
+      "generatedAt": "2026-05-14",
+      "phase": "3.3"
+    },
+    "landing-testimonials": {
+      "id": "c04b51c8e7874f6990d4b41b9226c1ce",
+      "sourceScreen": "projects/2969068159505124612/screens/c04b51c8e7874f6990d4b41b9226c1ce",
+      "title": "Landing Page - Testimonials Marquee (Warisan Edition)",
+      "deviceType": "DESKTOP",
+      "model": "GEMINI_3_1_PRO",
+      "width": 2560,
+      "height": 2802,
+      "generatedAt": "2026-05-14",
+      "phase": "3.3"
+    },
+    "landing-cta": {
+      "id": "9e546b773ae44c08813e208520076382",
+      "sourceScreen": "projects/2969068159505124612/screens/9e546b773ae44c08813e208520076382",
+      "title": "Landing Page - Final Ceremonial CTA",
+      "deviceType": "DESKTOP",
+      "model": "GEMINI_3_1_PRO",
+      "width": 2560,
+      "height": 2726,
+      "generatedAt": "2026-05-14",
+      "phase": "3.3"
+    },
+    "landing-footer": {
+      "id": "e12f2e49d0ba4046b47e17645d233e56",
+      "sourceScreen": "projects/2969068159505124612/screens/e12f2e49d0ba4046b47e17645d233e56",
+      "title": "Landing Page Footer - Ceremonial Warisan Edition",
+      "deviceType": "DESKTOP",
+      "model": "GEMINI_3_1_PRO",
+      "width": 2560,
+      "height": 2048,
+      "generatedAt": "2026-05-14",
+      "phase": "3.3"
+    },
+    "builder-warisan": {
+      "id": "e004aafa96504c26b72b6cd72aa528ce",
+      "sourceScreen": "projects/2969068159505124612/screens/e004aafa96504c26b72b6cd72aa528ce",
+      "title": "Warisan Card Authoring Studio",
+      "deviceType": "DESKTOP",
+      "model": "GEMINI_3_1_PRO",
+      "width": 2560,
+      "height": 2048,
+      "generatedAt": "2026-05-14",
+      "phase": "3.4"
+    },
+    "builder-cinematic": {
+      "id": "a3567aa83ade44c6b7a8167c9eafeb53",
+      "sourceScreen": "projects/2969068159505124612/screens/a3567aa83ade44c6b7a8167c9eafeb53",
+      "title": "Cinematic Video Builder - Authoring Studio",
+      "deviceType": "DESKTOP",
+      "model": "GEMINI_3_1_PRO",
+      "width": 2560,
+      "height": 2048,
+      "generatedAt": "2026-05-14",
+      "phase": "3.4"
+    },
+    "undang-cover": {
+      "id": "1f39e5639d9148c190eee17ea1a471b0",
+      "sourceScreen": "projects/2969068159505124612/screens/1f39e5639d9148c190eee17ea1a471b0",
+      "title": "Kerawang Moden - Invitation Hero Cover",
+      "deviceType": "MOBILE",
+      "model": "GEMINI_3_FLASH",
+      "width": 780,
+      "height": 1768,
+      "generatedAt": "2026-05-14",
+      "phase": "3.6"
+    },
+    "undang-akad": {
+      "id": "06c2e073960a4902a8c474bef03fdc38",
+      "sourceScreen": "projects/2969068159505124612/screens/06c2e073960a4902a8c474bef03fdc38",
+      "title": "Akad Nikah Section - Warisan Edition",
+      "deviceType": "MOBILE",
+      "model": "GEMINI_3_FLASH",
+      "width": 780,
+      "height": 1768,
+      "generatedAt": "2026-05-14",
+      "phase": "3.6"
+    },
+    "undang-resepsi": {
+      "id": "80c5823542c5479e806223a85a4fa527",
+      "sourceScreen": "projects/2969068159505124612/screens/80c5823542c5479e806223a85a4fa527",
+      "title": "Majlis Resepsi - Maroon Velvet Edition",
+      "deviceType": "MOBILE",
+      "model": "GEMINI_3_FLASH",
+      "width": 780,
+      "height": 2316,
+      "generatedAt": "2026-05-14",
+      "phase": "3.6"
+    },
+    "undang-story": {
+      "id": "3600e818a69e4550845db6a9058fc287",
+      "sourceScreen": "projects/2969068159505124612/screens/3600e818a69e4550845db6a9058fc287",
+      "title": "Love Story - Kisah Kasih (Warisan Edition)",
+      "deviceType": "MOBILE",
+      "model": "GEMINI_3_FLASH",
+      "width": 780,
+      "height": 3742,
+      "generatedAt": "2026-05-14",
+      "phase": "3.6"
+    },
+    "undang-countdown": {
+      "id": "13b4472db17a429e84192531c15c6f3b",
+      "sourceScreen": "projects/2969068159505124612/screens/13b4472db17a429e84192531c15c6f3b",
+      "title": "Ceremonial Countdown - e-motion.my",
+      "deviceType": "MOBILE",
+      "model": "GEMINI_3_FLASH",
+      "width": 780,
+      "height": 1768,
+      "generatedAt": "2026-05-14",
+      "phase": "3.6"
+    },
+    "undang-gallery": {
+      "id": "1b1e5a5be42f4ea79994f8f2137fa741",
+      "sourceScreen": "projects/2969068159505124612/screens/1b1e5a5be42f4ea79994f8f2137fa741",
+      "title": "Album Kasih Gallery - e-motion.my",
+      "deviceType": "MOBILE",
+      "model": "GEMINI_3_FLASH",
+      "width": 780,
+      "height": 2534,
+      "generatedAt": "2026-05-14",
+      "phase": "3.6"
+    },
+    "undang-gift": {
+      "id": "c28208f1daea41608a8bf649210ae4c3",
+      "sourceScreen": "projects/2969068159505124612/screens/c28208f1daea41608a8bf649210ae4c3",
+      "title": "Hadiah Kasih - Digital Gift Section",
+      "deviceType": "MOBILE",
+      "model": "GEMINI_3_FLASH",
+      "width": 950,
+      "height": 2438,
+      "generatedAt": "2026-05-14",
+      "phase": "3.6"
+    },
+    "undang-location": {
+      "id": "8f31f173e00a4130a1be1bfea70cf86e",
+      "sourceScreen": "projects/2969068159505124612/screens/8f31f173e00a4130a1be1bfea70cf86e",
+      "title": "Invitation Location - Dewan MBPJ Sek 13",
+      "deviceType": "MOBILE",
+      "model": "GEMINI_3_FLASH",
+      "width": 780,
+      "height": 1768,
+      "generatedAt": "2026-05-14",
+      "phase": "3.6"
+    },
+    "undang-rsvp": {
+      "id": "23ccebda53284e67a4b24cb753f4babd",
+      "sourceScreen": "projects/2969068159505124612/screens/23ccebda53284e67a4b24cb753f4babd",
+      "title": "RSVP Section - Warisan Edition",
+      "deviceType": "MOBILE",
+      "model": "GEMINI_3_FLASH",
+      "width": 780,
+      "height": 2564,
+      "generatedAt": "2026-05-14",
+      "phase": "3.6"
+    },
+    "undang-ucapan": {
+      "id": "66f5a727b0a4450fad6e202cef8d5149",
+      "sourceScreen": "projects/2969068159505124612/screens/66f5a727b0a4450fad6e202cef8d5149",
+      "title": "Pesanan Tetamu - Guest Wishes Section",
+      "deviceType": "MOBILE",
+      "model": "GEMINI_3_FLASH",
+      "width": 780,
+      "height": 3572,
+      "generatedAt": "2026-05-14",
+      "phase": "3.6"
+    },
+    "undang-closing": {
+      "id": "1d56b0e6e106472bb11e9785243bc090",
+      "sourceScreen": "projects/2969068159505124612/screens/1d56b0e6e106472bb11e9785243bc090",
+      "title": "Ceremonial Closing - Terima Kasih",
+      "deviceType": "MOBILE",
+      "model": "GEMINI_3_FLASH",
+      "width": 780,
+      "height": 2916,
+      "generatedAt": "2026-05-14",
+      "phase": "3.6"
+    }
+  },
+  "atoms": {
+    "_comment": "Reusable SVG sub-components Stitch broke out during card-archetype generation. Useable across all archetypes during react:components conversion.",
+    "pucuk-rebung-ornament": {
+      "id": "f49ada59679f4174a5691f654073b668",
+      "sourceScreen": "projects/2969068159505124612/screens/f49ada59679f4174a5691f654073b668",
+      "size": "40x40",
+      "purpose": "Card corner ornament (4 rotations 0/90/180/270)"
+    },
+    "lotus-medallion": {
+      "id": "ac9f0db444d643ccb820f7bf3688698c",
+      "sourceScreen": "projects/2969068159505124612/screens/ac9f0db444d643ccb820f7bf3688698c",
+      "size": "24x24",
+      "purpose": "Centered ornamental divider medallion"
+    },
+    "songket-weave-pattern": {
+      "id": "1f67eb5598d34f5eaec51a1bdf72cdc4",
+      "sourceScreen": "projects/2969068159505124612/screens/1f67eb5598d34f5eaec51a1bdf72cdc4",
+      "size": "100x100",
+      "purpose": "Songket diamond+chevron weave SVG (tile via background-image repeat)"
+    }
+  },
+  "phase": {
+    "0": {
+      "status": "complete",
+      "summary": "Stitch MCP installed, gcloud + ADC + API enabled, 18 stitch tools loaded"
+    },
+    "1": {
+      "status": "complete",
+      "summary": ".stitch/DESIGN.md synthesized from globals.css + warisan.css + layout.tsx + taste-design constraints (9472 bytes)"
+    },
+    "2": {
+      "status": "complete",
+      "summary": "Reusing project 2969068159505124612 'Malay Heritage Digital Invitations'; DESIGN.md uploaded and registered as design system asset 58c0bee2c5b94bb39c31e34caa60eb0f"
+    },
+    "3": {
+      "status": "complete",
+      "summary": "All 28 screens generated + 3 reusable SVG atoms registered in screens/atoms maps"
+    },
+    "4": {
+      "status": "complete",
+      "summary": "All 6 batches converted: WarisanHero pilot + 3 atoms + 11 undang sections (InvitationScroll 1099->121) + 6 card archetypes+dispatcher + 7 landing sections + 2 builder shells. 6 taste-design audit fixes applied."
+    },
+    "5": {
+      "status": "complete",
+      "summary": "tsc 0 errors (fixed 3 pre-existing: Next15 async params, 2 unused vars). npm run build PASSES — 11 routes prerendered, no font/viewport/Suspense warnings. Fixed 2 useSearchParams Suspense-boundary bugs (undang/preview, buat-cinematic)."
+    }
+  }
+}

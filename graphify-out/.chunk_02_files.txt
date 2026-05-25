@@ -1,0 +1,17 @@
+/Users/bambangperwitosoteto/vlaude/src/app/(dashboard)/builder/page.tsx
+/Users/bambangperwitosoteto/vlaude/src/app/(public)/buat-cinematic/page.tsx
+/Users/bambangperwitosoteto/vlaude/src/app/(public)/buat-warisan/page.tsx
+/Users/bambangperwitosoteto/vlaude/src/app/(public)/cards/[shareToken]/page.tsx
+/Users/bambangperwitosoteto/vlaude/src/app/(public)/undang/[slug]/CopyLinkButton.tsx
+/Users/bambangperwitosoteto/vlaude/src/app/(public)/undang/[slug]/page.tsx
+/Users/bambangperwitosoteto/vlaude/src/app/(public)/undang/preview/page.tsx
+/Users/bambangperwitosoteto/vlaude/src/app/api/invitations/route.ts
+/Users/bambangperwitosoteto/vlaude/src/app/api/rsvp/route.ts
+/Users/bambangperwitosoteto/vlaude/src/app/api/ucapan/route.ts
+/Users/bambangperwitosoteto/vlaude/src/app/layout.tsx
+/Users/bambangperwitosoteto/vlaude/src/app/page.tsx
+/Users/bambangperwitosoteto/vlaude/src/components/warisan-builder/HeritageTemplatePicker.tsx
+/Users/bambangperwitosoteto/vlaude/src/components/warisan-builder/WarisanCardBuilder.tsx
+/Users/bambangperwitosoteto/vlaude/src/components/warisan-builder/WarisanCardForm.tsx
+/Users/bambangperwitosoteto/vlaude/src/components/warisan-builder/WarisanCardPreview.tsx
+/Users/bambangperwitosoteto/vlaude/src/components/warisan-builder/types.ts

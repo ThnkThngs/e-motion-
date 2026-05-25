@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" font-family="Helvetica, Arial, sans-serif">
+  <!-- Background -->
+  <rect width="900" height="700" fill="#f5f2ec"/>
+
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" font-size="22" font-weight="700" fill="#1a1a1a" letter-spacing="2">LEXUS CLUBHOUSE — BOOTH FLOORPLAN</text>
+  <text x="450" y="58" text-anchor="middle" font-size="12" fill="#666" letter-spacing="1">8m × 6m · Tropicana GCC &amp; KLGCC · 2026</text>
+
+  <!-- Outer booth boundary -->
+  <rect x="80" y="100" width="740" height="540" fill="#ffffff" stroke="#2c2c2c" stroke-width="3"/>
+
+  <!-- Scale indicators -->
+  <text x="450" y="92" text-anchor="middle" font-size="10" fill="#888">8.0 m</text>
+  <line x1="80" y1="86" x2="200" y2="86" stroke="#888" stroke-width="0.5"/>
+  <line x1="700" y1="86" x2="820" y2="86" stroke="#888" stroke-width="0.5"/>
+  <text x="65" y="375" text-anchor="middle" font-size="10" fill="#888" transform="rotate(-90 65 375)">6.0 m</text>
+
+  <!-- LED Wall back -->
+  <rect x="80" y="100" width="740" height="50" fill="#1a1a1a"/>
+  <text x="450" y="132" text-anchor="middle" font-size="13" fill="#d4af37" font-weight="600" letter-spacing="3">▸ LED VIDEO WALL — TAKUMI CRAFTSMANSHIP FILM ◂</text>
+
+  <!-- Walnut deck under car -->
+  <rect x="130" y="180" width="320" height="240" fill="#8b6f47" opacity="0.25" stroke="#8b6f47" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="290" y="200" text-anchor="middle" font-size="9" fill="#6b5435" font-style="italic">walnut deck</text>
+
+  <!-- Rotating plinth -->
+  <circle cx="290" cy="310" r="105" fill="#e8e4dc" stroke="#999" stroke-width="1" stroke-dasharray="2,2"/>
+  <text x="290" y="425" text-anchor="middle" font-size="9" fill="#666" font-style="italic">rotating plinth Ø 2.1m</text>
+
+  <!-- NX car silhouette (top-down) -->
+  <g transform="translate(290 310)">
+    <!-- body -->
+    <rect x="-75" y="-32" width="150" height="64" rx="14" fill="#2c3e50" stroke="#1a1a1a" stroke-width="1.5"/>
+    <!-- roof/glass -->
+    <rect x="-50" y="-22" width="95" height="44" rx="8" fill="#5a7896" opacity="0.7"/>
+    <!-- windshield split -->
+    <line x1="20" y1="-22" x2="20" y2="22" stroke="#1a1a1a" stroke-width="1"/>
+    <!-- wheels -->
+    <rect x="-58" y="-36" width="20" height="6" fill="#111"/>
+    <rect x="-58" y="30" width="20" height="6" fill="#111"/>
+    <rect x="38" y="-36" width="20" height="6" fill="#111"/>
+    <rect x="38" y="30" width="20" height="6" fill="#111"/>
+    <!-- spindle grille hint -->
+    <polygon points="-75,-12 -82,0 -75,12" fill="#d4af37"/>
+    <text x="0" y="58" text-anchor="middle" font-size="11" font-weight="700" fill="#1a1a1a">LEXUS NX 350h</text>
+    <text x="0" y="72" text-anchor="middle" font-size="8" fill="#666">hero display vehicle</text>
+  </g>
+
+  <!-- Lounge seating area -->
+  <rect x="510" y="180" width="270" height="140" fill="#fdfaf3" stroke="#c9a96e" stroke-width="1.5"/>
+  <text x="645" y="200" text-anchor="middle" font-size="11" font-weight="600" fill="#1a1a1a">LOUNGE SEATING</text>
+
+  <!-- Armchairs -->
+  <g fill="#7a5c3b" stroke="#5a4228" stroke-width="1">
+    <rect x="535" y="220" width="48" height="44" rx="6"/>
+    <rect x="600" y="220" width="48" height="44" rx="6"/>
+    <rect x="665" y="220" width="48" height="44" rx="6"/>
+    <rect x="730" y="220" width="48" height="44" rx="6"/>
+  </g>
+  <!-- Coffee table -->
+  <rect x="565" y="280" width="180" height="30" rx="3" fill="#3d2817" stroke="#1a1a1a" stroke-width="1"/>
+  <text x="655" y="300" text-anchor="middle" font-size="8" fill="#fff" font-style="italic">walnut coffee table</text>
+
+  <!-- Refreshment / Coffee Bar -->
+  <rect x="510" y="340" width="270" height="100" fill="#2c3e50"/>
+  <rect x="520" y="350" width="250" height="50" fill="#3d556d" stroke="#1a1a1a"/>
+  <text x="645" y="370" text-anchor="middle" font-size="11" font-weight="700" fill="#d4af37">☕ BARISTA BAR</text>
+  <text x="645" y="385" text-anchor="middle" font-size="9" fill="#e8e4dc">specialty coffee · cold towels · juices</text>
+  <circle cx="555" cy="420" r="8" fill="#8b6f47"/>
+  <circle cx="595" cy="420" r="8" fill="#8b6f47"/>
+  <circle cx="695" cy="420" r="8" fill="#8b6f47"/>
+  <circle cx="735" cy="420" r="8" fill="#8b6f47"/>
+  <text x="645" y="450" text-anchor="middle" font-size="9" fill="#666" font-style="italic">4× bar stools</text>
+
+  <!-- Putting Green Challenge -->
+  <rect x="130" y="450" width="300" height="170" rx="8" fill="#4a7c3a" stroke="#2d4f23" stroke-width="2"/>
+  <text x="280" y="475" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">PUTTING GREEN CHALLENGE</text>
+  <text x="280" y="490" text-anchor="middle" font-size="9" fill="#d4f0c8">"Closest to the Pin" · 3m green</text>
+
+  <!-- Putting green - flag and hole -->
+  <circle cx="380" cy="540" r="6" fill="#1a1a1a"/>
+  <line x1="380" y1="540" x2="380" y2="500" stroke="#1a1a1a" stroke-width="2"/>
+  <polygon points="380,500 405,508 380,516" fill="#d4af37"/>
+  <!-- Tee mat -->
+  <rect x="150" y="555" width="40" height="50" fill="#3d3d3d" stroke="#1a1a1a"/>
+  <text x="170" y="585" text-anchor="middle" font-size="7" fill="#fff">TEE</text>
+  <!-- Path indicators -->
+  <line x1="190" y1="580" x2="375" y2="540" stroke="#fff" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+
+  <!-- Lead Capture iPad Station -->
+  <rect x="460" y="470" width="320" height="150" fill="#fdfaf3" stroke="#c9a96e" stroke-width="1.5"/>
+  <text x="620" y="492" text-anchor="middle" font-size="11" font-weight="700" fill="#1a1a1a">LEAD CAPTURE STATION</text>
+
+  <!-- iPads on stands -->
+  <g transform="translate(500 510)">
+    <rect x="0" y="0" width="40" height="55" rx="3" fill="#1a1a1a"/>
+    <rect x="3" y="3" width="34" height="42" fill="#5a7896"/>
+    <rect x="-5" y="55" width="50" height="6" fill="#444"/>
+    <text x="20" y="80" text-anchor="middle" font-size="7" fill="#666">iPad 1</text>
+  </g>
+  <g transform="translate(570 510)">
+    <rect x="0" y="0" width="40" height="55" rx="3" fill="#1a1a1a"/>
+    <rect x="3" y="3" width="34" height="42" fill="#5a7896"/>
+    <rect x="-5" y="55" width="50" height="6" fill="#444"/>
+    <text x="20" y="80" text-anchor="middle" font-size="7" fill="#666">iPad 2</text>
+  </g>
+
+  <!-- BAs (brand ambassadors) -->
+  <g transform="translate(660 525)">
+    <circle cx="0" cy="0" r="10" fill="#d4af37"/>
+    <rect x="-8" y="8" width="16" height="22" fill="#1f3a5f"/>
+    <text x="0" y="50" text-anchor="middle" font-size="8" font-weight="600" fill="#1a1a1a">BA</text>
+  </g>
+  <g transform="translate(720 525)">
+    <circle cx="0" cy="0" r="10" fill="#d4af37"/>
+    <rect x="-8" y="8" width="16" height="22" fill="#1f3a5f"/>
+    <text x="0" y="50" text-anchor="middle" font-size="8" font-weight="600" fill="#1a1a1a">BA</text>
+  </g>
+
+  <text x="620" y="605" text-anchor="middle" font-size="9" fill="#666" font-style="italic">2× product specialists capture leads + book test drives</text>
+
+  <!-- Entry points -->
+  <polygon points="80,400 70,390 70,410" fill="#d4af37"/>
+  <text x="40" y="404" font-size="9" fill="#1a1a1a" font-weight="600">ENTRY</text>
+
+  <polygon points="820,400 830,390 830,410" fill="#d4af37"/>
+  <text x="840" y="404" font-size="9" fill="#1a1a1a" font-weight="600">EXIT</text>
+
+  <!-- Bonsai/orchid accents -->
+  <g transform="translate(465 200)">
+    <circle r="8" fill="#2d5a3d"/>
+    <rect x="-5" y="6" width="10" height="6" fill="#6b4423"/>
+  </g>
+  <g transform="translate(465 410)">
+    <circle r="8" fill="#2d5a3d"/>
+    <rect x="-5" y="6" width="10" height="6" fill="#6b4423"/>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(80 660)">
+    <text x="0" y="0" font-size="10" font-weight="700" fill="#1a1a1a">LEGEND:</text>
+    <rect x="55" y="-9" width="14" height="10" fill="#8b6f47" opacity="0.5"/>
+    <text x="75" y="0" font-size="9" fill="#444">walnut deck</text>
+    <rect x="155" y="-9" width="14" height="10" fill="#4a7c3a"/>
+    <text x="175" y="0" font-size="9" fill="#444">putting turf</text>
+    <rect x="245" y="-9" width="14" height="10" fill="#2c3e50"/>
+    <text x="265" y="0" font-size="9" fill="#444">premium black</text>
+    <rect x="355" y="-9" width="14" height="10" fill="#d4af37"/>
+    <text x="375" y="0" font-size="9" fill="#444">Lexus gold accents</text>
+    <circle cx="495" cy="-4" r="6" fill="#d4af37"/>
+    <text x="510" y="0" font-size="9" fill="#444">Brand Ambassador</text>
+  </g>
+
+  <!-- North arrow -->
+  <g transform="translate(840 130)">
+    <circle r="15" fill="none" stroke="#666" stroke-width="1"/>
+    <polygon points="0,-10 4,4 0,1 -4,4" fill="#1a1a1a"/>
+    <text y="22" text-anchor="middle" font-size="8" fill="#666">CROWD</text>
+  </g>
+</svg>

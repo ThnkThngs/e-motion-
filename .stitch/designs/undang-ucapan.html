@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ms"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Inter:wght@100..900&amp;family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    .reveal-3d {
+      opacity: 0;
+      transform: translateY(20px) rotateX(-10deg);
+      transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+    
+    /* Simulate the staggered entrance that would be triggered via JS or Intersection Observer */
+    .reveal-3d-active {
+      opacity: 1 !important;
+      transform: translateY(0) rotateX(0) !important;
+    }
+
+    .glass-card {
+      background: rgba(26, 32, 64, 0.4);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(201, 162, 78, 0.3);
+    }
+
+    .gold-gradient-bg {
+      background: linear-gradient(135deg, #e8c775 0%, #c9a24e 100%);
+    }
+
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #f0d68c 0%, #e8c775 50%, #c9a24e 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .pucuk-rebung {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      fill: #c9a24e;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    @keyframes goldDust {
+      0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+      50% { opacity: 0.6; }
+      100% { transform: translateY(-100vh) translateX(50px) scale(0.5); opacity: 0; }
+    }
+
+    .dust-particle {
+      position: absolute;
+      background: #e8c775;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(1px);
+    }
+
+    .songket-overlay {
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l5 15h15l-12 9 5 15-13-10-13 10 5-15-12-9h15z' fill='%23c9a24e' fill-opacity='0.06'/%3E%3C/svg%3E");
+    }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "maroon-velvet": "#4a1020",
+            "warm-ivory": "#f8f0de",
+            "on-surface": "#eae2d0",
+            "error": "#ffb4ab",
+            "cream": "#faf4e3",
+            "inverse-on-surface": "#343024",
+            "surface-bright": "#3d392d",
+            "rose-whisper": "#d4949a",
+            "pale-gold": "#f0d68c",
+            "on-surface-variant": "#c7c5ce",
+            "on-background": "#eae2d0",
+            "gold-shadow": "#8a6d2a",
+            "emerald-forest": "#2d5a3f",
+            "surface-dim": "#161309",
+            "indigo-mist": "#2a3460",
+            "royal-maroon": "#6b1d2e",
+            "indigo-night": "#0d1228",
+            "indigo-twilight": "#1a2040",
+            "champagne-gold": "#e8c775",
+            "songket-gold": "#c9a24e",
+            "surface": "#161309"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "title-mb": "24px",
+            "sub-mb": "48px",
+            "section-v-desktop": "140px",
+            "gutter-desktop": "32px",
+            "label-mb": "20px",
+            "gutter-mobile": "16px",
+            "container-max": "1280px",
+            "section-v-mobile": "80px"
+          },
+          "fontFamily": {
+            "hero-title": ["Playfair Display"],
+            "eyebrow-label": ["Inter"],
+            "helper-text": ["EB Garamond"],
+            "body-main": ["Inter"],
+            "tier-badge": ["Inter"],
+            "section-title": ["Playfair Display"],
+            "section-sub": ["EB Garamond"],
+            "serif-alt": ["Cormorant Garamond"]
+          },
+          "fontSize": {
+            "hero-title": ["clamp(56px, 7vw, 96px)", {"lineHeight": "1.05", "letterSpacing": "-0.03em", "fontWeight": "400"}],
+            "eyebrow-label": ["11px", {"letterSpacing": "0.35em", "fontWeight": "500"}],
+            "section-title": ["clamp(40px, 5.5vw, 72px)", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+            "section-sub": ["19px", {"lineHeight": "1.6", "fontWeight": "300"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-indigo-night text-on-surface selection:bg-champagne-gold selection:text-indigo-night overflow-x-hidden">
+<!-- TopAppBar from Shared Components -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-songket-gold/30 shadow-[0_4px_30px_rgba(201,162,78,0.1)] px-4 py-4 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-songket-gold">menu</span>
+</div>
+<div class="font-hero-title text-champagne-gold italic text-2xl tracking-tight">e-motion.my</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-songket-gold">account_circle</span>
+</div>
+</header>
+<!-- Section: undang-ucapan -->
+<section class="relative min-h-screen bg-indigo-twilight pt-24 pb-32 px-4 overflow-hidden songket-overlay">
+<!-- Background Particles -->
+<div class="absolute inset-0 pointer-events-none overflow-hidden">
+<div class="dust-particle w-1 h-1 top-[20%] left-[10%]" style="animation: goldDust 12s infinite linear;"></div>
+<div class="dust-particle w-1 h-1 top-[40%] left-[80%]" style="animation: goldDust 15s infinite linear 2s;"></div>
+<div class="dust-particle w-[2px] h-[2px] top-[70%] left-[30%]" style="animation: goldDust 18s infinite linear 1s;"></div>
+<div class="dust-particle w-1 h-1 top-[90%] left-[60%]" style="animation: goldDust 14s infinite linear 5s;"></div>
+</div>
+<!-- Header Content -->
+<div class="relative z-10 mb-12">
+<p class="font-eyebrow-label text-eyebrow-label text-champagne-gold uppercase mb-2 ml-[-4px] reveal-3d reveal-3d-active">UCAPAN &amp; DOA</p>
+<h2 class="font-section-title text-section-title gold-gradient-text italic mb-6 reveal-3d reveal-3d-active" style="transition-delay: 100ms;">Pesanan Tetamu</h2>
+<!-- Divider -->
+<div class="flex items-center gap-4 reveal-3d reveal-3d-active" style="transition-delay: 200ms;">
+<div class="h-[1px] flex-grow bg-gradient-to-r from-transparent via-songket-gold/50 to-transparent"></div>
+<span class="material-symbols-outlined text-songket-gold text-lg" style="font-variation-settings: 'FILL' 1;">filter_vintage</span>
+<div class="h-[1px] flex-grow bg-gradient-to-r from-transparent via-songket-gold/50 to-transparent"></div>
+</div>
+</div>
+<!-- Submission Form -->
+<div class="relative z-10 glass-card p-6 rounded-[14px] mb-16 reveal-3d reveal-3d-active shadow-2xl" style="transition-delay: 300ms;">
+<!-- Pucuk Rebung Ornaments -->
+<svg class="pucuk-rebung top-2 left-2" viewbox="0 0 100 100"><path d="M50 0 L65 35 L100 50 L65 65 L50 100 L35 65 L0 50 L35 35 Z"></path></svg>
+<svg class="pucuk-rebung top-2 right-2 rotate-90" viewbox="0 0 100 100"><path d="M50 0 L65 35 L100 50 L65 65 L50 100 L35 65 L0 50 L35 35 Z"></path></svg>
+<svg class="pucuk-rebung bottom-2 left-2 -rotate-90" viewbox="0 0 100 100"><path d="M50 0 L65 35 L100 50 L65 65 L50 100 L35 65 L0 50 L35 35 Z"></path></svg>
+<svg class="pucuk-rebung bottom-2 right-2 rotate-180" viewbox="0 0 100 100"><path d="M50 0 L65 35 L100 50 L65 65 L50 100 L35 65 L0 50 L35 35 Z"></path></svg>
+<form class="space-y-4">
+<div>
+<input class="w-full bg-indigo-mist border border-songket-gold/30 rounded-[4px] px-4 py-3 text-warm-ivory placeholder:italic placeholder:font-body-main focus:ring-2 focus:ring-champagne-gold/50 outline-none transition-all" placeholder="Nama Anda" type="text"/>
+</div>
+<div>
+<textarea class="w-full bg-indigo-mist border border-songket-gold/30 rounded-[4px] px-4 py-3 text-warm-ivory placeholder:font-body-main focus:ring-2 focus:ring-champagne-gold/50 outline-none transition-all" placeholder="Tinggalkan ucapan…" rows="3"></textarea>
+</div>
+<div class="flex justify-end">
+<button class="gold-gradient-bg px-8 py-2.5 rounded-full flex items-center gap-2 active:scale-95 transition-transform shadow-[0_6px_20px_rgba(201,162,78,0.3)]" type="submit">
+<span class="font-eyebrow-label text-[11px] tracking-[0.28em] text-indigo-night font-bold">HANTAR</span>
+<span class="material-symbols-outlined text-indigo-night text-sm">send</span>
+</button>
+</div>
+</form>
+</div>
+<!-- Wishes Feed -->
+<div class="relative z-10 space-y-4">
+<!-- Card 1 -->
+<div class="glass-card p-5 rounded-[14px] reveal-3d reveal-3d-active -translate-x-1" style="transition-delay: 400ms;">
+<div class="relative">
+<span class="material-symbols-outlined absolute -top-2 -left-1 text-songket-gold/40 text-4xl" style="font-variation-settings: 'FILL' 1;">format_quote</span>
+<p class="font-serif-alt italic text-[18px] text-warm-ivory pl-6 leading-tight mb-4">Semoga mahligai yang dibina sentiasa diberkati Allah SWT dan kekal hingga ke Jannah.</p>
+</div>
+<p class="font-serif-alt italic text-gold-shadow text-[15px]">— Aisyah Rahman, Shah Alam</p>
+<div class="flex justify-between items-center mt-4">
+<span class="font-eyebrow-label text-[10px] text-warm-ivory/55">2 jam lalu</span>
+<div class="flex items-center gap-1 text-champagne-gold">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="font-eyebrow-label text-[10px]">24</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="glass-card p-5 rounded-[14px] reveal-3d reveal-3d-active translate-x-1" style="transition-delay: 500ms;">
+<div class="relative">
+<span class="material-symbols-outlined absolute -top-2 -left-1 text-songket-gold/40 text-4xl" style="font-variation-settings: 'FILL' 1;">format_quote</span>
+<p class="font-serif-alt italic text-[18px] text-warm-ivory pl-6 leading-tight mb-4">Selamat menempuh alam perkahwinan buat kedua mempelai diraja.</p>
+</div>
+<p class="font-serif-alt italic text-gold-shadow text-[15px]">— Dato' Hakim Adam, Kuala Lumpur</p>
+<div class="flex justify-between items-center mt-4">
+<span class="font-eyebrow-label text-[10px] text-warm-ivory/55">5 jam lalu</span>
+<div class="flex items-center gap-1 text-champagne-gold">
+<span class="material-symbols-outlined text-[16px]">favorite</span>
+<span class="font-eyebrow-label text-[10px]">18</span>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="glass-card p-5 rounded-[14px] reveal-3d reveal-3d-active -translate-x-1" style="transition-delay: 600ms;">
+<div class="relative">
+<span class="material-symbols-outlined absolute -top-2 -left-1 text-songket-gold/40 text-4xl" style="font-variation-settings: 'FILL' 1;">format_quote</span>
+<p class="font-serif-alt italic text-[18px] text-warm-ivory pl-6 leading-tight mb-4">Barakallahulakuma wa baraka 'alaikuma wa jama'a bainakuma fii khair.</p>
+</div>
+<p class="font-serif-alt italic text-gold-shadow text-[15px]">— Ustaz Hanafi, Johor Bahru</p>
+<div class="flex justify-between items-center mt-4">
+<span class="font-eyebrow-label text-[10px] text-warm-ivory/55">Semalam</span>
+<div class="flex items-center gap-1 text-champagne-gold">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="font-eyebrow-label text-[10px]">56</span>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="glass-card p-5 rounded-[14px] reveal-3d reveal-3d-active translate-x-1" style="transition-delay: 700ms;">
+<div class="relative">
+<span class="material-symbols-outlined absolute -top-2 -left-1 text-songket-gold/40 text-4xl" style="font-variation-settings: 'FILL' 1;">format_quote</span>
+<p class="font-serif-alt italic text-[18px] text-warm-ivory pl-6 leading-tight mb-4">Tahniah sahabatku! Tak sabar nak tengok korang bersanding nanti.</p>
+</div>
+<p class="font-serif-alt italic text-gold-shadow text-[15px]">— Farhan &amp; Zulaikha, Melaka</p>
+<div class="flex justify-between items-center mt-4">
+<span class="font-eyebrow-label text-[10px] text-warm-ivory/55">Semalam</span>
+<div class="flex items-center gap-1 text-champagne-gold">
+<span class="material-symbols-outlined text-[16px]">favorite</span>
+<span class="font-eyebrow-label text-[10px]">12</span>
+</div>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="glass-card p-5 rounded-[14px] reveal-3d reveal-3d-active -translate-x-1" style="transition-delay: 800ms;">
+<div class="relative">
+<span class="material-symbols-outlined absolute -top-2 -left-1 text-songket-gold/40 text-4xl" style="font-variation-settings: 'FILL' 1;">format_quote</span>
+<p class="font-serif-alt italic text-[18px] text-warm-ivory pl-6 leading-tight mb-4">Sama cantik sama padan. Seperti pinang dibelah dua.</p>
+</div>
+<p class="font-serif-alt italic text-gold-shadow text-[15px]">— Nek Timah, Perak</p>
+<div class="flex justify-between items-center mt-4">
+<span class="font-eyebrow-label text-[10px] text-warm-ivory/55">2 hari lalu</span>
+<div class="flex items-center gap-1 text-champagne-gold">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="font-eyebrow-label text-[10px]">31</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="relative z-10 flex justify-end mt-12 mb-20 reveal-3d reveal-3d-active" style="transition-delay: 900ms;">
+<button class="border border-songket-gold/40 px-6 py-3 rounded-full hover:bg-songket-gold/10 transition-colors">
+<span class="font-eyebrow-label text-[11px] tracking-[0.2em] text-champagne-gold font-bold uppercase">PAPARKAN SEMUA UCAPAN</span>
+</button>
+</div>
+</section>
+<!-- BottomNavBar from Shared Components -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pb-6 pt-3 bg-maroon-velvet/90 backdrop-blur-md border-t border-songket-gold/20 shadow-[0_-10px_40px_rgba(74,16,32,0.5)] rounded-t-xl">
+<div class="flex flex-col items-center justify-center text-rose-whisper/60 hover:text-champagne-gold transition-all duration-300">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="font-eyebrow-label text-tier-badge uppercase mt-1">Invite</span>
+</div>
+<div class="flex flex-col items-center justify-center text-rose-whisper/60 hover:text-champagne-gold transition-all duration-300">
+<span class="material-symbols-outlined">schedule</span>
+<span class="font-eyebrow-label text-tier-badge uppercase mt-1">Timeline</span>
+</div>
+<div class="flex flex-col items-center justify-center text-rose-whisper/60 hover:text-champagne-gold transition-all duration-300">
+<span class="material-symbols-outlined">location_on</span>
+<span class="font-eyebrow-label text-tier-badge uppercase mt-1">Venue</span>
+</div>
+<!-- Active State Logic: RSVP corresponds to the interaction of sending messages/intent -->
+<div class="flex flex-col items-center justify-center text-champagne-gold bg-royal-maroon/50 rounded-full px-4 py-1">
+<span class="material-symbols-outlined">favorite</span>
+<span class="font-eyebrow-label text-tier-badge uppercase mt-1">RSVP</span>
+</div>
+</nav>
+</body></html>

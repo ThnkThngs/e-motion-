@@ -1,0 +1,293 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "./warisan.css";
+
+/* Base styles */
+:root {
+  --color-neutral-50: #FAFAFA;
+  --color-neutral-100: #F5F5F5;
+  --color-neutral-200: #E5E5E5;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-900: #171717;
+
+  --color-indigo-700: #3730A3;
+  --color-amber-600: #D97706;
+  --color-rose-500: #F43F5E;
+  --color-teal-600: #0D9488;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+
+  --duration-fast: 100ms;
+  --duration-normal: 150ms;
+  --duration-slow: 300ms;
+  --easing-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --easing-in: cubic-bezier(0.7, 0, 0.84, 0);
+
+  /* Warisan Edition palette — usable site-wide via var(--gold) etc. */
+  --indigo: #1a2040;
+  --indigo-deep: #0d1228;
+  --indigo-light: #2a3460;
+  --maroon: #6b1d2e;
+  --maroon-dark: #4a1020;
+  --gold: #c9a24e;
+  --gold-light: #e8c775;
+  --gold-pale: #f0d68c;
+  --gold-shadow: #8a6d2a;
+  --emerald: #2d5a3f;
+  --emerald-dark: #1a3525;
+  --ivory: #f8f0de;
+  --ivory-warm: #f2e6c8;
+  --cream: #faf4e3;
+  --rose: #d4949a;
+  --muted: rgba(248, 240, 222, 0.55);
+  --muted-dark: rgba(26, 32, 64, 0.55);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--color-neutral-50);
+  color: var(--color-neutral-900);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Typography */
+h1 {
+  font-size: 48px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: 36px;
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 24px;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+small {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Focus states for accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-indigo-700);
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-indigo-700);
+  outline-offset: 2px;
+}
+
+/* Links */
+a {
+  color: var(--color-indigo-700);
+  text-decoration: none;
+  transition: color var(--duration-normal);
+}
+
+a:hover {
+  color: rgb(55, 48, 163, 0.8);
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Forms */
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input:disabled,
+select:disabled,
+textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-24px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scale {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn var(--duration-normal) ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp var(--duration-slow) ease-out;
+}
+
+.animate-scale {
+  animation: scale var(--duration-normal) ease-out;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Utility classes for common patterns */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Safe area support for mobile (skip on full-bleed Warisan surfaces) */
+@supports (padding: max(0px)) {
+  body:not([data-warisan]) {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+}
+
+/* When the Warisan landing is mounted, switch the body shell to the heritage
+ * palette so there is no flash of the original neutral-50 background. */
+body[data-warisan] {
+  background: var(--indigo-deep);
+  color: var(--ivory);
+  font-family: var(--font-inter), 'Inter', sans-serif;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+body[data-warisan][data-lang="zh"] {
+  font-family: var(--font-noto-sc), 'Noto Serif SC', serif;
+}
+body[data-warisan][data-lang="hi"] {
+  font-family: var(--font-tiro-hi), 'Tiro Devanagari Hindi', serif;
+}

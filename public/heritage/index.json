@@ -1,0 +1,122 @@
+[
+  {
+    "id": "songket-riau",
+    "name": "Songket Riau",
+    "tier": "free",
+    "thumb": "/heritage/songket-riau.jpg"
+  },
+  {
+    "id": "songket-biru-diraja",
+    "name": "Songket Biru Diraja",
+    "tier": "motion",
+    "thumb": "/heritage/songket-biru-diraja.jpg"
+  },
+  {
+    "id": "batik-merah-emas",
+    "name": "Batik Merah Emas",
+    "tier": "cinematic",
+    "thumb": "/heritage/batik-merah-emas.jpg"
+  },
+  {
+    "id": "warisan-hitam-emas",
+    "name": "Warisan Hitam Emas",
+    "tier": "cinematic",
+    "thumb": "/heritage/warisan-hitam-emas.jpg"
+  },
+  {
+    "id": "tenun-coklat",
+    "name": "Tenun Coklat",
+    "tier": "free",
+    "thumb": "/heritage/tenun-coklat.jpg"
+  },
+  {
+    "id": "pucuk-rebung-merah",
+    "name": "Pucuk Rebung Merah",
+    "tier": "motion",
+    "thumb": "/heritage/pucuk-rebung-merah.jpg"
+  },
+  {
+    "id": "ikat-jingga",
+    "name": "Ikat Jingga",
+    "tier": "motion",
+    "thumb": "/heritage/ikat-jingga.jpg"
+  },
+  {
+    "id": "songket-mewah",
+    "name": "Songket Mewah",
+    "tier": "cinematic",
+    "thumb": "/heritage/songket-mewah.jpg"
+  },
+  {
+    "id": "ornamen-riau",
+    "name": "Ornamen Riau",
+    "tier": "motion",
+    "thumb": "/heritage/ornamen-riau.jpg"
+  },
+  {
+    "id": "geometri-warisan",
+    "name": "Geometri Warisan",
+    "tier": "free",
+    "thumb": "/heritage/geometri-warisan.jpg"
+  },
+  {
+    "id": "ikat-tropika",
+    "name": "Ikat Tropika",
+    "tier": "motion",
+    "thumb": "/heritage/ikat-tropika.jpg"
+  },
+  {
+    "id": "ungu-permaisuri",
+    "name": "Ungu Permaisuri",
+    "tier": "cinematic",
+    "thumb": "/heritage/ungu-permaisuri.jpg"
+  },
+  {
+    "id": "tenun-biru-laut",
+    "name": "Tenun Biru Laut",
+    "tier": "free",
+    "thumb": "/heritage/tenun-biru-laut.jpg"
+  },
+  {
+    "id": "songket-pandai",
+    "name": "Songket Pandai",
+    "tier": "free",
+    "thumb": "/heritage/songket-pandai.jpg"
+  },
+  {
+    "id": "ikat-keemasan",
+    "name": "Ikat Keemasan",
+    "tier": "motion",
+    "thumb": "/heritage/ikat-keemasan.jpg"
+  },
+  {
+    "id": "kemerahan-corak",
+    "name": "Kemerahan Corak",
+    "tier": "motion",
+    "thumb": "/heritage/kemerahan-corak.jpg"
+  },
+  {
+    "id": "pucuk-rebung-hijau",
+    "name": "Pucuk Rebung Hijau",
+    "tier": "motion",
+    "thumb": "/heritage/pucuk-rebung-hijau.jpg"
+  },
+  {
+    "id": "palembang",
+    "name": "Palembang",
+    "tier": "cinematic",
+    "thumb": "/heritage/palembang.jpg"
+  },
+  {
+    "id": "merah-puteh",
+    "name": "Merah Puteh",
+    "tier": "free",
+    "thumb": "/heritage/merah-puteh.jpg"
+  },
+  {
+    "id": "kain-songket-klasik",
+    "name": "Kain Songket Klasik",
+    "tier": "cinematic",
+    "thumb": "/heritage/kain-songket-klasik.jpg"
+  }
+]

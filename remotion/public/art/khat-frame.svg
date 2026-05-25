@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1280" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="khatBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F4ECD8"/>
+      <stop offset="55%" stop-color="#EFE2C5"/>
+      <stop offset="100%" stop-color="#E5D2A6"/>
+    </linearGradient>
+    <linearGradient id="khatGold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#A87833"/>
+      <stop offset="50%" stop-color="#D6A752"/>
+      <stop offset="100%" stop-color="#A87833"/>
+    </linearGradient>
+    <radialGradient id="khatVignette" cx="50%" cy="50%" r="65%">
+      <stop offset="60%" stop-color="rgba(244,236,216,0)"/>
+      <stop offset="100%" stop-color="rgba(105,79,40,0.35)"/>
+    </radialGradient>
+    <pattern id="khatNoise" x="0" y="0" width="6" height="6" patternUnits="userSpaceOnUse">
+      <rect width="6" height="6" fill="rgba(168,120,51,0.04)"/>
+      <circle cx="1" cy="1" r="0.5" fill="rgba(168,120,51,0.06)"/>
+      <circle cx="4" cy="3" r="0.4" fill="rgba(168,120,51,0.05)"/>
+    </pattern>
+  </defs>
+
+  <rect width="720" height="1280" fill="url(#khatBg)"/>
+  <rect width="720" height="1280" fill="url(#khatNoise)"/>
+  <rect width="720" height="1280" fill="url(#khatVignette)"/>
+
+  <!-- Outer rectangular Khat frame -->
+  <rect x="36" y="36" width="648" height="1208" fill="none" stroke="url(#khatGold)" stroke-width="3"/>
+  <rect x="48" y="48" width="624" height="1184" fill="none" stroke="url(#khatGold)" stroke-width="1" opacity="0.8"/>
+  <rect x="58" y="58" width="604" height="1164" fill="none" stroke="#A87833" stroke-width="0.6" opacity="0.5"/>
+
+  <!-- Top arch motif -->
+  <g fill="none" stroke="url(#khatGold)" stroke-width="2.5" stroke-linecap="round">
+    <path d="M120 90 Q360 150 600 90"/>
+    <path d="M150 110 Q360 170 570 110" opacity="0.7"/>
+    <path d="M360 80 L360 30" opacity="0.6"/>
+    <circle cx="360" cy="22" r="6" fill="url(#khatGold)" stroke="none"/>
+  </g>
+
+  <!-- Bottom mirrored arch -->
+  <g fill="none" stroke="url(#khatGold)" stroke-width="2.5" stroke-linecap="round">
+    <path d="M120 1190 Q360 1130 600 1190"/>
+    <path d="M150 1170 Q360 1110 570 1170" opacity="0.7"/>
+    <path d="M360 1200 L360 1250" opacity="0.6"/>
+    <circle cx="360" cy="1258" r="6" fill="url(#khatGold)" stroke="none"/>
+  </g>
+
+  <!-- Side arabesque columns -->
+  <g fill="none" stroke="#B98941" stroke-width="1.4" opacity="0.85">
+    <path d="M48 200 Q70 260 48 320 Q26 380 48 440 Q70 500 48 560 Q26 620 48 680 Q70 740 48 800 Q26 860 48 920 Q70 980 48 1040"/>
+    <path d="M672 200 Q650 260 672 320 Q694 380 672 440 Q650 500 672 560 Q694 620 672 680 Q650 740 672 800 Q694 860 672 920 Q650 980 672 1040"/>
+  </g>
+
+  <!-- Corner medallions -->
+  <g fill="url(#khatGold)" opacity="0.9">
+    <path d="M48 48 q60 0 60 60 q-30 0 -45 -15 q-15 -15 -15 -45 z"/>
+    <path d="M672 48 q-60 0 -60 60 q30 0 45 -15 q15 -15 15 -45 z"/>
+    <path d="M48 1232 q60 0 60 -60 q-30 0 -45 15 q-15 15 -15 45 z"/>
+    <path d="M672 1232 q-60 0 -60 -60 q30 0 45 15 q15 15 15 45 z"/>
+  </g>
+
+  <!-- Center decorative hilal -->
+  <g opacity="0.18" stroke="#A87833" stroke-width="1" fill="none">
+    <circle cx="360" cy="640" r="280"/>
+    <circle cx="360" cy="640" r="220"/>
+    <path d="M180 640 Q360 480 540 640" />
+    <path d="M180 640 Q360 800 540 640" />
+  </g>
+</svg>

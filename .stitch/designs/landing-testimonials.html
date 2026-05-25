@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cerita Mereka - Warisan</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;family=Inter:wght@100..900&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#c1c5e3",
+                        "primary-fixed": "#dde1ff",
+                        "inverse-on-surface": "#343024",
+                        "surface-container-low": "#1e1b11",
+                        "indigo-night": "#0d1228",
+                        "on-primary-fixed": "#151a31",
+                        "maroon-velvet": "#4a1020",
+                        "indigo-mist": "#2a3460",
+                        "royal-maroon": "#6b1d2e",
+                        "primary": "#c1c5e3",
+                        "on-surface": "#eae2d0",
+                        "outline-variant": "#46464d",
+                        "on-secondary-fixed-variant": "#5c4300",
+                        "pale-gold": "#f0d68c",
+                        "secondary-container": "#735501",
+                        "secondary-fixed-dim": "#ebc169",
+                        "on-primary-fixed-variant": "#41455e",
+                        "surface-variant": "#383528",
+                        "rose-whisper": "#d4949a",
+                        "primary-container": "#0d1228",
+                        "on-tertiary-fixed": "#400012",
+                        "primary-fixed-dim": "#c1c5e3",
+                        "on-error": "#690005",
+                        "error-container": "#93000a",
+                        "background": "#161309",
+                        "on-primary": "#2a2f47",
+                        "secondary": "#ebc169",
+                        "inverse-primary": "#585d77",
+                        "tertiary-container": "#31000c",
+                        "surface-dim": "#161309",
+                        "on-tertiary-container": "#c16070",
+                        "emerald-forest": "#2d5a3f",
+                        "tertiary-fixed": "#ffd9dd",
+                        "on-tertiary": "#5e1325",
+                        "gold-shadow": "#8a6d2a",
+                        "warm-ivory": "#f8f0de",
+                        "outline": "#909097",
+                        "champagne-gold": "#e8c775",
+                        "on-secondary": "#402d00",
+                        "secondary-fixed": "#ffdea0",
+                        "on-surface-variant": "#c7c5ce",
+                        "error": "#ffb4ab",
+                        "surface-container-highest": "#383528",
+                        "surface-container-lowest": "#110e05",
+                        "surface-bright": "#3d392d",
+                        "on-tertiary-fixed-variant": "#7c2a3a",
+                        "tertiary-fixed-dim": "#ffb2bb",
+                        "on-primary-container": "#787d98",
+                        "cream": "#faf4e3",
+                        "indigo-twilight": "#1a2040",
+                        "songket-gold": "#c9a24e",
+                        "surface-container-high": "#2d2a1e",
+                        "on-secondary-container": "#f6cb73",
+                        "inverse-surface": "#eae2d0",
+                        "surface-container": "#231f14",
+                        "ivory-warm": "#f2e6c8",
+                        "surface": "#161309",
+                        "tertiary": "#ffb2bb",
+                        "on-secondary-fixed": "#261a00",
+                        "on-error-container": "#ffdad6",
+                        "emerald-deep": "#1a3525",
+                        "on-background": "#eae2d0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "title-mb": "24px",
+                        "section-v-desktop": "140px",
+                        "gutter-desktop": "32px",
+                        "grid-gap-dense": "18px",
+                        "section-v-mobile": "80px",
+                        "sub-mb": "48px",
+                        "grid-gap-form": "32px",
+                        "label-mb": "20px",
+                        "gutter-mobile": "16px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "hero-title": ["Playfair Display"],
+                        "tier-badge": ["inter"],
+                        "section-sub": ["ebGaramond"],
+                        "body-main": ["inter"],
+                        "section-title": ["Playfair Display"],
+                        "eyebrow-label": ["inter"],
+                        "helper-text": ["ebGaramond"],
+                        "cormorant": ["Cormorant Garamond", "serif"]
+                    },
+                    "fontSize": {
+                        "hero-title": ["clamp(56px, 7vw, 96px)", { "lineHeight": "1.05", "letterSpacing": "-0.03em", "fontWeight": "400" }],
+                        "tier-badge": ["10px", { "letterSpacing": "0.18em", "fontWeight": "600" }],
+                        "section-sub": ["19px", { "lineHeight": "1.6", "fontWeight": "300" }],
+                        "body-main": ["17px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "section-title": ["clamp(40px, 5.5vw, 72px)", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+                        "eyebrow-label": ["11px", { "letterSpacing": "0.35em", "fontWeight": "500" }],
+                        "helper-text": ["14px", { "fontWeight": "400" }]
+                    },
+                    "animation": {
+                        "marquee": "marquee 35s linear infinite",
+                        "fade-in": "fadeIn 1s cubic-bezier(0.19, 1, 0.22, 1) forwards"
+                    },
+                    "keyframes": {
+                        "marquee": {
+                            "0%": { transform: "translateX(0)" },
+                            "100%": { transform: "translateX(-50%)" }
+                        },
+                        "fadeIn": {
+                            "0%": { opacity: "0", transform: "translateY(20px)" },
+                            "100%": { opacity: "1", transform: "translateY(0)" }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .reveal-3d {
+            opacity: 0;
+            animation: fadeIn 1s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+        }
+        
+        .bg-songket-gradient {
+            background: linear-gradient(to bottom, #0d1228, #1a2040);
+        }
+        
+        .glass-card {
+            background: linear-gradient(135deg, rgba(26,32,64,0.55), rgba(13,18,40,0.65));
+            backdrop-filter: blur(18px) saturate(140%);
+            border: 1px solid rgba(201,162,78,0.28);
+            border-radius: 14px;
+            box-shadow: 0 8px 32px 0 rgba(201,162,78,0.15);
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-8px) rotate(-0.6deg);
+            box-shadow: 0 16px 40px 0 rgba(201,162,78,0.35);
+        }
+
+        .marquee-fade-left {
+            mask-image: linear-gradient(to right, transparent, black 15%);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 15%);
+        }
+        
+        .marquee-fade-both {
+            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+        }
+
+        .pucuk-rebung {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            opacity: 0.4;
+            transition: opacity 0.4s ease;
+        }
+        
+        .glass-card:hover .pucuk-rebung {
+            opacity: 0.8;
+        }
+        
+        .pr-tl { top: 0; left: 0; }
+        .pr-tr { top: 0; right: 0; transform: rotate(90deg); }
+        .pr-bl { bottom: 0; left: 0; transform: rotate(-90deg); }
+        .pr-br { bottom: 0; right: 0; transform: rotate(180deg); }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- Top Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-indigo-night/80 backdrop-blur-xl border-b border-songket-gold/30 shadow-[0_8px_32px_0_rgba(201,162,78,0.2)] reveal-3d">
+<div class="flex justify-between items-center h-24 px-gutter-mobile md:px-gutter-desktop max-w-container-max mx-auto">
+<div class="font-hero-title text-hero-title text-songket-gold tracking-tighter" style="font-size: 2rem;">WARISAN</div>
+<div class="hidden md:flex gap-8 items-center font-eyebrow-label text-eyebrow-label">
+<a class="text-on-surface-variant hover:text-songket-gold transition-all duration-300 hover:translate-y-[-2px]" href="#">Collections</a>
+<a class="text-on-surface-variant hover:text-songket-gold transition-all duration-300 hover:translate-y-[-2px]" href="#">Gallery</a>
+<a class="text-on-surface-variant hover:text-songket-gold transition-all duration-300 hover:translate-y-[-2px]" href="#">Tradition</a>
+<a class="text-on-surface-variant hover:text-songket-gold transition-all duration-300 hover:translate-y-[-2px]" href="#">Pricing</a>
+<a class="text-songket-gold border-b-2 border-songket-gold font-bold" href="#">About</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-songket-gold hidden md:block">shopping_bag</span>
+<span class="material-symbols-outlined text-songket-gold hidden md:block">account_circle</span>
+<button class="bg-gradient-to-r from-songket-gold to-pale-gold text-indigo-night font-eyebrow-label text-eyebrow-label py-3 px-6 rounded-full shadow-[0_6px_12px_rgba(201,162,78,0.3)] hover:translate-y-[-2px] transition-all">
+                    Inquiry
+                </button>
+</div>
+</div>
+</nav>
+<!-- Testimonials Section -->
+<section class="relative bg-songket-gradient py-section-v-mobile md:py-section-v-desktop overflow-hidden mt-24">
+<!-- Subtle Motif Overlay -->
+<div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M30 0L60 30L30 60L0 30L30 0Z\' fill=\'%23c9a24e\' fill-opacity=\'1\' fill-rule=\'evenodd\'/%3E%3C/svg%3E');"></div>
+<!-- Drifting Gold Dust (Simulated with gradients/blur) -->
+<div class="absolute top-1/4 left-1/4 w-64 h-64 bg-songket-gold/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-songket-gold/5 rounded-full blur-3xl pointer-events-none"></div>
+<div class="max-w-container-max mx-auto px-gutter-mobile md:px-gutter-desktop relative z-10">
+<!-- Asymmetric Header -->
+<div class="md:w-[60%] mb-16 reveal-3d">
+<span class="font-eyebrow-label text-eyebrow-label text-songket-gold block mb-label-mb">RIBUAN PASANGAN MERAIKAN</span>
+<h2 class="font-section-title text-section-title text-warm-ivory italic mb-title-mb">Cerita Mereka</h2>
+<p class="font-cormorant text-2xl text-on-surface-variant italic font-light max-w-xl">Sebuah ikatan suci yang diabadikan dengan nilai warisan dan keberkatan yang abadi.</p>
+</div>
+</div>
+<!-- Marquee Strip -->
+<div class="w-full overflow-hidden marquee-fade-both relative py-8">
+<div class="flex w-[200%] animate-marquee gap-8 items-center">
+<!-- Set 1 -->
+<div class="flex gap-8 items-stretch">
+<!-- Card 1 -->
+<div class="glass-card w-[360px] p-8 flex-shrink-0 relative group">
+<svg class="pucuk-rebung pr-tl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-tr text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-bl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-br text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<div class="flex text-champagne-gold mb-6">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-cormorant text-xl text-warm-ivory italic mb-8 relative z-10 leading-relaxed">
+                            "Menghidupkan kembali keindahan tradisi Melayu dalam majlis kami adalah impian yang menjadi nyata. Sentuhan emas dan tenunan menggamit kenangan keluarga."
+                        </p>
+<p class="font-cormorant text-gold-shadow italic text-lg relative z-10">— FARAH &amp; ADAM, SHAH ALAM</p>
+</div>
+<!-- Card 2 -->
+<div class="glass-card w-[360px] p-8 flex-shrink-0 relative group">
+<svg class="pucuk-rebung pr-tl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-tr text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-bl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-br text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<div class="flex text-champagne-gold mb-6">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-cormorant text-xl text-warm-ivory italic mb-8 relative z-10 leading-relaxed">
+                            "Keanggunan yang tidak lapuk dek hujan. Setiap butiran mencerminkan kehalusan budi dan kesopanan yang kami junjung tinggi dalam keluarga kami."
+                        </p>
+<p class="font-cormorant text-gold-shadow italic text-lg relative z-10">— NURUL &amp; HAZIQ, JOHOR BAHRU</p>
+</div>
+<!-- Card 3 -->
+<div class="glass-card w-[360px] p-8 flex-shrink-0 relative group">
+<svg class="pucuk-rebung pr-tl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-tr text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-bl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-br text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<div class="flex text-champagne-gold mb-6">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-cormorant text-xl text-warm-ivory italic mb-8 relative z-10 leading-relaxed">
+                            "Susun atur yang sungguh memukau jiwa. Bagai berada di istana kayangan, meraikan cinta diiringi selawat dan doa sanak saudara tercinta."
+                        </p>
+<p class="font-cormorant text-gold-shadow italic text-lg relative z-10">— AISYAH &amp; AMIR, KOTA BHARU</p>
+</div>
+<!-- Card 4 -->
+<div class="glass-card w-[360px] p-8 flex-shrink-0 relative group">
+<svg class="pucuk-rebung pr-tl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-tr text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-bl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-br text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<div class="flex text-champagne-gold mb-6">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-cormorant text-xl text-warm-ivory italic mb-8 relative z-10 leading-relaxed">
+                            "Rekaan yang teliti memancarkan pesona malam berinai kami. Warna-warna gelap yang dipadukan dengan cahaya keemasan mencipta suasana yang sangat syahdu."
+                        </p>
+<p class="font-cormorant text-gold-shadow italic text-lg relative z-10">— ZARA &amp; DANIAL, KUCHING</p>
+</div>
+<!-- Card 5 -->
+<div class="glass-card w-[360px] p-8 flex-shrink-0 relative group">
+<svg class="pucuk-rebung pr-tl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-tr text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-bl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-br text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<div class="flex text-champagne-gold mb-6">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-cormorant text-xl text-warm-ivory italic mb-8 relative z-10 leading-relaxed">
+                            "Mengingatkan kami pada akar umbi bangsa. Penuh adap dan dihias rapi tanpa sedikitpun mengurangi seri kemodenan yang diinginkan."
+                        </p>
+<p class="font-cormorant text-gold-shadow italic text-lg relative z-10">— HANIS &amp; IZHAR, KUALA LUMPUR</p>
+</div>
+<!-- Card 6 -->
+<div class="glass-card w-[360px] p-8 flex-shrink-0 relative group">
+<svg class="pucuk-rebung pr-tl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-tr text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-bl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-br text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<div class="flex text-champagne-gold mb-6">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-cormorant text-xl text-warm-ivory italic mb-8 relative z-10 leading-relaxed">
+                            "Tetamu pulang dengan senyuman dan puji-pujian. Mereka terpukau dengan suasana yang sungguh intim, persis sebuah majlis keramaian di pelataran istana lama."
+                        </p>
+<p class="font-cormorant text-gold-shadow italic text-lg relative z-10">— MAISARAH &amp; RIDZUAN, KUANTAN</p>
+</div>
+</div>
+<!-- Duplicate Set for infinite loop -->
+<div class="flex gap-8 items-stretch">
+<!-- Duplicated Cards 1-6 -->
+<div class="glass-card w-[360px] p-8 flex-shrink-0 relative group">
+<svg class="pucuk-rebung pr-tl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-tr text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-bl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-br text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<div class="flex text-champagne-gold mb-6">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-cormorant text-xl text-warm-ivory italic mb-8 relative z-10 leading-relaxed">
+                            "Menghidupkan kembali keindahan tradisi Melayu dalam majlis kami adalah impian yang menjadi nyata. Sentuhan emas dan tenunan menggamit kenangan keluarga."
+                        </p>
+<p class="font-cormorant text-gold-shadow italic text-lg relative z-10">— FARAH &amp; ADAM, SHAH ALAM</p>
+</div>
+<div class="glass-card w-[360px] p-8 flex-shrink-0 relative group">
+<svg class="pucuk-rebung pr-tl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-tr text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-bl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-br text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<div class="flex text-champagne-gold mb-6">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-cormorant text-xl text-warm-ivory italic mb-8 relative z-10 leading-relaxed">
+                            "Keanggunan yang tidak lapuk dek hujan. Setiap butiran mencerminkan kehalusan budi dan kesopanan yang kami junjung tinggi dalam keluarga kami."
+                        </p>
+<p class="font-cormorant text-gold-shadow italic text-lg relative z-10">— NURUL &amp; HAZIQ, JOHOR BAHRU</p>
+</div>
+<div class="glass-card w-[360px] p-8 flex-shrink-0 relative group">
+<svg class="pucuk-rebung pr-tl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-tr text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-bl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-br text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<div class="flex text-champagne-gold mb-6">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-cormorant text-xl text-warm-ivory italic mb-8 relative z-10 leading-relaxed">
+                            "Susun atur yang sungguh memukau jiwa. Bagai berada di istana kayangan, meraikan cinta diiringi selawat dan doa sanak saudara tercinta."
+                        </p>
+<p class="font-cormorant text-gold-shadow italic text-lg relative z-10">— AISYAH &amp; AMIR, KOTA BHARU</p>
+</div>
+<div class="glass-card w-[360px] p-8 flex-shrink-0 relative group">
+<svg class="pucuk-rebung pr-tl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-tr text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-bl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-br text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<div class="flex text-champagne-gold mb-6">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-cormorant text-xl text-warm-ivory italic mb-8 relative z-10 leading-relaxed">
+                            "Rekaan yang teliti memancarkan pesona malam berinai kami. Warna-warna gelap yang dipadukan dengan cahaya keemasan mencipta suasana yang sangat syahdu."
+                        </p>
+<p class="font-cormorant text-gold-shadow italic text-lg relative z-10">— ZARA &amp; DANIAL, KUCHING</p>
+</div>
+<div class="glass-card w-[360px] p-8 flex-shrink-0 relative group">
+<svg class="pucuk-rebung pr-tl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-tr text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-bl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-br text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<div class="flex text-champagne-gold mb-6">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-cormorant text-xl text-warm-ivory italic mb-8 relative z-10 leading-relaxed">
+                            "Mengingatkan kami pada akar umbi bangsa. Penuh adap dan dihias rapi tanpa sedikitpun mengurangi seri kemodenan yang diinginkan."
+                        </p>
+<p class="font-cormorant text-gold-shadow italic text-lg relative z-10">— HANIS &amp; IZHAR, KUALA LUMPUR</p>
+</div>
+<div class="glass-card w-[360px] p-8 flex-shrink-0 relative group">
+<svg class="pucuk-rebung pr-tl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-tr text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-bl text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<svg class="pucuk-rebung pr-br text-songket-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M0,0 L24,0 L0,24 Z"></path></svg>
+<div class="flex text-champagne-gold mb-6">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-cormorant text-xl text-warm-ivory italic mb-8 relative z-10 leading-relaxed">
+                            "Tetamu pulang dengan senyuman dan puji-pujian. Mereka terpukau dengan suasana yang sungguh intim, persis sebuah majlis keramaian di pelataran istana lama."
+                        </p>
+<p class="font-cormorant text-gold-shadow italic text-lg relative z-10">— MAISARAH &amp; RIDZUAN, KUANTAN</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest w-full py-section-v-mobile md:py-section-v-desktop border-t border-songket-gold/20 reveal-3d">
+<div class="flex flex-col md:flex-row justify-between items-center px-gutter-mobile md:px-gutter-desktop max-w-container-max mx-auto gap-grid-gap-form">
+<div class="font-hero-title text-section-title text-songket-gold">WARISAN</div>
+<div class="flex flex-wrap gap-6 justify-center">
+<a class="font-eyebrow-label text-eyebrow-label text-on-surface-variant hover:text-cream transition-colors" href="#">Terms of Craft</a>
+<a class="font-eyebrow-label text-eyebrow-label text-on-surface-variant hover:text-cream transition-colors" href="#">Privacy Policy</a>
+<a class="font-eyebrow-label text-eyebrow-label text-on-surface-variant hover:text-cream transition-colors" href="#">Heritage Guide</a>
+</div>
+<div class="font-body-main text-body-main text-songket-gold">
+                © 2024 Warisan Collection. A Tribute to Malay Excellence.
+            </div>
+</div>
+</footer>
+</body></html>

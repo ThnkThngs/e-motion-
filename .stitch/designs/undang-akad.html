@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ms"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:ital,wght@0,400;1,400&amp;family=EB+Garamond:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-tertiary-container": "#c16070",
+                "surface-dim": "#161309",
+                "secondary-fixed-dim": "#ebc169",
+                "tertiary-fixed-dim": "#ffb2bb",
+                "on-primary-container": "#787d98",
+                "gold-shadow": "#8a6d2a",
+                "indigo-twilight": "#1a2040",
+                "surface": "#161309",
+                "cream": "#faf4e3",
+                "outline-variant": "#46464d",
+                "on-secondary-container": "#f6cb73",
+                "maroon-velvet": "#4a1020",
+                "champagne-gold": "#e8c775",
+                "primary": "#c1c5e3",
+                "outline": "#909097",
+                "on-error-container": "#ffdad6",
+                "rose-whisper": "#d4949a",
+                "primary-container": "#0d1228",
+                "background": "#161309",
+                "emerald-forest": "#2d5a3f",
+                "primary-fixed-dim": "#c1c5e3",
+                "surface-variant": "#383528",
+                "surface-container-low": "#1e1b11",
+                "tertiary-container": "#31000c",
+                "on-surface": "#eae2d0",
+                "on-primary-fixed-variant": "#41455e",
+                "emerald-deep": "#1a3525",
+                "on-tertiary-fixed": "#400012",
+                "surface-container": "#231f14",
+                "surface-container-highest": "#383528",
+                "inverse-surface": "#eae2d0",
+                "on-error": "#690005",
+                "songket-gold": "#c9a24e",
+                "inverse-primary": "#585d77",
+                "primary-fixed": "#dde1ff",
+                "secondary-container": "#735501",
+                "on-secondary-fixed-variant": "#5c4300",
+                "ivory-warm": "#f2e6c8",
+                "secondary-fixed": "#ffdea0",
+                "tertiary-fixed": "#ffd9dd",
+                "pale-gold": "#f0d68c",
+                "on-tertiary-fixed-variant": "#7c2a3a",
+                "error-container": "#93000a",
+                "tertiary": "#ffb2bb",
+                "on-secondary": "#402d00",
+                "indigo-mist": "#2a3460",
+                "royal-maroon": "#6b1d2e",
+                "warm-ivory": "#f8f0de",
+                "indigo-night": "#0d1228",
+                "surface-bright": "#3d392d",
+                "on-background": "#eae2d0",
+                "on-tertiary": "#5e1325",
+                "surface-tint": "#c1c5e3",
+                "surface-container-high": "#2d2a1e",
+                "on-surface-variant": "#c7c5ce",
+                "on-secondary-fixed": "#261a00",
+                "inverse-on-surface": "#343024",
+                "error": "#ffb4ab",
+                "on-primary-fixed": "#151a31",
+                "secondary": "#ebc169",
+                "on-primary": "#2a2f47",
+                "surface-container-lowest": "#110e05"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "container-max": "1280px",
+                "title-mb": "24px",
+                "gutter-mobile": "16px",
+                "gutter-desktop": "32px",
+                "grid-gap-dense": "18px",
+                "label-mb": "20px",
+                "grid-gap-form": "32px",
+                "section-v-desktop": "140px",
+                "sub-mb": "48px",
+                "section-v-mobile": "80px"
+            },
+            "fontFamily": {
+                "eyebrow-label": ["Inter"],
+                "body-main": ["Inter"],
+                "section-title": ["Playfair Display"],
+                "hero-title": ["Playfair Display"],
+                "tier-badge": ["Inter"],
+                "helper-text": ["EB Garamond"],
+                "section-sub": ["EB Garamond"]
+            },
+            "fontSize": {
+                "eyebrow-label-mobile": ["11px", {"letterSpacing": "0.35em", "fontWeight": "500"}],
+                "body-main-mobile": ["17px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                "section-title-mobile": ["40px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                "hero-title-mobile": ["56px", {"lineHeight": "1.05", "letterSpacing": "-0.03em", "fontWeight": "400"}],
+                "tier-badge-mobile": ["10px", {"letterSpacing": "0.18em", "fontWeight": "600"}],
+                "helper-text-mobile": ["14px", {"fontWeight": "400"}],
+                "section-sub-mobile": ["19px", {"lineHeight": "1.6", "fontWeight": "300"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .reveal-3d { opacity: 1; transform: translateZ(0); } /* Placeholder for staggered intent */
+        .glass-card {
+            background: linear-gradient(180deg, rgba(26,32,64,0.55) 0%, rgba(13,18,40,0.65) 100%);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+        .songket-overlay {
+            background-image: url('https://lh3.googleusercontent.com/aida/ADBb0uh9uOICZVaxDZyHJq8mDtds641PI76H7px_m_40Ek9RSCTCPKGhVnZQwg8eossjS9Q6ndN0J4ceB8C5iOFwBoNJ4N7BzDafo912a86Nop7mH-8BvWHeZydWyngHDLRz9jZ9LMyjH4WUoGaHuzj2BFw_z2spXj0t7pkW6dKMqLrQIBX4VssML6D0sT6hbBCdOWTM6BLEZ6F0oYEKbOEIpGJ0bsamPzwA3RJDCuxz_hnN0dLF4heQlwIZzA');
+            background-repeat: repeat;
+            opacity: 0.15;
+            mix-blend-mode: overlay;
+        }
+        .gold-dust {
+            background: radial-gradient(circle at center, rgba(201,162,78,0.2) 0%, transparent 70%);
+            filter: blur(40px);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-indigo-night text-on-surface font-body-main selection:bg-songket-gold/30">
+<!-- Top Navigation Shell -->
+<header class="fixed top-0 w-full z-50 backdrop-blur-md bg-surface/30 shadow-[0_4px_30px_rgba(201,162,78,0.15)] flex justify-between items-center px-gutter-mobile py-4 reveal-3d">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-songket-gold" data-icon="unfold_more">unfold_more</span>
+<h1 class="font-hero-title text-body-main-mobile text-songket-gold tracking-[0.2em]">Warkah Persada</h1>
+</div>
+<button class="text-songket-gold">
+<span class="material-symbols-outlined" data-icon="music_note">music_note</span>
+</button>
+</header>
+<main class="relative min-h-screen pt-24 pb-32 overflow-hidden bg-gradient-to-b from-indigo-twilight to-indigo-night">
+<!-- Background Ornaments & Gold Dust -->
+<div class="absolute inset-0 songket-overlay pointer-events-none"></div>
+<div class="absolute top-1/4 left-1/4 w-32 h-32 gold-dust animate-pulse"></div>
+<div class="absolute bottom-1/4 right-1/4 w-48 h-48 gold-dust animate-pulse delay-700"></div>
+<section class="container mx-auto px-gutter-mobile flex flex-col items-start gap-y-10">
+<!-- Asymmetric Header Block -->
+<div class="w-full flex flex-col items-start reveal-3d space-y-4">
+<span class="font-eyebrow-label text-eyebrow-label-mobile text-songket-gold uppercase">AKAD NIKAH</span>
+<div class="text-songket-gold opacity-80">
+<svg fill="currentColor" height="32" viewbox="0 0 40 40" width="32" xmlns="http://www.w3.org/2000/svg">
+<path d="M20 0L24 16L40 20L24 24L20 40L16 24L0 20L16 16L20 0Z"></path>
+</svg>
+</div>
+<div class="flex flex-col">
+<h2 class="font-section-title text-champagne-gold italic text-[clamp(48px,12vw,64px)] leading-none -ml-1">9:00 PAGI</h2>
+<p class="font-section-sub text-section-sub-mobile text-warm-ivory italic mt-2">Sabtu, 14 Mei 2026</p>
+</div>
+</div>
+<!-- Glass Card Panel - Asymmetric Right Shift -->
+<div class="w-full max-w-[340px] ml-auto reveal-3d">
+<div class="glass-card relative p-8 rounded-[14px] border border-songket-gold/30 shadow-[0_10px_40px_rgba(201,162,78,0.2)]">
+<!-- Pucuk Rebung Corners -->
+<div class="absolute top-0 left-0 p-2 text-songket-gold/40">
+<svg fill="currentColor" height="24" viewbox="0 0 40 40" width="24"><path d="M20 0L24 16L40 20L24 24L20 40L16 24L0 20L16 16L20 0Z"></path></svg>
+</div>
+<div class="absolute top-0 right-0 p-2 text-songket-gold/40 rotate-90">
+<svg fill="currentColor" height="24" viewbox="0 0 40 40" width="24"><path d="M20 0L24 16L40 20L24 24L20 40L16 24L0 20L16 16L20 0Z"></path></svg>
+</div>
+<div class="absolute bottom-0 left-0 p-2 text-songket-gold/40 -rotate-90">
+<svg fill="currentColor" height="24" viewbox="0 0 40 40" width="24"><path d="M20 0L24 16L40 20L24 24L20 40L16 24L0 20L16 16L20 0Z"></path></svg>
+</div>
+<div class="absolute bottom-0 right-0 p-2 text-songket-gold/40 rotate-180">
+<svg fill="currentColor" height="24" viewbox="0 0 40 40" width="24"><path d="M20 0L24 16L40 20L24 24L20 40L16 24L0 20L16 16L20 0Z"></path></svg>
+</div>
+<!-- Card Content -->
+<div class="flex flex-col space-y-6 relative z-10">
+<div class="space-y-2">
+<h3 class="font-section-title text-warm-ivory italic text-xl leading-tight">MASJID SULTAN SALAHUDDIN ABDUL AZIZ SHAH</h3>
+<div class="h-px w-12 bg-songket-gold/30"></div>
+</div>
+<div class="font-section-sub text-gold-shadow italic text-base flex flex-col gap-1">
+<span>Persiaran Masjid</span>
+<span>Seksyen 14, 40000 Shah Alam</span>
+<span>Selangor Darul Ehsan</span>
+</div>
+</div>
+</div>
+<!-- Action Buttons Stacking -->
+<div class="mt-8 flex flex-col gap-4">
+<button class="w-full h-14 bg-gradient-to-r from-champagne-gold to-songket-gold rounded-full flex items-center justify-center gap-3 shadow-[0_6px_12px_rgba(201,162,78,0.25)] transition-transform active:scale-95">
+<span class="material-symbols-outlined text-indigo-night text-lg" data-icon="location_on">location_on</span>
+<span class="font-eyebrow-label text-indigo-night font-bold">PETA LOKASI</span>
+</button>
+<button class="w-full h-14 border border-songket-gold/30 rounded-full flex items-center justify-center gap-3 hover:bg-songket-gold/10 transition-all active:scale-95">
+<span class="material-symbols-outlined text-songket-gold text-lg" data-icon="calendar_month">calendar_month</span>
+<span class="font-eyebrow-label text-songket-gold font-bold">TAMBAH KE KALENDAR</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] rounded-full z-50 bg-surface-container-low/80 border border-songket-gold/30 backdrop-blur-lg shadow-[0_10px_40px_rgba(201,162,78,0.2)] flex justify-around items-center px-4 py-2 reveal-3d">
+<button class="text-on-surface-variant p-3 opacity-60 hover:opacity-100 hover:scale-105 transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="home_wedding">home</span>
+</button>
+<button class="bg-songket-gold text-surface rounded-full p-3 shadow-[0_0_15px_rgba(201,162,78,0.6)] scale-110">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+</button>
+<button class="text-on-surface-variant p-3 opacity-60 hover:opacity-100 hover:scale-105 transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+</button>
+<button class="text-on-surface-variant p-3 opacity-60 hover:opacity-100 hover:scale-105 transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="edit_note">edit_note</span>
+</button>
+</nav>
+<!-- Visual Polish: Vignette -->
+<div class="fixed inset-0 pointer-events-none ring-[100px] ring-inset ring-black/20 mix-blend-multiply"></div>
+</body></html>

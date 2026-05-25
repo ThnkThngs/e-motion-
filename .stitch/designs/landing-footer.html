@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>e-motion Footer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Inter:wght@100..900&amp;family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-fixed-dim": "#c1c5e3",
+                      "on-primary-fixed-variant": "#41455e",
+                      "primary-fixed": "#dde1ff",
+                      "on-error": "#690005",
+                      "on-secondary-fixed-variant": "#5c4300",
+                      "surface-container-low": "#1e1b11",
+                      "emerald-forest": "#2d5a3f",
+                      "outline-variant": "#46464d",
+                      "on-background": "#eae2d0",
+                      "secondary-fixed-dim": "#ebc169",
+                      "on-secondary-fixed": "#261a00",
+                      "royal-maroon": "#6b1d2e",
+                      "songket-gold": "#c9a24e",
+                      "indigo-twilight": "#1a2040",
+                      "surface-container-lowest": "#110e05",
+                      "on-error-container": "#ffdad6",
+                      "error": "#ffb4ab",
+                      "on-primary-container": "#787d98",
+                      "on-primary-fixed": "#151a31",
+                      "background": "#161309",
+                      "surface-bright": "#3d392d",
+                      "tertiary": "#ffb2bb",
+                      "indigo-night": "#0d1228",
+                      "gold-shadow": "#8a6d2a",
+                      "surface-container-highest": "#383528",
+                      "inverse-primary": "#585d77",
+                      "on-secondary": "#402d00",
+                      "on-tertiary-fixed": "#400012",
+                      "champagne-gold": "#e8c775",
+                      "warm-ivory": "#f8f0de",
+                      "tertiary-fixed-dim": "#ffb2bb",
+                      "surface": "#161309",
+                      "surface-tint": "#c1c5e3",
+                      "secondary-container": "#735501",
+                      "pale-gold": "#f0d68c",
+                      "surface-container-high": "#2d2a1e",
+                      "on-tertiary": "#5e1325",
+                      "inverse-on-surface": "#343024",
+                      "rose-whisper": "#d4949a",
+                      "tertiary-container": "#31000c",
+                      "emerald-deep": "#1a3525",
+                      "cream": "#faf4e3",
+                      "surface-dim": "#161309",
+                      "on-primary": "#2a2f47",
+                      "tertiary-fixed": "#ffd9dd",
+                      "on-tertiary-container": "#c16070",
+                      "surface-variant": "#383528",
+                      "primary": "#c1c5e3",
+                      "indigo-mist": "#2a3460",
+                      "secondary-fixed": "#ffdea0",
+                      "primary-container": "#0d1228",
+                      "on-tertiary-fixed-variant": "#7c2a3a",
+                      "on-surface-variant": "#c7c5ce",
+                      "surface-container": "#231f14",
+                      "secondary": "#ebc169",
+                      "on-secondary-container": "#f6cb73",
+                      "maroon-velvet": "#4a1020",
+                      "error-container": "#93000a",
+                      "inverse-surface": "#eae2d0",
+                      "ivory-warm": "#f2e6c8",
+                      "on-surface": "#eae2d0",
+                      "outline": "#909097"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-max": "1280px",
+                      "sub-mb": "48px",
+                      "grid-gap-form": "32px",
+                      "grid-gap-dense": "18px",
+                      "gutter-mobile": "16px",
+                      "label-mb": "20px",
+                      "title-mb": "24px",
+                      "section-v-mobile": "80px",
+                      "section-v-desktop": "140px",
+                      "gutter-desktop": "32px"
+              },
+              "fontFamily": {
+                      "section-sub": [
+                              "ebGaramond"
+                      ],
+                      "tier-badge": [
+                              "inter"
+                      ],
+                      "section-title": [
+                              "Playfair Display"
+                      ],
+                      "hero-title": [
+                              "Playfair Display"
+                      ],
+                      "eyebrow-label": [
+                              "inter"
+                      ],
+                      "body-main": [
+                              "inter"
+                      ],
+                      "helper-text": [
+                              "ebGaramond"
+                      ]
+              },
+              "fontSize": {
+                      "section-sub": [
+                              "19px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "300"
+                              }
+                      ],
+                      "tier-badge": [
+                              "10px",
+                              {
+                                      "letterSpacing": "0.18em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "section-title": [
+                              "clamp(40px, 5.5vw, 72px)",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "hero-title": [
+                              "clamp(56px, 7vw, 96px)",
+                              {
+                                      "lineHeight": "1.05",
+                                      "letterSpacing": "-0.03em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "eyebrow-label": [
+                              "11px",
+                              {
+                                      "letterSpacing": "0.35em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-main": [
+                              "17px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "helper-text": [
+                              "14px",
+                              {
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .reveal-3d {
+            opacity: 0;
+            transform: translateY(30px) scale(0.98) rotateX(5deg);
+            animation: reveal-3d 1s cubic-bezier(.19, 1, .22, 1) forwards;
+        }
+        @keyframes reveal-3d {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotateX(0deg);
+            }
+        }
+        .bg-songket-pattern {
+            background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 0l20 20-20 20L0 20z" fill="rgba(201,162,78,0.05)"/></svg>');
+            background-size: 40px 40px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased font-body-main text-body-main selection:bg-songket-gold/30 selection:text-cream">
+<footer class="relative w-full overflow-hidden bg-gradient-to-b from-indigo-night to-indigo-twilight py-section-v-mobile md:py-section-v-desktop px-gutter-mobile md:px-gutter-desktop min-h-screen flex items-end">
+<!-- Background Overlay -->
+<div class="absolute inset-0 bg-songket-pattern opacity-50 mix-blend-overlay"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/80 to-transparent"></div>
+<div class="relative w-full max-w-container-max mx-auto reveal-3d">
+<!-- Glassmorphism Container -->
+<div class="relative bg-indigo-night/40 backdrop-blur-[18px] backdrop-saturate-[140%] border border-songket-gold/30 rounded-[14px] p-8 md:p-12 lg:p-16 shadow-[0_8px_32px_0_rgba(201,162,78,0.15)]">
+<!-- Corner Ornaments -->
+<svg class="absolute top-4 left-4 w-10 h-10 text-songket-gold/50" fill="none" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0L20 20L0 40V0Z" fill="currentColor"></path>
+</svg>
+<svg class="absolute top-4 right-4 w-10 h-10 text-songket-gold/50 rotate-90" fill="none" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0L20 20L0 40V0Z" fill="currentColor"></path>
+</svg>
+<svg class="absolute bottom-4 left-4 w-10 h-10 text-songket-gold/50 -rotate-90" fill="none" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0L20 20L0 40V0Z" fill="currentColor"></path>
+</svg>
+<svg class="absolute bottom-4 right-4 w-10 h-10 text-songket-gold/50 rotate-180" fill="none" viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0L20 20L0 40V0Z" fill="currentColor"></path>
+</svg>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-grid-gap-form relative z-10">
+<!-- Brand Column -->
+<div class="flex flex-col gap-label-mb">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-songket-gold text-3xl" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<h2 class="font-section-title text-3xl italic text-champagne-gold tracking-tight">e-motion</h2>
+</div>
+<p class="font-section-sub text-section-sub italic text-warm-ivory/75">Warisan dalam setiap detik.</p>
+</div>
+<!-- Produk Column -->
+<div class="flex flex-col gap-label-mb">
+<h3 class="font-eyebrow-label text-eyebrow-label text-songket-gold uppercase tracking-[0.3em]">PRODUK</h3>
+<ul class="flex flex-col gap-3 font-section-sub text-section-sub italic text-warm-ivory">
+<li><a class="hover:text-songket-gold transition-colors duration-300" href="#">Kad Warisan</a></li>
+<li><a class="hover:text-songket-gold transition-colors duration-300" href="#">Kad Sinematik</a></li>
+<li><a class="hover:text-songket-gold transition-colors duration-300" href="#">Templat</a></li>
+<li><a class="hover:text-songket-gold transition-colors duration-300" href="#">Harga</a></li>
+<li><a class="hover:text-songket-gold transition-colors duration-300" href="#">Galeri Inspirasi</a></li>
+</ul>
+</div>
+<!-- Sokongan Column -->
+<div class="flex flex-col gap-label-mb">
+<h3 class="font-eyebrow-label text-eyebrow-label text-songket-gold uppercase tracking-[0.3em]">SOKONGAN</h3>
+<ul class="flex flex-col gap-3 font-section-sub text-section-sub italic text-warm-ivory">
+<li><a class="hover:text-songket-gold transition-colors duration-300" href="#">Pusat Bantuan</a></li>
+<li><a class="hover:text-songket-gold transition-colors duration-300" href="#">Hubungi Kami</a></li>
+<li><a class="hover:text-songket-gold transition-colors duration-300" href="#">Tutorial</a></li>
+<li><a class="hover:text-songket-gold transition-colors duration-300" href="#">Status Sistem</a></li>
+<li><a class="hover:text-songket-gold transition-colors duration-300" href="#">Komuniti</a></li>
+</ul>
+</div>
+<!-- Sosial Column -->
+<div class="flex flex-col gap-label-mb">
+<h3 class="font-eyebrow-label text-eyebrow-label text-songket-gold uppercase tracking-[0.3em]">SOSIAL</h3>
+<ul class="flex flex-col gap-4 font-section-sub text-section-sub italic text-warm-ivory">
+<li><a class="flex items-center gap-3 hover:text-songket-gold hover:translate-x-1 transition-all duration-300" href="#">
+<span class="material-symbols-outlined text-xl text-songket-gold" style="font-variation-settings: 'FILL' 1;">photo_camera</span>
+<span>Instagram</span>
+</a></li>
+<li><a class="flex items-center gap-3 hover:text-songket-gold hover:translate-x-1 transition-all duration-300" href="#">
+<span class="material-symbols-outlined text-xl text-songket-gold" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+<span>TikTok</span>
+</a></li>
+<li><a class="flex items-center gap-3 hover:text-songket-gold hover:translate-x-1 transition-all duration-300" href="#">
+<span class="material-symbols-outlined text-xl text-songket-gold" style="font-variation-settings: 'FILL' 1;">public</span>
+<span>Facebook</span>
+</a></li>
+<li><a class="flex items-center gap-3 hover:text-songket-gold hover:translate-x-1 transition-all duration-300" href="#">
+<span class="material-symbols-outlined text-xl text-songket-gold" style="font-variation-settings: 'FILL' 1;">chat</span>
+<span>WhatsApp</span>
+</a></li>
+</ul>
+</div>
+</div>
+<!-- Bottom Row -->
+<div class="mt-12 pt-8 border-t border-songket-gold/20 flex flex-col md:flex-row justify-between items-center gap-6 relative z-10">
+<p class="font-section-sub text-helper-text italic text-warm-ivory/60 text-center md:text-left">
+                        © 2026 e-motion.my · Dibuat dengan ❤ untuk warisan Melayu
+                    </p>
+<!-- Language Switcher -->
+<div class="flex items-center gap-2">
+<button class="px-4 py-1 rounded-full text-sm font-tier-badge text-indigo-night bg-gradient-to-r from-songket-gold to-champagne-gold shadow-[0_4px_12px_rgba(201,162,78,0.3)] transition-transform hover:scale-105">BM</button>
+<button class="px-4 py-1 rounded-full text-sm font-tier-badge text-warm-ivory border border-songket-gold/30 hover:bg-songket-gold/10 transition-colors">EN</button>
+<button class="px-4 py-1 rounded-full text-sm font-tier-badge text-warm-ivory border border-songket-gold/30 hover:bg-songket-gold/10 transition-colors">中</button>
+<button class="px-4 py-1 rounded-full text-sm font-tier-badge text-warm-ivory border border-songket-gold/30 hover:bg-songket-gold/10 transition-colors">हि</button>
+</div>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ms"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Inter:wght@100..900&amp;family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --songket-pattern: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l5 15h15l-12 9 5 15-13-9-13 9 5-15-12-9h15z' fill='%23c9a24e' fill-opacity='0.06'/%3E%3C/svg%3E");
+        }
+        .reveal-3d {
+            opacity: 0;
+            transform: translateY(30px) rotateX(-10deg);
+            transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .reveal-3d.active {
+            opacity: 1;
+            transform: translateY(0) rotateX(0);
+        }
+        .gold-dust {
+            background-image: radial-gradient(circle, #f0d68c 1px, transparent 1px);
+            background-size: 100px 100px;
+        }
+        .pucuk-rebung {
+            width: 40px;
+            height: 40px;
+            fill: #c9a24e;
+            opacity: 0.4;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container": "#231f14",
+                        "indigo-night": "#0d1228",
+                        "pale-gold": "#f0d68c",
+                        "on-primary-container": "#787d98",
+                        "emerald-forest": "#2d5a3f",
+                        "on-surface-variant": "#c7c5ce",
+                        "on-secondary-container": "#f6cb73",
+                        "background": "#161309",
+                        "tertiary-fixed-dim": "#ffb2bb",
+                        "secondary-fixed": "#ffdea0",
+                        "tertiary-fixed": "#ffd9dd",
+                        "surface-bright": "#3d392d",
+                        "on-tertiary-container": "#c16070",
+                        "inverse-on-surface": "#343024",
+                        "gold-shadow": "#8a6d2a",
+                        "on-primary": "#2a2f47",
+                        "surface-variant": "#383528",
+                        "surface-container-highest": "#383528",
+                        "surface": "#161309",
+                        "on-tertiary-fixed": "#400012",
+                        "surface-container-lowest": "#110e05",
+                        "error": "#ffb4ab",
+                        "on-tertiary": "#5e1325",
+                        "on-primary-fixed-variant": "#41455e",
+                        "on-error": "#690005",
+                        "surface-tint": "#c1c5e3",
+                        "ivory-warm": "#f2e6c8",
+                        "on-secondary": "#402d00",
+                        "cream": "#faf4e3",
+                        "primary": "#c1c5e3",
+                        "outline-variant": "#46464d",
+                        "maroon-velvet": "#4a1020",
+                        "indigo-twilight": "#1a2040",
+                        "secondary-fixed-dim": "#ebc169",
+                        "on-surface": "#eae2d0",
+                        "warm-ivory": "#f8f0de",
+                        "error-container": "#93000a",
+                        "primary-container": "#0d1228",
+                        "tertiary-container": "#31000c",
+                        "on-secondary-fixed": "#261a00",
+                        "royal-maroon": "#6b1d2e",
+                        "primary-fixed": "#dde1ff",
+                        "on-primary-fixed": "#151a31",
+                        "surface-container-low": "#1e1b11",
+                        "on-secondary-fixed-variant": "#5c4300",
+                        "surface-dim": "#161309",
+                        "rose-whisper": "#d4949a",
+                        "on-tertiary-fixed-variant": "#7c2a3a",
+                        "on-background": "#eae2d0",
+                        "on-error-container": "#ffdad6",
+                        "indigo-mist": "#2a3460",
+                        "primary-fixed-dim": "#c1c5e3",
+                        "secondary": "#ebc169",
+                        "inverse-surface": "#eae2d0",
+                        "outline": "#909097",
+                        "inverse-primary": "#585d77",
+                        "champagne-gold": "#e8c775",
+                        "tertiary": "#ffb2bb",
+                        "emerald-deep": "#1a3525",
+                        "secondary-container": "#735501",
+                        "surface-container-high": "#2d2a1e",
+                        "songket-gold": "#c9a24e"
+                    },
+                    fontFamily: {
+                        "section-sub": ["EB Garamond"],
+                        "hero-title": ["Playfair Display"],
+                        "helper-text": ["EB Garamond"],
+                        "tier-badge": ["Inter"],
+                        "section-title": ["Playfair Display"],
+                        "body-main": ["Inter"],
+                        "eyebrow-label": ["Inter"]
+                    },
+                    fontSize: {
+                        "section-sub": ["19px", { lineHeight: "1.6", fontWeight: "300" }],
+                        "hero-title": ["clamp(56px, 7vw, 96px)", { lineHeight: "1.05", letterSpacing: "-0.03em" }],
+                        "section-title": ["clamp(40px, 5.5vw, 72px)", { lineHeight: "1.1", letterSpacing: "-0.02em" }],
+                        "eyebrow-label": ["11px", { letterSpacing: "0.35em", fontWeight: "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background selection:bg-songket-gold selection:text-indigo-night">
+<!-- Top AppBar (From Shared JSON) -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 py-2 bg-stone-50/80 dark:bg-stone-900/80 backdrop-blur-md border-b border-orange-200/30 dark:border-orange-900/30">
+<div class="p-2 transition-colors hover:bg-orange-100/50 dark:hover:bg-orange-800/50 active:scale-95 duration-150">
+<span class="material-symbols-outlined text-orange-900 dark:text-orange-200">close</span>
+</div>
+<h1 class="font-noto-serif uppercase tracking-widest text-sm text-orange-800 dark:text-orange-300 font-bold tracking-tighter">S &amp; Y</h1>
+<div class="w-10"></div>
+</header>
+<main>
+<!-- Undang-Location Section -->
+<section class="relative min-h-screen w-full bg-indigo-twilight overflow-hidden py-section-v-mobile md:py-section-v-desktop px-gutter-mobile md:px-gutter-desktop" id="undang-location">
+<!-- Background Layers -->
+<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: var(--songket-pattern);"></div>
+<div class="absolute inset-0 gold-dust opacity-20 pointer-events-none"></div>
+<div class="max-w-container-max mx-auto flex flex-col items-start">
+<!-- Header (Asymmetric Left) -->
+<div class="reveal-3d active mb-label-mb w-full">
+<span class="font-eyebrow-label text-eyebrow-label text-champagne-gold block mb-2" style="letter-spacing: 0.32em;">LOKASI</span>
+<h2 class="font-section-title text-section-title italic text-transparent bg-clip-text bg-gradient-to-r from-champagne-gold to-songket-gold mb-4">Tempat Majlis</h2>
+<div class="flex items-center gap-4 w-full max-w-xs">
+<div class="h-[1px] flex-grow bg-songket-gold/30"></div>
+<div class="w-2 h-2 rounded-full border border-songket-gold flex items-center justify-center">
+<div class="w-0.5 h-0.5 bg-songket-gold rounded-full"></div>
+</div>
+<div class="h-[1px] flex-grow bg-songket-gold/30"></div>
+</div>
+</div>
+<!-- Main Map Card (3:4 Portrait Scale) -->
+<div class="reveal-3d active delay-100 w-full md:w-3/4 lg:w-2/3 mb-sub-mb">
+<div class="relative aspect-[3/4] bg-indigo-night rounded-xl overflow-hidden border-2 border-double border-songket-gold/40 shadow-[0_0_40px_rgba(138,109,42,0.2)]">
+<!-- Pucuk Rebung Ornaments -->
+<svg class="pucuk-rebung absolute top-2 left-2 rotate-0" viewbox="0 0 40 40"><path d="M20 0l3 10h7l-6 6 3 10-7-6-7 6 3-10-6-6h7z"></path></svg>
+<svg class="pucuk-rebung absolute top-2 right-2 rotate-90" viewbox="0 0 40 40"><path d="M20 0l3 10h7l-6 6 3 10-7-6-7 6 3-10-6-6h7z"></path></svg>
+<svg class="pucuk-rebung absolute bottom-2 right-2 rotate-180" viewbox="0 0 40 40"><path d="M20 0l3 10h7l-6 6 3 10-7-6-7 6 3-10-6-6h7z"></path></svg>
+<svg class="pucuk-rebung absolute bottom-2 left-2 -rotate-90" viewbox="0 0 40 40"><path d="M20 0l3 10h7l-6 6 3 10-7-6-7 6 3-10-6-6h7z"></path></svg>
+<!-- Abstract Map Content -->
+<div class="absolute inset-0 bg-indigo-twilight mix-blend-multiply opacity-80"></div>
+<div class="absolute inset-0 overflow-hidden" data-location="Petaling Jaya" style="">
+<img class="w-full h-full object-cover grayscale opacity-40 mix-blend-screen" data-alt="A sophisticated dark-mode digital map interface showcasing the intricate street layout of Petaling Jaya, Malaysia. The map is rendered in deep indigo and charcoal tones with golden-lit arterial roads and glowing landmarks. The aesthetic is cinematic and high-end, utilizing soft blurs and a subtle vignette to emphasize a central golden location pin. The atmosphere is intimate and regal, perfectly aligning with a traditional royal-court wedding theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-I-9F6fCrKjX5Z0fjFQXR1WXlEFMPU_gpvrAQEAr5eDRAtHXh7n0uQ5DW0LacrCrlEUXM-H-KeQSwjPPtbXARb8Z638gj9zqcdE3XpMZhew0o-dn2XWgcq3NNhf6iEFOkpJs7d-DsaJVVfsW5TCzQ1mwTd0vccDZvn3CauGgXgOky7V8rNQx6sH6B3xf0YTUZFOopoFGNvjAB2VucWyGlcCDsSmE3JO2jL_9guKZ3oxRR66xw7t9Rq25DuUxDGMTN17oUdCSMMHo"/>
+</div>
+<!-- Center Pin & Rings -->
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="relative">
+<!-- Pulsing Rings -->
+<div class="absolute inset-0 -m-10 border border-pale-gold/30 rounded-full animate-ping"></div>
+<div class="absolute inset-0 -m-6 border border-pale-gold/20 rounded-full animate-pulse"></div>
+<!-- Teardrop Pin -->
+<div class="relative z-10 w-12 h-12 bg-gradient-to-br from-champagne-gold to-songket-gold rounded-full rounded-bl-none rotate-45 flex items-center justify-center shadow-lg shadow-gold-shadow/40">
+<div class="-rotate-45">
+<span class="material-symbols-outlined text-indigo-night" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Compass Rose -->
+<div class="absolute top-8 right-8 text-champagne-gold/60">
+<span class="material-symbols-outlined text-4xl">explore</span>
+</div>
+</div>
+</div>
+<!-- Venue Details -->
+<div class="reveal-3d active delay-200 mb-title-mb text-left">
+<h3 class="font-section-title text-[36px] italic text-warm-ivory mb-2">Dewan MBPJ Sek 13</h3>
+<div class="space-y-1 font-section-sub text-warm-ivory/80 italic">
+<p>Jalan Othman Sek 13</p>
+<p>46100 Petaling Jaya</p>
+<p>Selangor Darul Ehsan</p>
+</div>
+</div>
+<!-- Action Row (Pill Buttons) -->
+<div class="reveal-3d active delay-300 flex flex-wrap gap-3 w-full">
+<button class="flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-champagne-gold to-songket-gold text-indigo-night font-body-main text-[11px] font-bold tracking-[0.28em] shadow-[0_6px_15px_rgba(138,109,42,0.4)] transition-transform active:scale-95">
+<span class="material-symbols-outlined text-sm">location_on</span>
+                        PETA LOKASI
+                    </button>
+<button class="flex items-center gap-2 px-6 py-3 rounded-full border border-champagne-gold/30 text-champagne-gold font-body-main text-[11px] font-bold tracking-[0.28em] transition-all hover:bg-champagne-gold/10 active:scale-95">
+<span class="material-symbols-outlined text-sm">directions_car</span>
+                        GRAB
+                    </button>
+<button class="flex items-center gap-2 px-6 py-3 rounded-full border border-champagne-gold/30 text-champagne-gold font-body-main text-[11px] font-bold tracking-[0.28em] transition-all hover:bg-champagne-gold/10 active:scale-95">
+<span class="material-symbols-outlined text-sm">local_taxi</span>
+                        INDRIVER
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar (From Shared JSON) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 pb-safe bg-stone-50/90 dark:bg-stone-950/90 backdrop-blur-lg rounded-t-2xl border-t border-orange-200 dark:border-orange-800 shadow-[0_-4px_20px_rgba(83,60,23,0.1)]">
+<a class="flex flex-col items-center justify-center text-stone-500 dark:text-stone-400 px-4 py-1 transition-transform active:scale-98" href="#">
+<span class="material-symbols-outlined" data-icon="event_available">event_available</span>
+<span class="font-noto-serif text-[10px] font-medium tracking-tight">RSVP</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-orange-100 dark:bg-orange-900/40 text-orange-900 dark:text-orange-100 rounded-xl px-4 py-1 transition-transform active:scale-98" href="#">
+<span class="material-symbols-outlined" data-icon="map" style="font-variation-settings: 'FILL' 1;">map</span>
+<span class="font-noto-serif text-[10px] font-medium tracking-tight">Lokasi</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-500 dark:text-stone-400 px-4 py-1 transition-transform active:scale-98" href="#">
+<span class="material-symbols-outlined" data-icon="auto_stories">auto_stories</span>
+<span class="font-noto-serif text-[10px] font-medium tracking-tight">Atur Cara</span>
+</a>
+</nav>
+</body></html>

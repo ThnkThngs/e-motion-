@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Landing Page CTA</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;family=Inter:wght@100..900&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed": "#ffdea0",
+                      "surface-container-low": "#1e1b11",
+                      "tertiary-fixed": "#ffd9dd",
+                      "surface-container-highest": "#383528",
+                      "surface-variant": "#383528",
+                      "tertiary-fixed-dim": "#ffb2bb",
+                      "surface-dim": "#161309",
+                      "on-tertiary-container": "#c16070",
+                      "outline-variant": "#46464d",
+                      "surface-bright": "#3d392d",
+                      "outline": "#909097",
+                      "emerald-forest": "#2d5a3f",
+                      "on-tertiary-fixed": "#400012",
+                      "on-primary-container": "#787d98",
+                      "secondary": "#ebc169",
+                      "primary": "#c1c5e3",
+                      "tertiary": "#ffb2bb",
+                      "gold-shadow": "#8a6d2a",
+                      "cream": "#faf4e3",
+                      "tertiary-container": "#31000c",
+                      "on-primary-fixed": "#151a31",
+                      "background": "#161309",
+                      "surface": "#161309",
+                      "inverse-on-surface": "#343024",
+                      "surface-container-lowest": "#110e05",
+                      "royal-maroon": "#6b1d2e",
+                      "on-secondary-fixed-variant": "#5c4300",
+                      "error-container": "#93000a",
+                      "on-surface-variant": "#c7c5ce",
+                      "on-secondary": "#402d00",
+                      "on-secondary-fixed": "#261a00",
+                      "on-tertiary-fixed-variant": "#7c2a3a",
+                      "on-surface": "#eae2d0",
+                      "surface-container": "#231f14",
+                      "indigo-twilight": "#1a2040",
+                      "emerald-deep": "#1a3525",
+                      "primary-container": "#0d1228",
+                      "warm-ivory": "#f8f0de",
+                      "primary-fixed": "#dde1ff",
+                      "inverse-surface": "#eae2d0",
+                      "on-primary-fixed-variant": "#41455e",
+                      "on-background": "#eae2d0",
+                      "indigo-mist": "#2a3460",
+                      "primary-fixed-dim": "#c1c5e3",
+                      "on-error-container": "#ffdad6",
+                      "on-error": "#690005",
+                      "inverse-primary": "#585d77",
+                      "on-tertiary": "#5e1325",
+                      "pale-gold": "#f0d68c",
+                      "on-secondary-container": "#f6cb73",
+                      "indigo-night": "#0d1228",
+                      "secondary-fixed-dim": "#ebc169",
+                      "songket-gold": "#c9a24e",
+                      "on-primary": "#2a2f47",
+                      "surface-tint": "#c1c5e3",
+                      "secondary-container": "#735501",
+                      "surface-container-high": "#2d2a1e",
+                      "rose-whisper": "#d4949a",
+                      "ivory-warm": "#f2e6c8",
+                      "champagne-gold": "#e8c775",
+                      "maroon-velvet": "#4a1020",
+                      "error": "#ffb4ab"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "sub-mb": "48px",
+                      "title-mb": "24px",
+                      "grid-gap-dense": "18px",
+                      "label-mb": "20px",
+                      "grid-gap-form": "32px",
+                      "container-max": "1280px",
+                      "section-v-mobile": "80px",
+                      "gutter-mobile": "16px",
+                      "gutter-desktop": "32px",
+                      "section-v-desktop": "140px"
+              },
+              "fontFamily": {
+                      "helper-text": [
+                              "ebGaramond"
+                      ],
+                      "eyebrow-label": [
+                              "inter"
+                      ],
+                      "tier-badge": [
+                              "inter"
+                      ],
+                      "section-title": [
+                              "Playfair Display"
+                      ],
+                      "section-sub": [
+                              "ebGaramond"
+                      ],
+                      "hero-title": [
+                              "Playfair Display"
+                      ],
+                      "body-main": [
+                              "inter"
+                      ]
+              },
+              "fontSize": {
+                      "helper-text": [
+                              "14px",
+                              {
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "eyebrow-label": [
+                              "11px",
+                              {
+                                      "letterSpacing": "0.35em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "tier-badge": [
+                              "10px",
+                              {
+                                      "letterSpacing": "0.18em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "section-title": [
+                              "clamp(40px, 5.5vw, 72px)",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "section-sub": [
+                              "19px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "300"
+                              }
+                      ],
+                      "hero-title": [
+                              "clamp(56px, 7vw, 96px)",
+                              {
+                                      "lineHeight": "1.05",
+                                      "letterSpacing": "-0.03em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-main": [
+                              "17px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .reveal-3d {
+            opacity: 0;
+            transform: translateY(30px) translateZ(-50px) rotateX(-5deg);
+            animation: reveal3D 1.2s cubic-bezier(.19, 1, .22, 1) forwards;
+        }
+        @keyframes reveal3D {
+            100% {
+                opacity: 1;
+                transform: translateY(0) translateZ(0) rotateX(0);
+            }
+        }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+
+        .particle-system {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 10;
+        }
+        .particle {
+            position: absolute;
+            background-color: #f0d68c; /* pale-gold */
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: drift 20s linear infinite;
+        }
+        @keyframes drift {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-10vh) translateX(50px); opacity: 0; }
+        }
+        
+        .pucuk-rebung {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            fill: #c9a24e; /* songket-gold */
+            opacity: 0.6;
+            transition: opacity 0.5s ease;
+            z-index: 20;
+        }
+        .section-container:hover .pucuk-rebung {
+            opacity: 1;
+        }
+        .top-left { top: 32px; left: 32px; transform: rotate(0deg); }
+        .top-right { top: 32px; right: 32px; transform: rotate(90deg); }
+        .bottom-right { bottom: 32px; right: 32px; transform: rotate(180deg); }
+        .bottom-left { bottom: 32px; left: 32px; transform: rotate(270deg); }
+      </style>
+</head>
+<body class="bg-background text-on-surface antialiased">
+<nav class="bg-maroon-velvet/80 backdrop-blur-md font-section-sub text-section-sub shadow-[0px_4px_30px_rgba(138,109,42,0.35)] fixed top-0 w-full z-50 flex justify-between items-center px-gutter-desktop h-20 border-b border-secondary/30 reveal-3d active:scale-95 text-secondary">
+<div class="font-hero-title text-hero-title italic text-secondary-fixed">ADAT</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-secondary/70 font-medium hover:text-secondary-fixed hover:translate-y-[-2px] transition-all duration-300" href="#">Heritage</a>
+<a class="text-secondary/70 font-medium hover:text-secondary-fixed hover:translate-y-[-2px] transition-all duration-300" href="#">Ceremony</a>
+<a class="text-secondary-fixed font-bold border-b-2 border-secondary-fixed hover:text-secondary-fixed hover:translate-y-[-2px] transition-all duration-300" href="#">Invitations</a>
+<a class="text-secondary/70 font-medium hover:text-secondary-fixed hover:translate-y-[-2px] transition-all duration-300" href="#">RSVP</a>
+</div>
+<button class="bg-gradient-to-r from-champagne-gold to-songket-gold text-indigo-night font-bold py-2 px-6 rounded-full shadow-[0_4px_12px_rgba(138,109,42,0.5)] hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(138,109,42,0.7)] transition-all duration-300 flex items-center gap-2">
+        Begin Ritual
+    </button>
+</nav>
+<main class="pt-20">
+<section class="relative w-full min-h-[819px] flex items-center justify-center overflow-hidden section-container bg-gradient-to-b from-royal-maroon to-maroon-velvet py-section-v-mobile md:py-section-v-desktop px-gutter-mobile md:px-gutter-desktop">
+<!-- Ornaments -->
+<svg class="pucuk-rebung top-left" viewbox="0 0 100 100"><polygon points="0,0 100,0 0,100"></polygon></svg>
+<svg class="pucuk-rebung top-right" viewbox="0 0 100 100"><polygon points="0,0 100,0 0,100"></polygon></svg>
+<svg class="pucuk-rebung bottom-right" viewbox="0 0 100 100"><polygon points="0,0 100,0 0,100"></polygon></svg>
+<svg class="pucuk-rebung bottom-left" viewbox="0 0 100 100"><polygon points="0,0 100,0 0,100"></polygon></svg>
+<!-- Filigree Overlay -->
+<div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M54.627 0l.83.83v58.34l-.83.83H5.373l-.83-.83V.83l.83-.83h49.254zm-1.66 1.66H7.033v56.68h45.934V1.66zM30 46c-8.837 0-16-7.163-16-16s7.163-16 16-16 16 7.163 16 16-7.163 16-16 16zm0-2c7.732 0 14-6.268 14-14s-6.268-14-14-14-14 6.268-14 14 6.268 14 14 14z\' fill=\'%23f0d68c\' fill-opacity=\'1\' fill-rule=\'evenodd\'/%3E%3C/svg%3E');"></div>
+<!-- Particles -->
+<div class="particle-system">
+<div class="particle" style="width: 4px; height: 4px; left: 10%; animation-duration: 25s; animation-delay: 0s;"></div>
+<div class="particle" style="width: 6px; height: 6px; left: 25%; animation-duration: 18s; animation-delay: 5s;"></div>
+<div class="particle" style="width: 3px; height: 3px; left: 45%; animation-duration: 30s; animation-delay: 2s;"></div>
+<div class="particle" style="width: 8px; height: 8px; left: 60%; animation-duration: 22s; animation-delay: 8s;"></div>
+<div class="particle" style="width: 5px; height: 5px; left: 80%; animation-duration: 28s; animation-delay: 1s;"></div>
+<div class="particle" style="width: 7px; height: 7px; left: 95%; animation-duration: 20s; animation-delay: 12s;"></div>
+<div class="particle" style="width: 4px; height: 4px; left: 15%; animation-duration: 26s; animation-delay: 15s;"></div>
+<div class="particle" style="width: 6px; height: 6px; left: 75%; animation-duration: 19s; animation-delay: 7s;"></div>
+</div>
+<div class="relative z-30 max-w-container-max mx-auto text-center flex flex-col items-center">
+<div class="font-eyebrow-label text-eyebrow-label text-songket-gold uppercase mb-label-mb reveal-3d delay-100 tracking-[0.35em]">
+                AKHIR PERJALANAN, MULA CERITA
+            </div>
+<h1 class="text-[clamp(80px,8vw,128px)] leading-[1.05] tracking-[-0.03em] font-light italic text-white mb-title-mb reveal-3d delay-200" style="font-family: 'Playfair Display', serif;">
+                Mulakan <span class="text-champagne-gold" style="font-family: 'EB Garamond', serif;">Cerita</span> Anda
+            </h1>
+<p class="font-section-sub text-section-sub italic text-warm-ivory/75 max-w-2xl mb-sub-mb reveal-3d delay-300">
+                Hari paling istimewa hidup anda layak diraikan dengan keagungan.
+            </p>
+<button class="reveal-3d delay-400 bg-gradient-to-r from-champagne-gold to-songket-gold rounded-full px-8 py-4 flex items-center justify-center gap-3 shadow-[0_8px_20px_rgba(138,109,42,0.4)] hover:-translate-y-2 hover:shadow-[0_12px_24px_rgba(138,109,42,0.6)] transition-all duration-500 group">
+<span class="font-eyebrow-label text-eyebrow-label text-indigo-night font-bold uppercase tracking-[0.2em]">BINA KAD KAHWIN ANDA</span>
+<span class="material-symbols-outlined text-indigo-night group-hover:translate-x-1 transition-transform">arrow_right_alt</span>
+</button>
+</div>
+</section>
+</main>
+<footer class="bg-background font-helper-text text-helper-text w-full flex flex-col items-center justify-center gap-title-mb text-center px-gutter-desktop py-section-v-mobile md:py-section-v-desktop border-t border-secondary/20 reveal-3d text-secondary">
+<div class="font-hero-title text-section-title text-secondary">ADAT</div>
+<div class="flex gap-6">
+<a class="text-on-surface-variant hover:text-secondary-fixed transition-colors" href="#">Privacy</a>
+<a class="text-on-surface-variant hover:text-secondary-fixed transition-colors" href="#">Terms</a>
+<a class="text-on-surface-variant hover:text-secondary-fixed transition-colors" href="#">Contact</a>
+</div>
+<div class="text-secondary/60 mt-4">
+        © 2024 Adat Digital. A Royal Ceremony of Heritage.
+    </div>
+</footer>
+</body></html>
