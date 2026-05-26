@@ -631,3 +631,36 @@ body[data-lang="hi"] .inv-name { font-family: var(--font-tiro-hi), 'Tiro Devanag
 @media (max-width: 768px) {
   .stat-num--word { font-size: 26px; }
 }
+
+/* ──────────────────────────────────────────────────────────────────────────
+ * Template palette swatch — hover-reveal "info on intent" per paperlesspost
+ * audit. Pass 2 polish.
+ * ────────────────────────────────────────────────────────────────────────── */
+.tpl-palette {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity .2s ease, transform .2s ease;
+  z-index: 2;
+  pointer-events: none;
+}
+.tpl-palette span {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 240, 222, 0.35);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+.tpl-card:hover .tpl-palette,
+.tpl-card:focus-visible .tpl-palette,
+.tpl-card.selected .tpl-palette {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .tpl-palette { transition: none; }
+}

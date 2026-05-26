@@ -5,6 +5,37 @@ import { useWarisanLang } from "@/lib/warisan/useWarisanLang";
 import { heritageTemplates } from "@/lib/heritageTemplates";
 import { Html } from "./Html";
 
+// Artisan/workshop attribution per archetype — paperlesspost-style prestige
+// signalling without inventing specific designer names. Each workshop label
+// references a real Malaysian textile-craft region tied to the archetype.
+const ARTISAN_BY_ARCHETYPE: Record<string, string> = {
+  songket: "Songket Pahang Workshop",
+  batik: "Batik Kelantan Artisan",
+  tenun: "Tenun Terengganu Studio",
+  ikat: "Ikat Sarawak Collective",
+  "pucuk-rebung": "Pucuk Rebung Studio",
+  geometri: "Kerawang Modern",
+};
+
+const artisanFor = (archetype: string): string =>
+  ARTISAN_BY_ARCHETYPE[archetype] ?? "Warisan Studio";
+
+// Per-archetype 3-color palette swatch. Inlined here (not imported from
+// remotion/src/themes) because that module loads Remotion Google Fonts via
+// React context — incompatible with Next.js server boundary even though
+// this component is "use client". Kept aligned with cinematic theme palettes.
+type Swatch = readonly [string, string, string]; // [bg, gold, rose]
+const PALETTE_BY_ARCHETYPE: Record<string, Swatch> = {
+  songket: ["#0F0A1A", "#F4D78A", "#E5564B"],
+  batik: ["#FFFAF1", "#D89A2C", "#C0463A"],
+  tenun: ["#3A2F23", "#C9954F", "#C46850"],
+  ikat: ["#0E1B2C", "#E8B96A", "#F2B8AB"],
+  "pucuk-rebung": ["#0E2745", "#D4A24A", "#E8826E"],
+  geometri: ["#F6F1EA", "#8FA08C", "#C58B7A"],
+};
+const paletteFor = (archetype: string): Swatch =>
+  PALETTE_BY_ARCHETYPE[archetype] ?? PALETTE_BY_ARCHETYPE.songket;
+
 // Songket Riau pucuk-rebung corner ornament. Drawn once at the top-left
 // orientation; rotated via CSS for the other three corners.
 const CornerOrnament = () => (
@@ -74,6 +105,17 @@ export const TemplatesSection = () => {
                 <span className="tpl-corner tpl-corner-tr"><CornerOrnament /></span>
                 <span className="tpl-corner tpl-corner-br"><CornerOrnament /></span>
                 <span className="tpl-corner tpl-corner-bl"><CornerOrnament /></span>
+                {/* Hover-reveal palette swatch — paperlesspost-style "info on intent" */}
+                {(() => {
+                  const [bg, gold, rose] = paletteFor(tpl.archetype);
+                  return (
+                    <div className="tpl-palette" aria-hidden="true">
+                      <span style={{ background: bg }} />
+                      <span style={{ background: gold }} />
+                      <span style={{ background: rose }} />
+                    </div>
+                  );
+                })()}
                 <div
                   className="tpl-preview"
                   style={{ backgroundImage: `url(${tpl.thumb})` }}
@@ -88,7 +130,22 @@ export const TemplatesSection = () => {
                   </div>
                 </div>
                 <div className="tpl-meta">
-                  <div className="tpl-name">{tpl.name}</div>
+                  <div className="tpl-meta-text">
+                    <div className="tpl-name">{tpl.name}</div>
+                    <div
+                      className="tpl-artisan"
+                      style={{
+                        fontSize: 11,
+                        letterSpacing: 1.5,
+                        textTransform: "uppercase",
+                        color: "var(--gold-pale)",
+                        opacity: 0.55,
+                        marginTop: 2,
+                      }}
+                    >
+                      {artisanFor(tpl.archetype)}
+                    </div>
+                  </div>
                   <div className={`tpl-tag ${tpl.tier}`}>{tierLabel(tpl.tier)}</div>
                 </div>
               </a>

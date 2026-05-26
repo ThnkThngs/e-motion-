@@ -134,6 +134,9 @@ const config: Config = {
         inter: ['var(--font-inter)', 'Inter', 'sans-serif'],
         'noto-sc': ['var(--font-noto-sc)', '"Noto Serif SC"', 'serif'],
         'tiro-hi': ['var(--font-tiro-hi)', '"Tiro Devanagari Hindi"', 'serif'],
+        // Geist — taste-design recommended for tool/dashboard surfaces.
+        // Applied via `font-geist` className on builder shells only.
+        geist: ['var(--font-geist)', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         none: '0',

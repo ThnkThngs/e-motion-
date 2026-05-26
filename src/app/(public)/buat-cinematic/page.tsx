@@ -36,7 +36,7 @@ function BuatCinematicInner() {
   const template = cinematicTemplateById(templateId);
 
   return (
-    <main className="builder-shell">
+    <main className="builder-shell font-geist">
       <div className="builder-shell-inner builder-shell-inner--narrow">
         <header className="builder-shell-header builder-shell-header--cinematic">
           <p className="builder-shell-eyebrow">e-motion · Warisan cinematic builder</p>

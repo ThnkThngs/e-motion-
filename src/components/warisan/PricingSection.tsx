@@ -125,6 +125,34 @@ export const PricingSection = () => {
             {t("price.sub")}
           </p>
         </div>
+        {/* Trust signal row — paperlesspost-style transparent value stacking.
+            Only true claims, no fabricated metrics. */}
+        <div
+          className="pricing-trust reveal-3d reveal-d2"
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            gap: "16px 32px",
+            margin: "0 auto 48px",
+            maxWidth: 760,
+            fontSize: 13,
+            letterSpacing: 2,
+            textTransform: "uppercase",
+            color: "var(--gold-pale)",
+            opacity: 0.7,
+          }}
+        >
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+            <span style={{ color: "var(--gold-light)" }}>✦</span> {t("price.trust1")}
+          </span>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+            <span style={{ color: "var(--gold-light)" }}>✦</span> {t("price.trust2")}
+          </span>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+            <span style={{ color: "var(--gold-light)" }}>✦</span> {t("price.trust3")}
+          </span>
+        </div>
         <div className="pricing-grid">
           {tiers.map((tier, i) => (
             <div

@@ -5,6 +5,7 @@ import {
   Inter,
   Noto_Serif_SC,
   Tiro_Devanagari_Hindi,
+  Geist,
 } from "next/font/google";
 import "../styles/globals.css";
 
@@ -50,6 +51,16 @@ const tiroHi = Tiro_Devanagari_Hindi({
   preload: false,
 });
 
+// Geist — taste-design recommended for tool/dashboard surfaces (builder UI).
+// Scoped via `font-geist` Tailwind class on builder shells only — does NOT
+// override the ceremonial scroll fonts (Cormorant, Dancing Script, Amiri).
+const geist = Geist({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-geist",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "e-motion.my — Warisan Edition",
   description:
@@ -68,6 +79,7 @@ const fontClasses = [
   inter.variable,
   notoSc.variable,
   tiroHi.variable,
+  geist.variable,
 ].join(" ");
 
 export default function RootLayout({

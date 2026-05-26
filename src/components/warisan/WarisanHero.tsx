@@ -19,7 +19,9 @@ const seededRandom = (i: number) => {
   return x - Math.floor(x);
 };
 
-const particles = Array.from({ length: 18 }, (_, i) => {
+// Reduced from 18 to 6 per taste-design audit — less visual noise competing
+// with the headline message. Particle motion preserved for ceremonial feel.
+const particles = Array.from({ length: 6 }, (_, i) => {
   const size = 4 + seededRandom(i + 1) * 8;
   return {
     left: `${seededRandom(i + 2) * 100}%`,
@@ -71,6 +73,48 @@ const CornerOrnament = () => (
   </svg>
 );
 
+// Inline-image typography: split `hero.title1` on the `[[card]]` token and
+// render a small rounded thumbnail of a sample invitation card between the
+// two text halves. Taste-design signature technique. If the token is missing
+// (i18n regression), the full text falls through and a dev warning fires.
+type TitleProps = Readonly<{ text: string }>;
+const TitleWithInlineCard = ({ text }: TitleProps) => {
+  const parts = text.split("[[card]]");
+  if (parts.length !== 2) {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(
+        `[WarisanHero] hero.title1 missing [[card]] token: "${text}"`,
+      );
+    }
+    return <>{text}</>;
+  }
+  return (
+    <>
+      {parts[0]}
+      <img
+        src="/api/og?template=floral&compact=1"
+        alt=""
+        aria-hidden="true"
+        width={56}
+        height={56}
+        loading="eager"
+        style={{
+          display: "inline-block",
+          width: "clamp(36px, 5vw, 56px)",
+          height: "auto",
+          aspectRatio: "1200 / 630",
+          borderRadius: 8,
+          verticalAlign: "middle",
+          margin: "0 8px",
+          boxShadow: "0 2px 10px rgba(0, 0, 0, 0.35)",
+          objectFit: "cover",
+        }}
+      />
+      {parts[1]}
+    </>
+  );
+};
+
 export const WarisanHero = () => {
   const { t } = useWarisanLang();
   const particleNodes = useMemo(
@@ -100,16 +144,28 @@ export const WarisanHero = () => {
         <div className="hero-asym-left reveal-3d reveal-d1">
           <div className="hero-asym-eyebrow">{t("hero.eyebrow")}</div>
           <h1 className="hero-asym-title">
-            {t("hero.title1")}{" "}
+            <TitleWithInlineCard text={t("hero.title1")} />{" "}
             <em className="hero-asym-title-em">{t("hero.title2")}</em>
           </h1>
           <p className="hero-asym-desc">{t("hero.desc")}</p>
           <div className="hero-asym-actions">
-            <a href="#builder" className="warisan-btn-primary">
+            <a href="/buat-warisan" className="warisan-btn-primary">
               {t("hero.cta1")}
             </a>
-            <a href="#templates" className="warisan-btn-secondary">
-              {t("hero.cta2")}
+            <a
+              href="#templates"
+              className="hero-asym-textlink"
+              style={{
+                color: "var(--gold-light)",
+                fontSize: 14,
+                letterSpacing: 2,
+                textTransform: "uppercase",
+                textDecoration: "none",
+                marginLeft: 20,
+                opacity: 0.75,
+              }}
+            >
+              {t("hero.cta2")} →
             </a>
           </div>
         </div>

@@ -27,6 +27,10 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const slug = searchParams.get("slug") ?? "";
   const template = searchParams.get("template") ?? "";
+  // Compact mode renders a monogram-style card with bigger margins and a
+  // simpler ornament — designed to read as a card thumbnail when displayed
+  // small (e.g. inline within the hero headline at ~50px).
+  const compact = searchParams.get("compact") === "1";
 
   // Theme-driven palette (for template thumbnails) or brand default (for slug previews)
   let bg = DEFAULT_BG;
@@ -111,37 +115,39 @@ export async function GET(request: Request) {
           }}
         />
 
-        {/* Brand eyebrow */}
+        {/* Brand eyebrow — hidden in compact mode (unreadable at thumbnail size) */}
+        {!compact && (
+          <div
+            style={{
+              fontSize: 13,
+              letterSpacing: 7,
+              color: mutedInk,
+              textTransform: "uppercase",
+              marginBottom: 32,
+              display: "flex",
+            }}
+          >
+            {themeLabel ? `e-motion.my · ${themeLabel}` : "e-motion.my · Warisan Edition"}
+          </div>
+        )}
+
+        {/* Top ornament — slightly larger in compact mode so it reads as a card glyph */}
         <div
           style={{
-            fontSize: 13,
-            letterSpacing: 7,
-            color: mutedInk,
-            textTransform: "uppercase",
-            marginBottom: 32,
+            fontSize: compact ? 64 : 20,
+            color: gold,
+            marginBottom: compact ? 32 : 16,
+            letterSpacing: compact ? 4 : 12,
             display: "flex",
           }}
         >
-          {themeLabel ? `e-motion.my · ${themeLabel}` : "e-motion.my · Warisan Edition"}
+          {compact ? "✦" : "✦ ✦ ✦"}
         </div>
 
-        {/* Top ornament */}
+        {/* Couple names — larger in compact mode so monogram reads when scaled small */}
         <div
           style={{
-            fontSize: 20,
-            color: `${gold}99`,
-            marginBottom: 16,
-            letterSpacing: 12,
-            display: "flex",
-          }}
-        >
-          ✦ ✦ ✦
-        </div>
-
-        {/* Couple names */}
-        <div
-          style={{
-            fontSize: names.length > 30 ? 56 : 72,
+            fontSize: compact ? 140 : names.length > 30 ? 56 : 72,
             color: gold,
             fontStyle: "italic",
             lineHeight: 1.15,
@@ -155,31 +161,35 @@ export async function GET(request: Request) {
           {names}
         </div>
 
-        {/* Bottom ornament */}
-        <div
-          style={{
-            fontSize: 20,
-            color: `${gold}99`,
-            marginTop: 16,
-            letterSpacing: 12,
-            display: "flex",
-          }}
-        >
-          ✦ ✦ ✦
-        </div>
+        {/* Bottom ornament — hidden in compact mode for cleaner read */}
+        {!compact && (
+          <div
+            style={{
+              fontSize: 20,
+              color: `${gold}99`,
+              marginTop: 16,
+              letterSpacing: 12,
+              display: "flex",
+            }}
+          >
+            ✦ ✦ ✦
+          </div>
+        )}
 
-        {/* Subtitle */}
-        <div
-          style={{
-            marginTop: 24,
-            fontSize: 16,
-            color: mutedInk,
-            letterSpacing: 4,
-            display: "flex",
-          }}
-        >
-          Jemputan Perkahwinan
-        </div>
+        {/* Subtitle — hidden in compact mode (unreadable at thumbnail size) */}
+        {!compact && (
+          <div
+            style={{
+              marginTop: 24,
+              fontSize: 16,
+              color: mutedInk,
+              letterSpacing: 4,
+              display: "flex",
+            }}
+          >
+            Jemputan Perkahwinan
+          </div>
+        )}
       </div>
     ),
     {
