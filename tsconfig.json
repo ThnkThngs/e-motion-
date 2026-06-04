@@ -52,6 +52,10 @@
     ".next/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "remotion/node_modules",
+    "remotion/remotion.config.ts",
+    "remotion/vite.config.ts",
+    "remotion/dist"
   ]
 }
