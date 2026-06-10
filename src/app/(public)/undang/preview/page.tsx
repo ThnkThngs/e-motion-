@@ -11,6 +11,9 @@ import { InvitationScroll } from "@/components/scroll/InvitationScroll";
 // inner component so the page export can provide that boundary.
 function UndangPreviewInner() {
   const sp = useSearchParams();
+  // ?live=1 renders the real guest experience (activation gate, no preview
+  // badge) so editors can rehearse exactly what invitees will see.
+  const live = sp.get("live") === "1";
 
   const { templateId, payload } = useMemo(() => {
     const raw = sp.get("data");
@@ -28,7 +31,7 @@ function UndangPreviewInner() {
     }
   }, [sp]);
 
-  return <InvitationScroll templateId={templateId} payload={payload} preview />;
+  return <InvitationScroll templateId={templateId} payload={payload} preview={!live} />;
 }
 
 export default function UndangPreviewPage() {

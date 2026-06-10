@@ -12,8 +12,11 @@
 // The exported name (`InvitationScroll`) and prop signature are unchanged so
 // existing callers (the /undang/<slug> route) keep working.
 
+import { useState } from "react";
 import { themes, type ThemeId } from "@cinematic/themes";
 import type { InvitationProps } from "@cinematic/schema";
+import { ActivationGate } from "./ActivationGate";
+import { ScrollProgress } from "./ScrollProgress";
 import { CoverSection } from "./sections/Cover";
 import { AkadSection } from "./sections/Akad";
 import { ResepsiSection } from "./sections/Resepsi";
@@ -42,6 +45,9 @@ const NO_GIFT_ACCOUNTS: ReadonlyArray<GiftAccount> = [];
 export const InvitationScroll: React.FC<Props> = ({ templateId, payload, slug, preview }) => {
   const theme = themes[templateId] ?? themes.floral;
   const f = payload.features;
+  // Activation: guests open a sealed gate before the scroll story begins.
+  // Preview (builder iframe) skips the gate so editors see content directly.
+  const [opened, setOpened] = useState(Boolean(preview));
 
   return (
     <main
@@ -65,6 +71,16 @@ export const InvitationScroll: React.FC<Props> = ({ templateId, payload, slug, p
         } as React.CSSProperties
       }
     >
+      {!opened && (
+        <ActivationGate
+          brideShort={payload.brideShort}
+          groomShort={payload.groomShort}
+          dateLong={payload.dateLong}
+          onOpen={() => setOpened(true)}
+        />
+      )}
+      {opened && !preview && <ScrollProgress />}
+
       {preview && (
         <div
           style={{
