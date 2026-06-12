@@ -14,22 +14,28 @@ import { useWarisanLang } from "@/lib/warisan/useWarisanLang";
 //   • Seeded-random particles preserved from the previous WarisanHero to
 //     keep SSR/CSR markup identical (prevents hydration mismatch).
 
+// Integer-only PRNG (mulberry32-style). Math.sin-based seeding is NOT safe
+// here: Math.sin is implementation-approximated, so server and browser can
+// disagree in the low bits and break hydration. Integer ops are exact.
 const seededRandom = (i: number) => {
-  const x = Math.sin(i * 9999) * 10000;
-  return x - Math.floor(x);
+  let t = (i + 0x6d2b79f5) | 0;
+  t = Math.imul(t ^ (t >>> 15), t | 1);
+  t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+  return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
 };
 
 // Reduced from 18 to 6 per taste-design audit — less visual noise competing
 // with the headline message. Particle motion preserved for ceremonial feel.
+// Every value is pinned with toFixed so SSR and client markup match exactly.
 const particles = Array.from({ length: 6 }, (_, i) => {
-  const size = 4 + seededRandom(i + 1) * 8;
+  const size = (4 + seededRandom(i + 1) * 8).toFixed(2);
   return {
-    left: `${seededRandom(i + 2) * 100}%`,
+    left: `${(seededRandom(i + 2) * 100).toFixed(4)}%`,
     width: `${size}px`,
     height: `${size}px`,
-    bottom: `${-10 - seededRandom(i + 3) * 20}%`,
-    animationDelay: `${seededRandom(i + 4) * 18}s`,
-    animationDuration: `${10 + seededRandom(i + 5) * 14}s`,
+    bottom: `${(-10 - seededRandom(i + 3) * 20).toFixed(4)}%`,
+    animationDelay: `${(seededRandom(i + 4) * 18).toFixed(4)}s`,
+    animationDuration: `${(10 + seededRandom(i + 5) * 14).toFixed(4)}s`,
   };
 });
 
