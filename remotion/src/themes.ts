@@ -23,7 +23,8 @@ export type ThemeId =
   | "batik"
   | "tenun-pahang"
   | "mawar"
-  | "andaman";
+  | "andaman"
+  | "porcelain-songket";
 
 export type ThemePalette = {
   bg: string;
@@ -269,6 +270,33 @@ export const themes: Record<ThemeId, Theme> = {
     introAsset: "art/bismillah-scene.png",
     butterflies: false,
     petals: false,
+    useCenterSpotlight: true,
+  },
+  // Porcelain Songket — ivory porcelain ground, blue-and-white ware + dusty
+  // copper accents, subtle songket weave overlay. All-serif (Georgia-style)
+  // typography, so `script` maps to a serif rather than a cursive face.
+  "porcelain-songket": {
+    id: "porcelain-songket",
+    label: "Porcelain Songket",
+    palette: {
+      bg: "#FFFAF4",
+      spotlight: "#FFFAF4",
+      ink: "#214770",
+      rose: "#B25F50",
+      gold: "#214770",
+      muted: "#6B7480",
+      accent: "#B25F50",
+    },
+    fonts: {
+      display: playfair,
+      script: cormorant,
+      body: cormorant,
+      arabic: amiri,
+    },
+    borderAsset: "art/porcelain-songket-overlay.png",
+    introAsset: "art/porcelain-songket-overlay.png",
+    butterflies: false,
+    petals: true,
     useCenterSpotlight: true,
   },
 };

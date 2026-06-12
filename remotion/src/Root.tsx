@@ -6,6 +6,12 @@ import { ModernInvitation } from "./compositions/ModernInvitation";
 import { WildflowerInvitation } from "./compositions/WildflowerInvitation";
 import { SongketInvitation } from "./compositions/SongketInvitation";
 import { BatikInvitation } from "./compositions/BatikInvitation";
+import { PorcelainInvitation } from "./compositions/PorcelainInvitation";
+import {
+  PorcelainSongketInvitation,
+  PORCELAIN_FPS,
+  PORCELAIN_DURATION,
+} from "./compositions/PorcelainSongketInvitation";
 import { invitationSchema, defaultInvitationProps } from "./schema";
 
 const COMPOSITIONS = [
@@ -15,6 +21,7 @@ const COMPOSITIONS = [
   { id: "Invitation-Wildflower", component: WildflowerInvitation },
   { id: "Invitation-Songket", component: SongketInvitation },
   { id: "Invitation-Batik", component: BatikInvitation },
+  { id: "Invitation-Porcelain", component: PorcelainInvitation },
 ] as const;
 
 export const RemotionRoot: React.FC = () => {
@@ -33,6 +40,16 @@ export const RemotionRoot: React.FC = () => {
           defaultProps={defaultInvitationProps}
         />
       ))}
+
+      {/* Bespoke Aulia & Hilmi deliverable — self-contained, 18s storyboard. */}
+      <Composition
+        id="PorcelainSongket"
+        component={PorcelainSongketInvitation}
+        durationInFrames={PORCELAIN_DURATION}
+        fps={PORCELAIN_FPS}
+        width={720}
+        height={1280}
+      />
     </>
   );
 };

@@ -8,6 +8,7 @@ import { BatikInvitation } from "@cinematic/compositions/BatikInvitation";
 import { TenunPahangInvitation } from "@cinematic/compositions/TenunPahangInvitation";
 import { MawarInvitation } from "@cinematic/compositions/MawarInvitation";
 import { AndamanInvitation } from "@cinematic/compositions/AndamanInvitation";
+import { PorcelainInvitation } from "@cinematic/compositions/PorcelainInvitation";
 import type { InvitationProps } from "@cinematic/schema";
 
 export type CinematicTemplateId =
@@ -19,7 +20,8 @@ export type CinematicTemplateId =
   | "batik"
   | "tenun-pahang"
   | "mawar"
-  | "andaman";
+  | "andaman"
+  | "porcelain-songket";
 
 export type CinematicTemplate = {
   id: CinematicTemplateId;
@@ -102,6 +104,14 @@ export const cinematicTemplates: CinematicTemplate[] = [
     thumb: "/api/og?template=andaman",
     badge: "Cinematic · RM79",
     component: AndamanInvitation,
+  },
+  {
+    id: "porcelain-songket",
+    name: "Porcelain Songket",
+    blurb: "Porselin biru-puteh, aksen tembaga lembut dan tenunan songket halus — anggun dan berbumi.",
+    thumb: "/porcelain-songket/mockup_preview.jpg",
+    badge: "Cinematic · RM79",
+    component: PorcelainInvitation,
   },
 ];
 

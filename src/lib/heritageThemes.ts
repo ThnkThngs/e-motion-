@@ -25,6 +25,7 @@ const ornaments: Record<string, string> = {
   kerawang: "/art/geometric-kerawang.svg",
   wildflower: "/art/frame-wildflower.svg",
   khat: "/art/khat-frame.svg",
+  porcelainSongket: "/art/porcelain-songket-overlay.png",
 };
 
 export const heritageThemes: Record<string, HeritageTheme> = {
@@ -127,6 +128,11 @@ export const heritageThemes: Record<string, HeritageTheme> = {
     bg: "linear-gradient(180deg, #0F0A1A 0%, #1a2040 100%)",
     ink: "#f4d78a", accent: "#f4d78a", rule: "rgba(244,215,138,.45)",
     body: "#1a132a", bodyInk: "#f4d78a", ornament: ornaments.songket,
+  },
+  "porcelain-songket": {
+    bg: "linear-gradient(180deg, #fffaf4 0%, #eef3f7 100%)",
+    ink: "#214770", accent: "#b25f50", rule: "rgba(178,95,80,.3)",
+    body: "#fffaf4", bodyInk: "#214770", ornament: ornaments.porcelainSongket,
   },
 };
 
