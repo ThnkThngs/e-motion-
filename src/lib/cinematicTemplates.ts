@@ -9,6 +9,7 @@ import { TenunPahangInvitation } from "@cinematic/compositions/TenunPahangInvita
 import { MawarInvitation } from "@cinematic/compositions/MawarInvitation";
 import { AndamanInvitation } from "@cinematic/compositions/AndamanInvitation";
 import { PorcelainInvitation } from "@cinematic/compositions/PorcelainInvitation";
+import { SongketDirajaCinematic } from "@cinematic/compositions/SongketDirajaCinematic";
 import type { InvitationProps } from "@cinematic/schema";
 
 export type CinematicTemplateId =
@@ -21,7 +22,8 @@ export type CinematicTemplateId =
   | "tenun-pahang"
   | "mawar"
   | "andaman"
-  | "porcelain-songket";
+  | "porcelain-songket"
+  | "songket-diraja";
 
 export type CinematicTemplate = {
   id: CinematicTemplateId;
@@ -112,6 +114,14 @@ export const cinematicTemplates: CinematicTemplate[] = [
     thumb: "/porcelain-songket/mockup_preview.jpg",
     badge: "Cinematic · RM79",
     component: PorcelainInvitation,
+  },
+  {
+    id: "songket-diraja",
+    name: "Songket Diraja",
+    blurb: "Biru-navy diraja dengan tenunan emas, gerbang mihrab puteh dan bunga merah — mewah dan istiadat.",
+    thumb: "/songket-diraja/og.jpg",
+    badge: "Cinematic · RM79",
+    component: SongketDirajaCinematic,
   },
 ];
 

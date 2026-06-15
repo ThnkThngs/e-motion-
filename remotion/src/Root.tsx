@@ -7,11 +7,22 @@ import { WildflowerInvitation } from "./compositions/WildflowerInvitation";
 import { SongketInvitation } from "./compositions/SongketInvitation";
 import { BatikInvitation } from "./compositions/BatikInvitation";
 import { PorcelainInvitation } from "./compositions/PorcelainInvitation";
+import { SongketDirajaCinematic } from "./compositions/SongketDirajaCinematic";
 import {
   PorcelainSongketInvitation,
   PORCELAIN_FPS,
   PORCELAIN_DURATION,
 } from "./compositions/PorcelainSongketInvitation";
+import {
+  SongketDirajaInvitation,
+  SONGKET_DIRAJA_FPS,
+  SONGKET_DIRAJA_DURATION,
+} from "./compositions/SongketDirajaInvitation";
+import {
+  BrandFilm,
+  BRAND_FILM_FPS,
+  BRAND_FILM_DURATION,
+} from "./compositions/BrandFilm";
 import { invitationSchema, defaultInvitationProps } from "./schema";
 
 const COMPOSITIONS = [
@@ -22,6 +33,7 @@ const COMPOSITIONS = [
   { id: "Invitation-Songket", component: SongketInvitation },
   { id: "Invitation-Batik", component: BatikInvitation },
   { id: "Invitation-Porcelain", component: PorcelainInvitation },
+  { id: "Invitation-SongketDiraja", component: SongketDirajaCinematic },
 ] as const;
 
 export const RemotionRoot: React.FC = () => {
@@ -49,6 +61,26 @@ export const RemotionRoot: React.FC = () => {
         fps={PORCELAIN_FPS}
         width={720}
         height={1280}
+      />
+
+      {/* Bespoke Aulia & Hilmi — royal navy/gold songket, fully code-drawn, 18s. */}
+      <Composition
+        id="SongketDiraja"
+        component={SongketDirajaInvitation}
+        durationInFrames={SONGKET_DIRAJA_DURATION}
+        fps={SONGKET_DIRAJA_FPS}
+        width={720}
+        height={1280}
+      />
+
+      {/* Maison Warisan brand film — landscape, for the e-motion-landing artifact. */}
+      <Composition
+        id="BrandFilm"
+        component={BrandFilm}
+        durationInFrames={BRAND_FILM_DURATION}
+        fps={BRAND_FILM_FPS}
+        width={1920}
+        height={1080}
       />
     </>
   );

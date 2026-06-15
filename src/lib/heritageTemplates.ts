@@ -47,6 +47,7 @@ export const heritageTemplates: HeritageTemplate[] = [
   { id: "merah-puteh", name: "Merah Puteh", tier: "free", thumb: "/heritage/merah-puteh.jpg", archetype: "geometri" },
   { id: "kain-songket-klasik", name: "Kain Songket Klasik", tier: "cinematic", thumb: "/heritage/kain-songket-klasik.jpg", archetype: "songket" },
   { id: "porcelain-songket", name: "Porcelain Songket", tier: "cinematic", thumb: "/porcelain-songket/mockup_preview.jpg", archetype: "songket" },
+  { id: "songket-diraja", name: "Songket Diraja", tier: "cinematic", thumb: "/songket-diraja/og.jpg", archetype: "songket" },
 ];
 
 // Look up the archetype for a template id. Returns "songket" as a safe default
@@ -58,6 +59,7 @@ export const archetypeFor = (id: string): HeritageArchetype =>
 // can pre-select something useful when the user clicks a Heritage card.
 export const heritageToCinematic = (id: string): CinematicTemplateId => {
   if (id === "porcelain-songket") return "porcelain-songket";
+  if (id === "songket-diraja") return "songket-diraja";
   if (id.startsWith("songket-biru") || id.includes("diraja") || id.includes("andaman")) return "andaman";
   if (id.startsWith("tenun")) return "tenun-pahang";
   if (id.includes("pastel") || id.startsWith("mawar") || id === "merah-puteh") return "mawar";

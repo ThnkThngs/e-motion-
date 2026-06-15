@@ -24,7 +24,8 @@ export type ThemeId =
   | "tenun-pahang"
   | "mawar"
   | "andaman"
-  | "porcelain-songket";
+  | "porcelain-songket"
+  | "songket-diraja";
 
 export type ThemePalette = {
   bg: string;
@@ -297,6 +298,33 @@ export const themes: Record<ThemeId, Theme> = {
     introAsset: "art/porcelain-songket-overlay.png",
     butterflies: false,
     petals: true,
+    useCenterSpotlight: true,
+  },
+  // Songket Diraja — royal navy ground, woven gold songket + cream ogee panel
+  // with red-and-cream floral accents. The data-driven twin of the bespoke,
+  // fully code-drawn SongketDirajaInvitation.
+  "songket-diraja": {
+    id: "songket-diraja",
+    label: "Songket Diraja",
+    palette: {
+      bg: "#0C2340",
+      spotlight: "#163A5F",
+      ink: "#F3E6C4",
+      rose: "#C0463A",
+      gold: "#C9A24A",
+      muted: "#B8A06E",
+      accent: "#E6C878",
+    },
+    fonts: {
+      display: playfair,
+      script: dancing,
+      body: cormorant,
+      arabic: amiri,
+    },
+    borderAsset: "art/pattern-songket-dark.svg",
+    introAsset: "art/bismillah-scene.png",
+    butterflies: false,
+    petals: false,
     useCenterSpotlight: true,
   },
 };
